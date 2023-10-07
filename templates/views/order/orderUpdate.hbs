@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Order Billing</title>
+  <link rel="stylesheet" href="/public/css/order.css">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <style>
+    body {
+      background-color: rgb(244, 244, 247) !important;
+    }
+
+    .table-custom tbody tr:nth-child(even) {
+      background-color: #ffff;
+    }
+
+    /* Dark color for odd rows */
+    .table-custom tbody tr:nth-child(odd) {
+      background-color: rgb(244, 244, 247);
+    }
+
+    .tr-head th {
+      text-align: center;
+    }
+
+    .breadcrumdiv {
+      margin-left: 4px;
+      margin-top: 0px;
+
+    }
+
+    ul.breadcrumb {
+
+      list-style: none;
+
+      padding-top: 15px;
+
+    }
+
+    ul.breadcrumb li {
+      display: inline;
+      font-size: 15px;
+    }
+
+    ul.breadcrumb li+li:before {
+      padding: 8px;
+      color: black;
+      content: ">\00a0";
+    }
+
+    ul.breadcrumb li a {
+      color: #3019fa;
+      text-decoration: none;
+    }
+
+    ul.breadcrumb li a:hover {
+      color: #0808f0;
+      text-decoration: underline;
+    }
+
+    #formdata {
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+      width: 60%;
+      padding: 8px 20px 18px 20px;
+      background-color: white;
+
+
+    }
+
+    #formdata h5 {
+      padding-top: 30px;
+
+    }
+
+    #billing-form h1 {
+      text-align: left;
+      font-size: 29px;
+    }
+
+    /* Media query for mobile devices */
+    @media (max-width: 576px) {
+      .breadcrumdiv {
+        margin-top: 30px;
+      }
+
+      ul.breadcrumb li {
+        font-size: 14px;
+      }
+
+      #formdata {
+
+        width: 100%;
+
+      }
+
+      /* Add more mobile-specific styles here */
+    }
+
+    #line {
+      padding-bottom: 5px;
+      padding-right: 10px;
+      padding-left: 12px;
+      height: 40px;
+      /* Set the height of the container div */
+
+      display: flex;
+      align-items: center;
+      /* Vertically center the content */
+      justify-content: center;
+      /* Horizontally center the content */
+    }
+
+    #line-content {
+      /* font-size: 24px; /* Adjust the font size for the content */
+      /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+      background-color: #cbd5e1;
+      width: 1px;
+      height: 70%;
+    }
+
+    ul.breadcrumb li:last-child a {
+      color: grey;
+      /* Change the color to the grey color you prefer */
+
+    }
+  </style>
+</head>
+
+<body id="body-pd">
+
+  {{>side}}
+  <div class="col-md-12" style="padding: 10px;">
+    {{#if message}}
+    <div class="alert alert-info">{{message}}</div>
+    {{/if}}
+    <div class="col-md-12 subtitle d-flex justify-content-between align-items-center w-100"
+      style="margin-top: 50px;     padding-bottom: 0px;">
+      <div class="me-two d-flex justify-content-center align-items-center">
+        <div class="block">
+          <h4 class="flex-grow-1 listtocon " style="font-size: 24px; margin-top:0px ;  margin-bottom: 18px;">Update Order
+            Billing
+        </div>
+        <div id="line">
+          <span id="line-content"></span> <!-- Content inside the div -->
+        </div>
+        <div class="breadcrumdiv">
+          <ul class="breadcrumb">
+            <li><a href="#"> Home</a></li>
+            <li><a href="#">Master</a></li>
+            <li><a href="#">Update Order billing</a></li>
+
+          </ul>
+        </div>
+      </div>
+        <a href="/orderList" style="text-decoration: none;margin-right:20px ;margin-top: 25px;" > <i class="fa fa-xmark text-dark fa-2x"></i></a>
+
+    </div>
+    <form id="billing-form" action="" method="post">
+      {{!-- <h1>Order Billing</h1> --}}
+      <div id="formdata">
+        <h4>Enter customer details</h4>
+
+        <label for="store">Your Store:</label>
+
+        {{!-- <select name="outletId" id="store" class="store-select" style="padding-left: 30px;font-size:14px" >
+            <option value="" disabled selected> Select Store</option>
+            <option value="{{previousStore.outletId}}"> {{previousStore.storeName}}</option>
+            {{#each store}}
+            <option value='{{outletId}}'>{{storeName}}</option>
+            {{/each}}
+          </select> --}}
+
+
+        <select name="outletId" id="store" class="store-select">
+          {{!-- <option value={{outletId}}>{{orderItems.storeName}}</option> --}}
+           <option value="{{previousStore.outletId}}"> {{previousStore.storeName}}</option>
+          {{#each store}}
+          <option value={{outletId}} data-store-name="{{storeName}}">{{storeName}}</option>
+          {{/each}}
+        </select>
+
+        <label for="customer-name">Customer Name:</label>
+        <input type="text" id="customer-name" value="{{order.customerName}}" name="customerName"
+          placeholder="&#128100; Enter customer name">
+
+        <label for="customer-mobile">Customer Mobile:</label>
+        <input type="tel" id="customer-mobile" value="{{order.customerMobile}}" name="customerMobile"
+          placeholder="&#x260E; Enter customer mobile" required>
+
+        <label for="email">Email ID:</label>
+        <input type="email" id="email" name="customerEmail" value="{{order.customerEmail}}"
+          placeholder="&#x2709; Enter email id" required>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="customerCity" value="{{order.customerCity}}"
+          placeholder=" &#9751; Enter city" required>
+
+        <label for="state">State:</label>
+        <input type="text" id="state" value="{{order.customerState}}" name="customerState"
+          placeholder="&#9851; Enter state" required>
+
+        <label for="pincode">Pincode:</label>
+        <input type="text" id="pincode" value="{{order.customerPinCode}}" name="customerPinCode"
+          placeholder="&#9951; Enter state" required>
+
+
+        <label for="payment">Payment Method:</label>
+        <select id="payment" name="paymentMode" required>
+          <option>{{order.paymentMode}}</option>
+          <option value="online">Online</option>
+          <option value="offline">Offline</option>
+        </select>
+
+
+      </div>
+
+
+      <table id="product-table" class="table">
+        {{!-- <button type="button" class="delete-row-btn button-15" id="add-product-btn">AddProduct</button> --}}
+        <thead>
+          <div class="row">
+            <tr class="tr-head">
+              <div class="col-md-2 ">
+                <th style="display: none">uuid</th>
+              </div>
+              <div class="col-md-2">
+                <th>Product</th>
+              </div>
+              <div class="col-md-2">
+                <th>Quantity</th>
+              </div>
+              <div class="col-md-1">
+                <th>Price</th>
+              </div>
+              <div class="col-md-1">
+                <th>Discount</th>
+              </div>
+              <div class="col-md-1">
+                <th>Total</th>
+              </div>
+              <div class="col-md-1">
+                <th>GST %</th>
+              </div>
+              {{!-- <div class="col-md-2">
+                <th>Action</th>
+              </div> --}}
+
+
+            </tr>
+
+
+          </div>
+        </thead>
+        <tbody id="product-list">
+
+        </tbody>
+        <tfoot>
+          <tr>
+
+            <td colspan="5" style="text-align: right;"><strong>Grand Total:</strong></td>
+            <td><input type="number" value="{{order.totalAmount}}" name="totalAmount" id="grand-total" readonly></td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+  </div>
+  </div>
+
+  <input type="submit" placeholder="Submit" id="type">
+
+  </form>
+
+
+
+  </div>
+
+</body>
+<script>
+  
+  
+  // Function to fetch and append orderItems data
+  function fetchAndAppendOrderItems(orderId) {
+   
+    fetch(`/getOrderItems/${orderId}`)
+      .then(response => response.json())
+      .then(orderItems => {
+        console.log("working")
+        console.log(444,orderItems)
+        const tableBody = document.getElementById("product-list");
+
+        // Clear any existing rows in the table body
+        tableBody.innerHTML = "";
+
+        // Loop through the orderItems and append them to the table
+        orderItems.forEach(orderItem => {
+          const newRow = document.createElement("tr");
+          newRow.innerHTML = `
+              <!-- Add your table row structure here based on the orderItem data -->
+               <td style="width:1px; display:none;"><input type="text" name="orderItemId" class="uuid-input" value="${orderItem.orderItemId}" readonly></td>
+
+              <td>
+                  <select name="itemId" class="product-select">
+                  {{!-- <option value={{itemId}}>{{orderItems.itemName}}</option> --}}
+                  {{#each product}}
+                    <option value={{itemId}}>{{itemName}}</option>
+                  {{/each}}
+                </select>
+
+
+                
+              </td>
+              <td><input type="number" name="quantity" class="quantity-input" value="${orderItem.quantity}"></td>
+              <td><input type="number" name="salePrice" class="price-input" value="${orderItem.salePrice}"></td>
+              <td><input type="number" name="discountPercentage" class="discount-input" value="${orderItem.discountPercentage}"></td>
+              <td><input type="number" name="total" class="total-cell" value="${orderItem.itemAmount}"></td>
+              <td><input type="number" name="taxPercentage" class="gst-input" value="${orderItem.taxPercentage}"></td>
+              {{!-- <td><i class="fa-solid fa-trash delete-row-btn"></i></td> --}}
+            `;
+          tableBody.appendChild(newRow);
+        });
+
+        // Initialize the totals after fetching the order items
+        updateTotals();
+      })
+      .catch(error => console.error(error));
+  }
+
+  // Function to extract the orderId from the URL path
+  function extractOrderIdFromUrl() {
+    const urlParts = window.location.pathname.split('/');
+    const orderIdIndex = urlParts.indexOf('updateOrder') + 1; // Assuming 'updateOrder' is in the URL path
+    if (orderIdIndex > 0 && orderIdIndex < urlParts.length) {
+      return urlParts[orderIdIndex];
+    }
+    return null;
+  }
+
+  // Get the orderId from the URL path
+  const orderId = extractOrderIdFromUrl();
+
+  // Now you can use the orderId as needed in your JavaScript code
+  console.log("orderId:", orderId);
+
+  // Call the function with the orderId when the page loads or whenever needed
+  fetchAndAppendOrderItems(orderId);
+
+
+
+  // Function to update totals
+  function updateTotals() {
+    const tableBody = document.getElementById("product-list");
+    const rows = tableBody.querySelectorAll("tr");
+    let grandTotal = 0;
+
+    rows.forEach(row => {
+      const quantity = parseFloat(row.querySelector(".quantity-input").value);
+      const price = parseFloat(row.querySelector(".price-input").value);
+      const discount = parseFloat(row.querySelector(".discount-input").value);
+      const gst = parseFloat(row.querySelector(".gst-input").value);
+
+      // Check for zero values and set them to 1 to prevent calculation errors
+      const nonZeroQuantity = quantity === 0 ? 1 : quantity;
+      const nonZeroPrice = price === 0 ? 1 : price;
+      const nonZeroDiscount = discount === 0 ? 0 : discount;
+      const nonZeroGst = gst === 0 ? 0 : gst;
+
+      const total = (nonZeroQuantity * nonZeroPrice) - (nonZeroQuantity * nonZeroPrice) * nonZeroDiscount / 100;
+      const gstAmount = (total * (nonZeroQuantity * nonZeroGst)) / 100;
+
+      const totalWithGST = total + gstAmount;
+      row.querySelector(".total-cell").value = total.toFixed();
+
+      grandTotal += totalWithGST;
+    });
+
+    // Update the grand total input field
+    document.getElementById("grand-total").value = grandTotal.toFixed(2);
+  }
+
+
+  // Add event listeners to update totals when input values change
+  const tableBody = document.getElementById("product-list");
+  const storeSelect=document.getElementById("store")
+  tableBody.addEventListener("input", updateTotals);
+
+  // Call the function to initialize totals
+  updateTotals();
+
+
+
+
+  document.getElementById("billing-form").addEventListener("submit", async (event) => {
+event.preventDefault()
+
+
+    // Collect customer details
+    const customerName = document.getElementById("customer-name").value;
+    const customerMobile = document.getElementById("customer-mobile").value;
+    const customerEmail = document.getElementById("email").value;
+    const customerCity = document.getElementById("city").value;
+    const customerState = document.getElementById("state").value;
+    const customerPinCode = document.getElementById("pincode").value;
+    const paymentMode = document.getElementById("payment").value;
+    const totalAmount = document.getElementById("grand-total").value;
+
+    // Collect product details
+    const productRows = Array.from(document.querySelectorAll("#product-list tr"));
+    const products = productRows.map(row => {
+      const uuid = row.querySelector(".uuid-input");
+      const productSelect = row.querySelector(".product-select");
+      const quantityInput = row.querySelector(".quantity-input");
+      const priceInput = row.querySelector(".price-input");
+      const discountInput = row.querySelector(".discount-input");
+      const totalInput = row.querySelector(".total-cell");
+      const gstInput = row.querySelector(".gst-input");
+      // Get the selected option values from the select elements
+  
+      return {
+        orderItemId: uuid.value,
+        outletId: storeSelect.value,
+        storeName: storeSelect.options[storeSelect.selectedIndex].text,
+        itemId: productSelect.value,
+        itemName: productSelect.options[productSelect.selectedIndex].text,
+        quantity: quantityInput.value,
+        price: priceInput.value,
+        discount: discountInput.value,
+        itemAmount: totalInput.value,
+        taxPercentage: (gstInput.value * quantityInput.value),
+        // ... Collect other product details
+      };
+    });
+
+    console.log("daata to send", products)
+
+    // Prepare data to send
+    const dataToSend = {
+      customerName,
+      customerMobile,
+      customerEmail,
+      customerCity,
+      customerState,
+      customerPinCode,
+      paymentMode,
+      totalAmount,
+      // ... Other cus  tomer details
+      products // Send products as an array
+    };
+
+
+    console.log(1234568)
+    console.log(`${orderId}`)
+    // Send data to the server
+    const response = await fetch(`/updateOrder/${orderId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(dataToSend)
+    });
+
+    // Handle response
+    const responseData = await response.json();
+    // ... Handle response as needed
+
+    // Reset the form fields and product list
+
+  });
+
+
+
+</script>

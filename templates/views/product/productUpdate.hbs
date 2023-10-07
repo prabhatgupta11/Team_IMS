@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="/public/css/newStyle.css">
+    <link rel="stylesheet" href="/public/css/product.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* Light color for even rows */
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #ffff;
+        }
+
+        /* Dark color for odd rows */
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgb(244, 244, 247);
+        }
+
+        .input-field-second {
+            padding-left: 40px !important;
+        }
+
+        .input-field-second::placeholder {
+            padding-left: 0px !important;
+        }
+
+        .breadcrumdiv {
+            margin-left: 4px;
+
+
+        }
+
+        ul.breadcrumb {
+
+            list-style: none;
+            padding-bottom: 5px;
+            padding-top: 15px;
+
+        }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 15px;
+        }
+
+
+        ul.breadcrumb li:last-child a {
+            color: grey;
+            /* Change the color to the grey color you prefer */
+
+        }
+
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: ">\00a0";
+        }
+
+        ul.breadcrumb li a {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+
+        ul.breadcrumb li:last-child a {
+            color: #64748b;
+            /* Change the color to the grey color you prefer */
+
+        }
+
+        ul.breadcrumb li a:hover {
+
+            text-decoration: underline;
+        }
+
+        #line {
+            padding-bottom: 5px;
+            padding-right: 0px;
+            padding-left: 22px;
+            height: 40px;
+            /* Set the height of the container div */
+
+            display: flex;
+            align-items: center;
+            /* Vertically center the content */
+            justify-content: center;
+            /* Horizontally center the content */
+        }
+
+        #line-content {
+            /* font-size: 24px; /* Adjust the font size for the content */
+            /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+            background-color: #cbd5e1;
+            width: 1px;
+            height: 70%;
+        }
+
+        .icon-input {
+            position: absolute;
+            left: 4%;
+            top: 47%;
+            color: gray;
+        }
+    </style>
+</head>
+
+<body id="body-pd">
+    <div class="breadcrumdiv">
+        <ul class="breadcrumb">
+            <li><i class="fa-solid fa-house"></i><a href="#"> Home</a></li>
+            <li><a href="#">Master</a></li>
+            <li><a href="#">Product List</a></li>
+
+        </ul>
+    </div>
+    {{>side}}
+
+
+
+    <div class="row-md-4 subtitle d-flex justify-content-between align-items-center w-100"
+        style="margin-top: 35px;     padding-bottom: 0px;">
+        <div class="aling-second d-flex justify-content-center align-items-center">
+            <div class="block">
+                <h4 class="flex-grow-1 listtocon " style="font-size: 24px; margin-top:0px;"> Update Product
+            </div>
+            <div id="line">
+                <span id="line-content"></span> <!-- Content inside the div -->
+            </div>
+            <div class="breadcrumdiv ">
+                <ul class="breadcrumb " style="background-color: transparent;">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Master</a></li>
+                    <li><a href="#">Update Product</a></li>
+
+                </ul>
+            </div>
+        </div>
+        <div>
+
+            <a href="/productMasterList" style="text-decoration: none;margin-right:20px"> <i
+                    class="fa fa-xmark text-dark fa-2x"></i></a>
+        </div>
+
+    </div>
+
+
+
+    <form action="/updateProduct/{{product.itemId}}" method="post" enctype="multipart/form-data">
+        <div class="lineone-main-contianer col-md-12">
+            <div class="row">
+                <div class="border-gen col-md-9 ">
+                    <div class="ger-title col-md-9 my-2">
+                        <i class="fa-solid fa-layer-group" style="color: #5102e3;"></i>
+                        <div class="ger-subtitle">
+                            <h3 class="m-0">Gerneral</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-md-9 first-gen-section">
+                        <div class="row mt-3">
+                            <div class="item-section-gen col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Product name</label>
+                                    <input type="text" class="form-control input-field " id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.itemName}}" name="itemName"
+                                        placeholder="Enter product name" required>
+                                    <div class="icon-context input-field">
+                                        <i class="fa-solid fa-truck-fast icons-icons"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="item-section-gen-second col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Short Name</label>
+                                    <input type="text" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.shortName}}" name="shortName"
+                                        placeholder="Enter Short Name">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-user icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-section-gen col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Status</label>
+                                    <input type="text" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.status}}" name="status"
+                                        placeholder="Enter Status">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-file icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="item-section-gen-second col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Food Type</label>
+                                    <input type="text" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.foodType}}" name="foodType"
+                                        placeholder="Enter Food type ">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-filter icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-section-gen-second col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Item Product Type</label>
+                                    <input type="text" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.itemProductType}}"
+                                        name="itemProductType" placeholder="Enter item product type">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-font icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-section-gen col-md-12">
+                                <label for="exampleInputEmail1">Manufacturer</label>
+                                <select class="form-select " name="manufacturerId" aria-label="Default select example"
+                                    style="border-radius: 10px; padding-left: 40px;" required>
+                                    {{!-- <option value="" disabled selected>Select Manufacturer</option> --}}
+                                    {{#each manufacturer}}
+                                    <option value="{{manufacturerId}}"> {{ shortDescription }} </option>
+                                    {{/each}}
+                                </select>
+                                <div class="icon-context input-field">
+                                    <i class="fa-solid fa-store icon-input"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+
+
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-6 mt-2">
+                                <div id="uploaded-image-container" style="position: relative;">
+                                    <label for="" class="formlabel">Image URL</label>
+                                    {{!-- <img src="/public/uploads/{{product.imageUrl}}" height="100" width=""> --}}
+                                    <div class="image-box" style="height:150px">
+                                        <div class="hv-centered" style="height: 80%;">
+                                            <img src="/public/uploads/{{product.imageUrl}} " alt=""
+                                                class="setupload img-fluid">
+                                            {{!-- <p>Upload Image</p> --}}
+                                        </div>
+                                        <span id="upload">
+                                            <input id="inputimage " type="file" accept=".png, .jpg, .jpeg" type="file"
+                                                name="imageUrl" class="md-textarea form-control" />
+                                        </span>
+                                        <div id="image-show" class="image-show" style="height: 100%;">
+
+                                            <img id="uploadedImage" src="" alt="Uploaded Image">
+                                        </div>
+
+                                    </div>
+                                    <i class="fa-regular fa-circle-xmark mememe" id="remove-img" alt="Remove image"></i>
+                                </div>
+                            </div>
+
+                            <div class="item-section-gen-second col-md-6 m-auto">
+                                <label for="exampleInputEmail1">Description</label>
+                                <div class="form-outline" style="border: 1px solid lightgray;border-radius:10px">
+                                    <textarea class="form-control" name="description"
+                                        placeholder="Enter Description here" id="textAreaExample1"
+                                        rows="6"> {{product.description}}</textarea>
+                                    {{!-- <label class="form-label" for="textAreaExample">Description</label> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-gen col-md-9 mt-2">
+                    <div class="ger-title col-md-9 my-2">
+                        <i class="fa-solid fa-bars" style="color: #5102e3;"></i>
+                        <div class="ger-subtitle">
+                            <h3 class="m-0">Sales</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-md-9 first-gen-section">
+                        <div class="row mt-3">
+                            <div class="item-section-gen col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Length</label>
+                                    <input type="number" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.length}}" name="length"
+                                        placeholder="Enter length">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-arrows-up-down icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-section-gen-second col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Breadth</label>
+                                    <input type="number" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.breadth}}" name="breadth"
+                                        placeholder="Enter breadth">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-arrows-left-right icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="item-section-gen col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Height</label>
+                                    <input type="number" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.height}}" name="height"
+                                        placeholder="Enter height">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-arrow-up-long icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-section-gen-second col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Weight</label>
+                                    <input type="number" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.weight}}" name="weight"
+                                        placeholder="Enter weight">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-weight-hanging icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="item-section-gen col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Width</label>
+                                    <input type="number" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.width}}" name="width"
+                                        placeholder="Enter width">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-arrows-left-right icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-section-gen-second col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Decimal Allowed</label>
+                                    <input type="number" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.decimalsAllowed}}"
+                                        name="decimalsAllowed" placeholder="Enter decimal allowed">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-circle-dot icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-gen col-md-9 ">
+
+                    <div class="ger-title col-md-9 my-2 ">
+                        <i class="fa-solid fa-truck-fast" style="color: #5102e3;"></i>
+                        <div class="ger-subtitle">
+                            <h3 class="m-0">Taxes</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-9 first-gen-section">
+                        <div class="row mt-3">
+                            <div class="item-section-gen col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Tax Id</label>
+                                    <input type="number" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.taxId}}" name="taxId"
+                                        placeholder="Enter tax id">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-user icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-section-gen-second col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Item Tax Type</label>
+                                    <input type="text" name="itemTaxType" class="form-control input-field-second"
+                                        id="exampleInputEmail1" value="{{product.itemTaxType}}"
+                                        aria-describedby="emailHelp" placeholder="Enter item tax type">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-sitemap icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="item-section-gen col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Item Product Tax Type</label>
+                                    <input type="text" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.itemProductTaxType}}"
+                                        name="itemProductTaxType" placeholder="item product tax type">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-font icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-section-gen-second col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Fullfillment Mode</label>
+                                    <input type="text" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.fulfilmentMode}}"
+                                        name="fulfilmentMode" placeholder="Enter fullfillment mode">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-check icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="item-section-gen col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Is Returnable</label>
+                                    <input type="text" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.isReturnable}}"
+                                        name="isReturnable" placeholder="Enter is returnable">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-box icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-section-gen-second col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Is Cancellable</label>
+                                    <input type="text" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.isCancellable}}"
+                                        name="isCancellable" placeholder="Enter is cancellable">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-xmark icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-section-gen-second col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Return Period</label>
+                                    <input type="text" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.returnPeriod}}"
+                                        name="returnPeriod" placeholder="Enter return period">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-bell icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-gen col-md-9 ">
+                    <div class="ger-title col-md-9 my-2 ">
+                        <i class="fa-solid fa-box" style="color: #5102e3;"></i>
+                        <div class="ger-subtitle">
+                            <h3 class="m-0">Packaging</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-9 first-gen-section">
+                        <div class="row mt-3">
+                            <div class="item-section-gen col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Box</label>
+                                    <input type="text" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.box}}" name="box"
+                                        placeholder="Enter box">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-boxes-stacked icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-section-gen-second col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Rack</label>
+                                    <input type="text" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.rack}}" name="rack"
+                                        placeholder="Enter rack">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-cubes-stacked icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="item-section-gen col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">IBaru</label>
+                                    <input type="text" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" name="iBarU" value="{{product.iBarU}}"
+                                        placeholder="Enter IBaru">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-ribbon icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-section-gen-second col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Weight Grams</label>
+                                    <input type="number" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.weightGrams}}" name="weightGrams"
+                                        placeholder="Enter weight grams">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-weight-hanging icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="item-section-gen col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Detailed Description</label>
+                                    <input type="text" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.detailedDescription}}"
+                                        name="detailedDescription" placeholder="Enter detailed description">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-circle-info icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-section-gen-second col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Applied Online</label>
+                                    <input type="text" class="form-control input-field-second" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" value="{{product.appliesOnline}}"
+                                        name="appliesOnline" placeholder="Enter  applied online">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-hand-pointer icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container btn-context" style="padding-left: 20px;">
+                                <div class="row">
+                                    <div class="col-md-12 form-buttons p-0 m-0 d-flex">
+                                        <button class="button-15" role="button" type="submit"
+                                            style="margin:10px">Save</button>
+
+                                        <button class="button-15" role="button" type="reset"
+                                            style="margin:10px 0px">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script>
+    const uploadedImage = document.getElementById('uploadedImage');
+    const imageBox = document.getElementById('image-show');
+    const fileInput = document.querySelector('input[type="file"]');
+    const removeButton = document.getElementById('remove-img');
+
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        const imageUrl = URL.createObjectURL(file);
+        console.log(imageUrl);
+        uploadedImage.src = imageUrl;
+        imageBox.classList.add("image-box-opacity");
+    });
+
+    removeButton.addEventListener('click', () => {
+        uploadedImage.src = '';
+        fileInput.value = '';
+        imageBox.classList.remove("image-box-opacity");
+    });
+</script>
+
+</html>

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/public/css/newStyle.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    a {
+      text-decoration: none;
+    }
+    .active-pink-textarea-2 >*{
+      margin: 0px !important;
+    }
+
+    .input-para {
+      display: none;
+    }
+
+    .icons-short {
+      position: absolute;
+      left: 8%;
+      top: 50%;
+      color: gray;
+    }
+
+    .pra-pra {
+      -webkit-text-stroke: thin;
+      font-size: 1.4rem;
+      line-height: 2rem;
+      color: #1e293b;
+      font-weight: 500 !important;
+    }
+
+
+
+    .icons-icons {
+      position: absolute !important;
+      left: 1% !important;
+      bottom: 0% !important;
+      margin-bottom: 8px;
+      color: gray;
+
+    }
+
+    .input-field-second::placeholder {
+      position: relative !important;
+      padding-left: 25px !important;
+    }
+
+    .input-field::placeholder {
+
+      padding-left: 30px !important;
+    }
+
+    .input-field {
+      padding-left: 30px !important;
+      position: relative !important;
+    }
+
+    .input-field::placeholder {
+      padding-left: 0px !important;
+    }
+
+    .input-field-second {
+      padding-left: 25px !important;
+
+    }
+
+    .breadcrumdiv {
+      margin-left: 4px;
+
+
+    }
+
+    ul.breadcrumb {
+
+      list-style: none;
+
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+
+    ul.breadcrumb li {
+      display: inline;
+      font-size: 18px;
+    }
+
+    ul.breadcrumb li+li:before {
+      padding: 8px;
+      color: black;
+      content: ">\00a0";
+    }
+
+    ul.breadcrumb li a {
+      color: #3019fa;
+      text-decoration: none;
+    }
+
+    ul.breadcrumb li a:hover {
+      color: #0808f0;
+      text-decoration: underline;
+    }
+
+    /* Light color for even rows */
+    .table-custom tbody tr:nth-child(even) {
+      background-color: #ffff;
+    }
+
+    /* Dark color for odd rows */
+    .table-custom tbody tr:nth-child(odd) {
+      background-color: rgb(244, 244, 247);
+    }
+
+    .breadcrumdiv {
+      margin-left: 4px;
+
+
+    }
+
+    ul.breadcrumb {
+
+      list-style: none;
+      padding-bottom: 5px;
+      padding-top: 15px;
+
+    }
+
+    ul.breadcrumb li {
+      display: inline;
+      font-size: 15px;
+    }
+
+
+    ul.breadcrumb li:last-child a {
+      color: grey;
+      /* Change the color to the grey color you prefer */
+
+    }
+
+    ul.breadcrumb li+li:before {
+      padding: 8px;
+      color: black;
+      content: ">\00a0";
+    }
+
+    ul.breadcrumb li a {
+      color: #3019fa;
+      text-decoration: none;
+    }
+
+    ul.breadcrumb li a:hover {
+
+      text-decoration: underline;
+    }
+
+    #line {
+      padding-bottom: 5px;
+      padding-right: 10px;
+      padding-left: 12px;
+      height: 40px;
+      /* Set the height of the container div */
+
+      display: flex;
+      align-items: center;
+      /* Vertically center the content */
+      justify-content: center;
+      /* Horizontally center the content */
+    }
+
+    #line-content {
+      /* font-size: 24px; /* Adjust the font size for the content */
+      /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+      background-color: #cbd5e1;
+      width: 1px;
+      height: 70%;
+    }
+
+    ul.breadcrumb li:last-child a {
+      color: grey;
+      /* Change the color to the grey color you prefer */
+
+    }
+  </style>
+</head>
+
+<body>
+  {{>side}}
+  <div class="height-100 ">
+    <h3 class="pt-4">Add Store</h3>
+    {{#if message}}
+    <div class="alert alert-info">{{message}}</div>
+    {{/if}}
+    <div class="store   col-md-12 pt-3" style="display: flex;justify-content:space-between">
+      {{!-- <div class="cross-section">
+        <h3>Create User</h3>
+      </div> --}}
+      <div class="me-two d-flex justify-content-center align-items-center">
+        <div class="block">
+          <h4 class="flex-grow-1 listtocon " style="font-size: 24px; margin-top:0px;">Update Store
+        </div>
+        <div id="line">
+          <span id="line-content"></span> <!-- Content inside the div -->
+        </div>
+        <div class="breadcrumdiv">
+          <ul class="breadcrumb">
+            <li><a href="#"> Home</a></li>
+            <li><a href="#">Master</a></li>
+            <li><a href="#">Update Store</a></li>
+
+          </ul>
+        </div>
+
+      </div>
+
+
+      <a href="/newStoreList" style="text-decoration: none;margin-right:20px margin-top=" 25px";"> <i
+          class="fa fa-xmark text-dark fa-2x"></i></a>
+    </div>
+
+    <form action="/updateNewStore/{{newStore.rowguid}}" method="post" class="form-form">
+      <div class="col-md-6 main-table-data container main-table-box" style="margin-top:8px;">
+        <div class="col-md-12 title-title">
+          <h3 class="pt-4 h4-title">Update Store Details</h3>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Code</label>
+          <input class="form-control input-field " placeholder="Enter Your Code" name="code" id="code" value="{{newStore.code}}">
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-code icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Store Name<span class="text-danger">*</span></label>
+          <input class="form-control input-field" placeholder="Enter Your Store Name " type="text" name="storeName" id="name"
+           value="{{newStore.storeName}}" required></input>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-user icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlSelect1">Business Type <span class="text-danger">*</span></label>
+          <select id="businessType" name="businessType" class="form-control input-field"
+            style="padding-left:30px !important" required>
+            <option value="{{newStore.businessType}}">{{newStore.businessType}}</option>
+            <option value="FRANCHISE">FRANCHISE</option>
+            <option value="DISTRIBUTION CENTER">DISTRIBUTION CENTER</option>
+            <option value="BRANCH">BRANCH</option>
+          </select>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-business-time icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Address1</label>
+
+          <textarea class="form-control input-field px-1" cols="" rows="" type="text"
+            placeholder="&#9751; Enter Your Address " name="address1" id="address1">{{newStore.address1}}</textarea>
+          {{!-- <div class="icon-context input-field">
+            <i class="fa-solid fa-envelope icons-icons"></i>
+          </div> --}}
+
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Address2</label>
+          <textarea class="form-control input-field px-1" type="text" placeholder="&#9751; Enter Your Address "
+            name="address2" id="address2">{{newStore.address2}}</textarea>
+          {{!-- <div class="icon-context input-field">
+            <i class="fa-solid fa-envelope icons-icons"></i>
+          </div> --}}
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlSelect1">State</label>
+          <select id="state" name="state" class="form-control input-field" style="padding-left:30px !important" >
+            {{!-- <option value="{{newStore.state}}">{{newStore.state}}</option> --}}
+            {{#each state}}
+            <option value="{{id}}">{{Name}}</option>
+            {{/each}}
+          </select>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-landmark icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Pin Code</label>
+          <input class="form-control input-field" type="text" placeholder="Enter Your Pin Code here " name="pincode"
+            id="pinCode" maxlength="6" value="{{newStore.pincode}}"></input>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-location-dot icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Contact Person Name</label>
+          <input class="form-control input-field" type="text" placeholder="Enter Your Name " name="contactPersonName"
+            id="contactPersonName" value="{{newStore.contactPersonName}}"></input>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-id-card icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="contactNo">Contact No 1<span class="text-danger">*</span></label>
+          <input class="form-control input-field validateContact1" type="tel" placeholder="0-987-654-321" name="contactNo1"
+            id="contactNo" title="Please enter a 10-digit contact number" onblur="validateContact1(this)"
+            maxlength="10" value="{{newStore.contactNo1}}" required></input>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-mobile-screen-button icons-icons"></i>
+          </div>
+          <p class="input-validated1 mb-0 "></p>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Contact No 2</label>
+          <input class="form-control input-field validateContact2" type="text" placeholder="0-987-654-321 " name="contactNo2"
+            id="contactNo" maxlength="10" onblur="validateContact2(this)" value="{{newStore.contactNo2}}"></input>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-mobile-screen-button icons-icons"></i>
+          </div>
+          <p class="input-validated2 mb-0 "></p>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">GST No</label>
+          <input class="form-control input-field " type="text" placeholder="Enter Your GST number " name="GSTNo"
+            id="gstNo" maxlength="15" oninput="convertToUpperCase(this)" value="{{newStore.GSTNo}}"></input>
+          <div class="icon-context input-field">
+            <i class="fa-regular fa-money-bill-1 icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">PAN No</label>
+          <input class="form-control input-field" type="text" placeholder="Enter Your Contact number " name="panNo"
+            id="panNo" maxlength="10" oninput="convertToUpperCase(this)" value="{{newStore.panNo}}"></input>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-id-card icons-icons"></i>
+          </div>
+        </div>
+        {{!-- <div class="form-group py-2">
+          <label for="exampleFormControlSelect1">Category</label>
+          <select id="category" name="category" class="form-control input-field" style="padding-left:30px !important" required>
+            <option value="grocery">Grocery</option>
+            <option value="electronics">Electronics</option>
+          </select>
+          <div class="icon-context input-field">
+            <i class="fa-brands fa-dropbox icons-icons"></i>
+          </div>
+        </div> --}}
+         <div class="form-group py-2 ">
+          <label class="formlabel " style="display: block">Category<span class="text-danger">*</span></label>
+          <input type="text" id="category-search" placeholder="Search Categories" class="my-2 w-50" style='border:1px solid #bdbdbd'>
+          <div class="md-form active-pink-textarea-2" style="display: inherit;" id="categoryList">
+
+
+          </div>
+            </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlSelect1">Tax State</label>
+          <select id="taxState" name="taxState" class="form-control input-field" style="padding-left:30px !important">
+            {{!-- <option value="{{newStore.id}}">{{newStore.taxState}}</option> --}}
+             {{#each state}}
+            <option value="{{id}}">{{Name}}</option>
+            {{/each}}
+          </select>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-landmark icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlSelect1">Status</label>
+          <select id="status" name="status" class="form-control input-field" style="padding-left:30px !important">
+            <option value="{{newStore.status}}">{{newStore.status}}</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-battery-half icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Display Order</label>
+          <input class="form-control input-field" type="number" placeholder="Display Order " name="displayOrder"
+            id="displayOrder" value="{{newStore.displayOrder}}"></input>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-arrow-down-short-wide icons-icons"></i>
+          </div>
+        </div>
+        <div class="container" style="padding: 20px 0px;">
+          <div class="row">
+            <div class="col-md-12 form-buttons p-0 m-0 d-flex">
+              <button class="button-15" role="button" type="submit" style="margin:10px">Save</button>
+
+              <button class="button-15" role="button" type="reset" style="margin:10px 0px">Reset</button>
+            </div>
+          </div>
+        </div>
+
+    </form>
+  </div>
+  </div>
+</body>
+
+<script>
+  function validateContact1(input) {
+    // Define a regular expression pattern for a valid mobile number.
+    var mobileNumberPattern = /^[9876]\d{9}$/;
+    const validateContact = document.querySelector('.input-validated1')
+
+    // Check if the entered value matches the pattern.
+    if (!mobileNumberPattern.test(input.value)) {
+      document.querySelector('.validateContact1').style.border = '1px solid red'
+      validateContact.style.display = 'block'
+      validateContact.style.color = 'red'
+      validateContact.innerText = 'Invalid mobile number'
+    } else {
+      document.querySelector('.validateContact1').style.border = ''
+      validateContact.innerHTML = '';
+    }
+  }
+
+    function validateContact2(input) {
+    // Define a regular expression pattern for a valid mobile number.
+    var mobileNumberPattern = /^[9876]\d{9}$/;
+    const validateContact = document.querySelector('.input-validated2')
+
+    // Check if the entered value matches the pattern.
+    if (!mobileNumberPattern.test(input.value)) {
+      document.querySelector('.validateContact2').style.border = '1px solid red'
+      validateContact.style.display = 'block'
+      validateContact.style.color = 'red'
+      validateContact.innerText = 'Invalid mobile number'
+    } else {
+      document.querySelector('.validateContact2').style.border = ''
+      validateContact.innerHTML = '';
+    }
+  }
+</script>
+
+
+<script>
+
+
+  // Convert into upper case
+  function convertToUpperCase(input) {
+    input.value = input.value.toUpperCase();
+  }
+
+  // Validation for contact number 
+/*  const contactNo1Validation = document.getElementById('contactNo1');
+
+  contactNo1Validation.addEventListener('input', () => {
+    const contactNoValue = contactNo1Validation.value;
+
+    if (/^[9876]\d{9}$/.test(contactNoValue)) {
+      contactNo1Validation.setCustomValidity('');
+    } else {
+      contactNo1Validation.setCustomValidity('Please enter a valid 10-digit contact number');
+    }
+  });
+
+
+  // Validation for contact number 2
+
+  const contactNo2Validation = document.getElementById('contactNo2');
+
+  contactNo2Validation.addEventListener('input', () => {
+    const contactNoValue = contactNo2Validation.value;
+
+    if (/^[9876]\d{9}$/.test(contactNoValue)) {
+      contactNo2Validation.setCustomValidity('');
+    } else {
+      contactNo2Validation.setCustomValidity('Please enter a valid 10-digit contact number');
+    }
+  }); */
+
+  // PIN code validation 
+  const pinCodeValidation = document.getElementById('pinCode');
+
+  pinCodeValidation.addEventListener('input', () => {
+    const validPinCode = /^[0-9]{6}$/.test(pinCodeValidation.value);
+
+    if (validPinCode) {
+      pinCodeValidation.setCustomValidity('');
+    } else {
+      pinCodeValidation.setCustomValidity('Please enter a valid Pin Code number');
+    }
+  });
+
+  // PAN number validation 
+  const panNoValidation = document.getElementById('panNo');
+
+  panNoValidation.addEventListener('input', () => {
+    const validPanNo = /^[A-Z]{5}[0-9]{4}[A-Z]$/.test(panNoValidation.value);
+
+    if (validPanNo) {
+      panNoValidation.setCustomValidity('');
+    } else {
+      panNoValidation.setCustomValidity('Please enter a valid PAN number');
+    }
+  });
+
+  // GST number validation 
+  const gstNoValidation = document.getElementById('gstNo');
+
+  gstNoValidation.addEventListener('input', () => {
+    const validGstNo = /^(\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[Z]{1}[A-Z\d]{1})$/.test(gstNoValidation.value);
+
+    if (validGstNo) {
+      gstNoValidation.setCustomValidity('');
+    } else {
+      gstNoValidation.setCustomValidity('Please enter a valid GST number');
+    }
+  });
+
+</script>
+
+
+{{!-- <script>
+  $(document).ready(function () {
+    $('#form17').on('change', function () {
+      const outletId = $(this).val();
+
+      // Use an API endpoint to fetch the user's selected stores based on outletId
+      $.get(`/getSelectedCategories/${outletId}`, function (selectedCategories) {
+        const categoryList = $('#categoryList');
+
+        // Clear the previous content in #storeList
+        categoryList.empty();
+
+        // Loop through the selectedStores and create checkboxes with labels
+        selectedCategories.forEach(function (data) {
+          const checkbox = $(document.createElement('input')).prop({
+            id: 'myCheckBox_' + data.categoryId,
+            name: 'categoryId',
+            value: data.categoryId,
+            type: 'checkbox',
+            checked: data.checked
+          });
+
+            checkbox.on('change', function () {
+                const isChecked = $(this).prop('checked');
+                if (!isChecked) {
+                    // Handle deselection here
+                    // Remove the store from the user's selection on the server-side
+                    $.post(`/deselectCategory/${outletId}/${data.categoryId}`, function (response) {
+                        console.log(response);
+                    });
+                }
+            });
+
+          categoryList.append(checkbox)
+            .append(
+              $(document.createElement('label')).prop({
+                for: 'myCheckBox_' + data.categoryId
+              }).html(data.shortDescription)
+            )
+            .append(document.createElement('br'));
+        });
+      });
+    });
+  });
+</script> --}}
+
+  {{!-- <script>
+    // Function to populate the selected categories when the page loads
+    function populateSelectedCategories(selectedCategories) {
+      const categoryList = $('#categoryList');
+
+      // Loop through the selectedCategories and create checkboxes with labels
+      selectedCategories.forEach(function (data) {
+        const checkbox = $(document.createElement('input')).prop({
+          id: 'myCheckBox_' + data.categoryId,
+          name: 'categoryId',
+          value: data.categoryId,
+          type: 'checkbox',
+          checked: data.checked
+        });
+
+        checkbox.on('change', function () {
+          const isChecked = $(this).prop('checked');
+          if (!isChecked) {
+            // Handle deselection here
+            // Remove the store from the user's selection on the server-side
+            // You can use an AJAX request similar to your existing code
+            $.post(`/deselectCategory/${outletId}/${data.categoryId}`, function (response) {
+              console.log(response);
+            });
+          }
+        });
+
+        categoryList.append(checkbox)
+          .append(
+            $(document.createElement('label')).prop({
+              for: 'myCheckBox_' + data.categoryId
+            }).html(data.shortDescription)
+          )
+          .append(document.createElement('br'));
+      });
+    }
+
+    // Extract the selected categories data from the URL or wherever you passed it
+    const selectedCategoriesData = []; // Replace with the actual data extraction logic
+
+    // Call the function to populate the checkboxes when the page loads
+    $(document).ready(function () {
+      populateSelectedCategories(selectedCategoriesData);
+    });
+  </script> --}}
+
+
+<script>
+  $(document).ready(function () {
+    // Assuming you can obtain the outletId from your page's context or URL parameter
+    const outletId = {{newStore.outletId}}; // Replace with your logic
+
+    // Use an API endpoint to fetch the selected categories for the store you want to edit
+    $.get(`/getSelectedCategories/${outletId}`, function (selectedCategories) {
+      const categoryList = $('#categoryList');
+
+      // Create an array to store references to category checkboxes
+      const categoryCheckboxes = [];
+
+      // Loop through the selectedCategories and create checkboxes with labels
+      selectedCategories.forEach(function (data) {
+        const checkbox = $(document.createElement('input')).prop({
+          id: 'myCheckBox_' + data.id,
+          name: 'id',
+          value: data.id,
+          type: 'checkbox',
+          checked: data.checked
+        });
+
+        checkbox.on('change', function () {
+          const isChecked = $(this).prop('checked');
+          if (!isChecked) {
+            console.log(data.id);
+            // Handle deselection here
+            // Remove the category from the store's selection on the server-side
+            $.post(`/deselectCategory/${outletId}/${data.id}`, function (response) {
+              console.log(response);
+            });
+          }
+        });
+
+        // Store a reference to the checkbox in the array
+        categoryCheckboxes.push(checkbox);
+
+        categoryList.append(checkbox)
+          .append(
+            $(document.createElement('label')).prop({
+              for: 'myCheckBox_' + data.id
+            }).html(data.code_name)
+          )
+          .append(document.createElement('br'));
+      });
+
+      // Handle category search
+      const categorySearchInput = document.getElementById('category-search');
+      categorySearchInput.addEventListener('input', () => {
+        const searchValue = categorySearchInput.value.trim().toLowerCase();
+
+        // Filter category checkboxes based on the search value
+        categoryCheckboxes.forEach((checkbox) => {
+          const categoryLabel = checkbox.next('label'); // Get the associated label
+          const categoryText = categoryLabel.text().toLowerCase();
+
+          if (categoryText.includes(searchValue)) {
+            checkbox.show(); // Show the checkbox
+            categoryLabel.show(); // Show the label
+          } else {
+            checkbox.hide(); // Hide the checkbox
+            categoryLabel.hide(); // Hide the label
+            checkbox.prop('checked', false); // Uncheck hidden checkboxes
+          }
+        });
+      });
+    });
+  });
+</script>
+
+
+
+{{!-- <script>
+  // Handle category checkboxes and search
+  const categoryCheckboxes = document.querySelectorAll('input[name="id"]');
+  const categorySearchInput = document.getElementById('category-search');
+  const categoryLabels = document.querySelectorAll('.md-form.mb-4.active-pink-textarea-2 label');
+console.log(categoryCheckboxes)
+  categorySearchInput.addEventListener('input', () => {
+    const searchValue = categorySearchInput.value.trim().toLowerCase();
+
+    categoryLabels.forEach((label, index) => {
+      const checkbox = categoryCheckboxes[index];
+      const category = label.textContent.toLowerCase();
+
+      if (category.includes(searchValue)) {
+        label.style.display = 'block'; // Show the label
+        checkbox.style.display = 'block'; // Show the checkbox
+      } else {
+        label.style.display = 'none'; // Hide the label
+        checkbox.style.display = 'none'; // Hide the checkbox
+        checkbox.checked = false; // Uncheck hidden checkboxes
+      }
+    });
+  });
+
+  categoryCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener('change', () => {
+      const selectedCategories = Array.from(categoryCheckboxes)
+        .filter((checkbox) => checkbox.checked)
+        .map((checkbox) => checkbox.value);
+
+      console.log('Selected Categories:', selectedCategories);
+    });
+  });
+</script> --}}
+
+
+</html>

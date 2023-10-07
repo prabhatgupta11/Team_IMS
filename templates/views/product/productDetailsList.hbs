@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/newStyle.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+  <style>
+        /* Light color for even rows */
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #ffff;
+        }
+
+        /* Dark color for odd rows */
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgb(244, 244, 247);
+        }
+
+        .breadcrumdiv {
+            margin-left: 4px;
+
+
+        }
+
+        ul.breadcrumb {
+
+            list-style: none;
+            padding-bottom: 5px;
+            padding-top: 15px;
+
+        }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 15px;
+        }
+
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: ">\00a0";
+        }
+
+        ul.breadcrumb li a {
+            color: #3019fa;
+            text-decoration: none;
+        }
+
+        ul.breadcrumb li a:hover {
+
+            text-decoration: underline;
+        }
+
+        #line {
+            padding-bottom: 5px;
+            padding-right: 10px;
+            padding-left: 12px;
+            height: 40px;
+            /* Set the height of the container div */
+
+            display: flex;
+            align-items: center;
+            /* Vertically center the content */
+            justify-content: center;
+            /* Horizontally center the content */
+        }
+
+        #line-content {
+            /* font-size: 24px; /* Adjust the font size for the content */
+            /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+            background-color: #cbd5e1;
+            width: 1px;
+            height: 70%;
+        }
+        
+        ul.breadcrumb li:last-child a {
+    color: grey; /* Change the color to the grey color you prefer */
+   
+}
+
+    </style>
+</head>
+
+<body id="body-pd">       
+    {{>side}}
+     {{#if message}}
+            <div class="alert alert-info opacity-0">{{message}}</div>
+            {{/if}}
+             {{#if message}}
+            <div class="alert alert-info">{{message}}</div>
+            {{/if}}
+    <div class="col-md-12 row-md-5 mx-0 main_container " style="padding-right:0px; margin-top:2px">
+        <div class="row-md-4 subtitle d-flex justify-content-between align-items-center" style="margin-top: 60px;">
+            <div class="row-md-4 subtitle d-flex justify-content-start align-items-center w-75" style="margin-top: 5px;">
+                <div class="block">
+                <h4 class="flex-grow-1 " style="font-size: 29px     color: #1e293b;
+    font-weight:800;">Product Stock List
+            </div>
+                <div id="line">
+                    <span id="line-content"></span> <!-- Content inside the div -->
+                </div>
+               <div class="breadcrumdiv">
+        <ul class="breadcrumb">
+            <li><a href="#"> Home</a></li>
+            <li><a href="#">Master</a></li>
+            <li><a href="#">Product Stock List</a></li>
+
+        </ul>
+    </div>
+            </div>
+            <div class="khel-container d-flex ">
+            <button type="button" class="btn btn-light btn-md me-cls  text-light h-25 "
+                style="background-color: #ff9f43;font-weight:500"><a href="/productCategoryMapping"
+                    style="text-decoration: none;color:white">Update Category</a></button>
+                    <button type="button" class="btn btn-light btn-md me-cls mx-2 text-light h-25 "
+                style="background-color: #ff9f43;font-weight:500"><a href="/productRaise"
+                    style="text-decoration: none;color:white">+ Rate</a></button>
+                    <button type="button" class="btn btn-light btn-md me-cls  text-light h-25 "
+                style="background-color: #ff9f43;font-weight:500"><a href="/stockInOut"
+                    style="text-decoration: none;color:white">+ Stock</a></button>
+
+                    </div>
+        </div>
+
+        <div class="container col-md-12 me-class" style="padding-right:24px">
+            <div class="input-group py-2">
+                <div class="form-inline d-flex">
+                    {{!-- <i class="fa-solid fa-filter d-flex justify-content-center align-items-center"
+                        style="font-size: 24px;color:orange"></i> --}}
+                    {{!-- <div class="form-outline">
+                        <input id="search-input" type="search" id="form1" name="form1"
+                            class="form-control border text-dark" placeholder="Search..."
+                            style="border-radius: 20px 0 0 20px;" />
+                    </div> --}}
+                    {{!-- <button id="search-button" type="submit" class="btn btn-dark"
+                        style="border-radius: 0 20px 20px 0;">
+                        <i class="fas fa-search "></i>
+                    </button> --}}
+                </div>
+
+            </div>
+
+
+            <div class="container-table pt-2 p-0 mt-4 table-responsive">
+                <form style="overflow-x: hidden;">
+                    <table class="table table-custom" id="product_table">
+                        <thead>
+                            <tr>
+                                {{!-- <th scope="col"><i class="fa-regular fa-square-check"></i></th>
+                                <th scope="col"><input class="form-check-input border-2" type="checkbox" value=""
+                                        id="flexCheckDefault"></th> --}}
+                                <th scope="col ">Product Name</th>
+                                <th scope="col ">Store</th>
+                                <th scope="col ">Stock</th>
+                                <th scope="col ">Price</th>
+                                <th scope="col ">MRP</th>
+                                <th scope="col ">Category 1</th>
+                                <th scope="col ">Category 2</th>
+                                {{!-- <th scope="col">Category Edit</th> --}}
+                                {{!-- <th scope="col">Rate Edit</th> --}}
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+
+                        {{!-- {{#each data}} --}}
+
+                        <tr>
+                            {{!-- <th scope="row">1</th>
+                            <td> <input class="form-check-input border-2" type="checkbox" id="flexCheckDefault"
+                                    name='selected_row' value="{{outletId}}"></td> --}}
+                            {{!-- <td>{{outletId}}</td>
+                            <td>{{storeName}}</td>
+                            <td>{{storeAddress}}</td> --}}
+                            {{!-- <td class="d-flex">
+                                <a href="/update/{{outletId}}"><i
+                                        class="fa-solid fa-pencil table-icon text-dark"></i></a>
+                                <a href="/delete/{{outletId}}" class="mx-2"><i
+                                        class="fa-solid fa-trash text-danger delete"></i></a>
+                                <a href="#"><i class="fa-solid fa-plus text-dark"></i></a>
+                            </td>
+                        </tr> --}}
+                        {{!-- {{/each}} --}}
+
+                    </table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+    {{!--
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+    <script>
+        $(document).ready(function () {
+
+            const dataTable = $('#product_table').DataTable({
+                /* language: {
+                    lengthMenu: '<span class="show-label">Show Entries</span> <span class="dataTables_select">MENU</span>'
+                }, */
+                'processing': true,
+                'serverSide': true,
+                'serverMethod': 'get',
+                'ajax': {
+                    'url': '/productsDetailsList'
+                },
+                'aaSorting': [],
+                'columns': [
+                    { data: 'itemName' },
+                    { data: 'storeName' },
+                    { data: 'stock' },
+                    { data: 'salePrice' },
+                    { data: 'mrp' },
+                    { data: 'Cat1' },
+                    { data: 'Cat2' },
+              /*      {
+                        data: "categoryId",
+                        'render': function (data, type, row) {
+                            return "<a href='/updateCategory/" + data + "'>EDIT</a>";
+                        }
+                    },
+                    {
+                        data: "itemId",
+                        'render': function (data, type, row) {
+                            return "<a href='/updateProductRaise/" + data + "'>EDIT</a>";
+                        }
+                    } */
+
+                ]
+
+            });
+
+        });
+
+    </script>
+</body>
+
+</html>

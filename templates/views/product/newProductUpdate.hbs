@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="/public/css/newStyle.css">
+    <link rel="stylesheet" href="/public/css/product.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* Light color for even rows */
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #ffff;
+        }
+
+        /* Dark color for odd rows */
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgb(244, 244, 247);
+        }
+
+        .breadcrumdiv {
+            margin-left: 4px;
+
+
+        }
+
+        ul.breadcrumb {
+
+            list-style: none;
+            padding-bottom: 5px;
+            padding-top: 15px;
+
+        }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 15px;
+        }
+
+
+        ul.breadcrumb li:last-child a {
+            color: grey;
+            /* Change the color to the grey color you prefer */
+
+        }
+
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: ">\00a0";
+        }
+
+        ul.breadcrumb li a {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+
+        ul.breadcrumb li:last-child a {
+            color: #64748b;
+            /* Change the color to the grey color you prefer */
+
+        }
+
+        ul.breadcrumb li a:hover {
+
+            text-decoration: underline;
+        }
+
+        #line {
+            padding-bottom: 5px;
+            padding-right: 0px;
+            padding-left: 22px;
+            height: 40px;
+            /* Set the height of the container div */
+
+            display: flex;
+            align-items: center;
+            /* Vertically center the content */
+            justify-content: center;
+            /* Horizontally center the content */
+        }
+
+        #line-content {
+            /* font-size: 24px; /* Adjust the font size for the content */
+            /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+            background-color: #cbd5e1;
+            width: 1px;
+            height: 70%;
+        }
+
+        .icon-input {
+            position: absolute;
+            left: 4%;
+            top: 47%;
+            color: gray;
+        }
+    </style>
+</head>
+
+<body id="body-pd">
+    <div class="breadcrumdiv">
+        <ul class="breadcrumb">
+            <li><i class="fa-solid fa-house"></i><a href="#"> Home</a></li>
+            <li><a href="#">Master</a></li>
+            <li><a href="#">Product List</a></li>
+
+        </ul>
+    </div>
+    {{>side}}
+    <div class="cross-section">
+
+    </div>
+
+
+    <div class="row-md-4 subtitle d-flex justify-content-between align-items-center w-100"
+        style="margin-top: 35px;     padding-bottom: 0px;">
+        <div class="aling-second d-flex justify-content-center align-items-center">
+            <div class="block">
+                <h4 class="flex-grow-1 listtocon " style="font-size: 24px; margin-top:0px;">Update Product
+            </div>
+            <div id="line">
+                <span id="line-content"></span> <!-- Content inside the div -->
+            </div>
+            <div class="breadcrumdiv ">
+                <ul class="breadcrumb " style="background-color: transparent;">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Master</a></li>
+                    <li><a href="#">Update Product</a></li>
+
+                </ul>
+            </div>
+        </div>
+        <div>
+
+            <a href="/newProductList" style="text-decoration: none;margin-right:20px"> <i
+                    class="fa fa-xmark text-dark fa-2x"></i></a>
+        </div>
+
+    </div>
+
+
+
+    <form action="/newProductUpdate/{{product.rowguid}}" method="post" enctype="multipart/form-data">
+        <div class="lineone-main-contianer col-md-12">
+            <div class="row">
+                <div class="border-gen col-md-9 ">
+                    <div class="ger-title col-md-9 my-2">
+                        <i class="fa-solid fa-layer-group" style="color: #5102e3;"></i>
+                        <div class="ger-subtitle">
+                            <h3 class="m-0">Update Product Details</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-md-9 first-gen-section">
+                        <div class="row mt-3">
+                            <div class="item-section-gen col-md-12">
+                                <label for="exampleInputEmail1">Category</label>
+                                <select class="form-select " id="categoryDropdown" name="category" aria-label="Default select example"
+                                    style="border-radius: 10px; padding-left: 40px;">
+                                    <option value="{{categoryPreviousValue.id}}"> {{categoryPreviousValue.code_name}} </option>
+                                    {{#each category}}
+                                    <option value="{{id}}"> {{code_name}} </option>
+                                    {{/each}}
+                                </select>
+                                <div class="icon-context input-field">
+                                    <i class="fa-solid fa-store icon-input"></i>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="item-section-gen col-md-12">
+                                <label for="exampleInputEmail1">Department</label>
+                                <select class="form-select " id="departmentDropdown" name="department" aria-label="Default select example"
+                                    style="border-radius: 10px; padding-left: 40px;">
+                                    <option value="{{departmentPreviousValue.id}}"> {{departmentPreviousValue.code_name}} </option>
+                                    {{#each department}}
+                                    <option value="{{id}}"> {{ code_name }} </option>
+                                    {{/each}}
+                                </select>
+                                <div class="icon-context input-field">
+                                    <i class="fa-solid fa-store icon-input"></i>
+                                </div>
+
+                            </div>
+                            <div class="item-section-gen col-md-12">
+                                <label for="exampleInputEmail1">Group</label>
+                                <select class="form-select " id="groupDropdown" name="group" aria-label="Default select example"
+                                    style="border-radius: 10px; padding-left: 40px;" required>
+                                    
+                                    <option value="{{groupPreviousValue.id}}"> {{groupPreviousValue.code_name}} </option>
+                                    {{#each group}}
+                                    <option value="{{id}}"> {{ code_name }} </option>
+                                    {{/each}}
+                                </select>
+                                <div class="icon-context input-field">
+                                    <i class="fa-solid fa-store icon-input"></i>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="item-section-gen col-md-12">
+                                <label for="exampleInputEmail1">Item Type</label>
+                                <select class="form-select " id="itemTypeDropdown" name="itemType" aria-label="Default select example"
+                                    style="border-radius: 10px; padding-left: 40px;" required>
+                                    <option value="{{itemTypePreviousValue.id}}"> {{itemTypePreviousValue.code_name}} </option>
+                                    {{#each itemType}}
+                                    <option value="{{id}}"> {{ code_name }} </option>
+                                    {{/each}}
+                                </select>
+                                <div class="icon-context input-field">
+                                    <i class="fa-solid fa-store icon-input"></i>
+                                </div>
+
+                            </div>
+                            <div class="item-section-gen col-md-12">
+                                <label for="exampleInputEmail1">Brand</label>
+                                <select class="form-select" name="brand" aria-label="Default select example"
+                                    style="border-radius: 10px; padding-left: 40px;" required>
+                                    <option value="{{manufacturerPreviousValue.manufacturerId}}"> {{manufacturerPreviousValue.shortDescription}} </option>
+                                    {{#each manufacturer}}
+                                    <option value="{{manufacturerId}}">{{shortDescription}}</option>
+                                    {{/each}}
+                                </select>
+
+                                <div class="icon-context input-field">
+                                    <i class="fa-solid fa-store icon-input"></i>
+                                </div>
+
+                            </div>
+
+                            <div class="item-section-gen-second col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Item Code</label>
+                                    <input type="text" class="form-control input-field" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" name="itemCode" value="{{product.itemCode}}"
+                                        placeholder="Enter Item Code ">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-filter icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-section-gen-second col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Item Name</label>
+                                    <input type="text" class="form-control input-field" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" name="itemName" value="{{product.itemName}}"
+                                        placeholder="Enter Item Name">
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-font icons-short"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row ">
+
+
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-6 mt-2">
+                                <div id="uploaded-image-container" style="position: relative;">
+                                    <label for="" class="formlabel">Image URL</label>
+                                    {{!-- <img src="/public/uploads/{{product.imageUrl}}" height="100" width=""> --}}
+                                    <div class="image-box" style="height:150px">
+                                        <div class="hv-centered" style="height: 80%;">
+                                            <img src="/public/uploads/{{product.imageUrl}} " alt=""
+                                                class="setupload img-fluid" style="max-height:160px">
+                                            {{!-- <p>Upload Image</p> --}}
+                                        </div>
+                                        <span id="upload">
+                                            <input id="inputimage " type="file" accept=".png, .jpg, .jpeg" type="file"
+                                                name="imageUrl" class="md-textarea form-control" />
+                                        </span>
+                                        <div id="image-show" class="image-show" style="height: 100%;">
+
+                                            <img id="uploadedImage" src="" alt="Uploaded Image">
+                                        </div>
+
+                                    </div>
+                                    <i class="fa-regular fa-circle-xmark mememe" id="remove-img" alt="Remove image"></i>
+                                </div>
+                            </div>
+                            <div class="item-section-gen-second col-md-6 m-auto">
+                                <label for="exampleInputEmail1">Description</label>
+                                <div class="form-outline" style="border: 1px solid lightgray;border-radius:10px ">
+                                    <textarea class="form-control" placeholder="Enter Description Here"
+                                        name="description" id="textAreaExample1"
+                                        rows="6">{{product.description}}</textarea>
+                                    {{!-- <label class="form-label" for="textAreaExample">Description</label> --}}
+                                </div>
+                            </div>
+                            <div class="col-md-12 first-gen-section">
+                                <div class="row mt-3">
+                                    <div class="item-section-gen col-md-12">
+                                        <label for="exampleInputEmail1">Status</label>
+                                        <select class="form-select " name="status" aria-label="Default select example"
+                                            style="border-radius: 10px; padding-left: 40px;">
+                                            <option value="{{product.status}}">{{product.status}}</option>
+                                            <option value="Active">Active</option>
+                                            <option value="Inactive">Inactive</option>
+
+                                        </select>
+                                        <div class="icon-context input-field">
+                                            <i class="fa-solid fa-store icon-input"></i>
+                                        </div>
+
+                                    </div>
+                                    <div class="item-section-gen col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Weight</label>
+                                            <input type="text" class="form-control input-field"
+                                                id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                value="{{product.weight}}" name="weight"
+                                                placeholder="Enter Weight in kg">
+                                            <div class="icon-context">
+                                                <i class="fa-solid fa-user icons-short"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="item-section-gen col-md-12">
+                                        <label for="exampleInputEmail1">Tax Percentage</label>
+                                        <select class="form-select " name="tax" aria-label="Default select example"
+                                            style="border-radius: 10px; padding-left: 40px;" required>
+                                            <option value="{{taxPreviousValue.id}}">{{taxPreviousValue.Tax_percentage}}</option>
+                                            {{#each tax}}
+                                            <option value="{{id}}"> {{ Tax_percentage }} </option>
+                                            {{/each}}
+                                        </select>
+                                        <div class="icon-context input-field">
+                                            <i class="fa-solid fa-store icon-input"></i>
+                                        </div>
+
+                                    </div>
+                                    <div class="container btn-context" style="padding-left: 20px;">
+                                        <div class="row">
+                                            <div class="col-md-12 form-buttons p-0 m-0 d-flex">
+                                                <button class="button-15" role="button" type="submit"
+                                                    style="margin:10px">Save</button>
+
+                                                <button class="button-15" role="button" type="reset"
+                                                    style="margin:10px 0px">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </form>
+</body>
+
+
+
+{{!--
+<link rel="stylesheet" href="css/product.css"> --}}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script>
+    const uploadedImage = document.getElementById('uploadedImage');
+    const imageBox = document.getElementById('image-show');
+    const fileInput = document.querySelector('input[type="file"]');
+    const removeButton = document.getElementById('remove-img');
+
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        const imageUrl = URL.createObjectURL(file);
+        console.log(imageUrl);
+        uploadedImage.src = imageUrl;
+        imageBox.classList.add("image-box-opacity");
+    });
+
+    removeButton.addEventListener('click', () => {
+        uploadedImage.src = '';
+        fileInput.value = '';
+        imageBox.classList.remove("image-box-opacity");
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  // Function to populate the department dropdown based on the selected category
+  function populateDepartments() {
+    const categoryId = $('#categoryDropdown').val();
+    $.get(`/departments/${categoryId}`, function (departments) {
+      const departmentDropdown = $('#departmentDropdown');
+      departmentDropdown.empty();
+      departmentDropdown.append('<option value="">Select Department</option>');
+      departments.forEach(function (department) {
+        departmentDropdown.append(`<option value="${department.id}">${department.code_name}</option>`);
+      });
+    });
+  }
+
+  // Event listener for category dropdown
+  $('#categoryDropdown').change(populateDepartments);
+
+  // Function to populate the group dropdown based on the selected department
+  function populateGroups() {
+    const departmentId = $('#departmentDropdown').val();
+    $.get(`/groups/${departmentId}`, function (groups) {
+      const groupDropdown = $('#groupDropdown');
+      groupDropdown.empty();
+      groupDropdown.append('<option value="">Select Group</option>');
+      groups.forEach(function (group) {
+        groupDropdown.append(`<option value="${group.id}">${group.code_name}</option>`);
+      });
+    });
+  }
+
+  // Event listener for department dropdown
+  $('#departmentDropdown').change(populateGroups);
+
+  // Function to populate the item type dropdown based on the selected group
+  function populateItemTypes() {
+    const groupId = $('#groupDropdown').val();
+    $.get(`/itemTypes/${groupId}`, function (itemTypes) {
+      const itemTypeDropdown = $('#itemTypeDropdown');
+      itemTypeDropdown.empty();
+      itemTypeDropdown.append('<option value="">Select Item Type</option>');
+      itemTypes.forEach(function (itemType) {
+        itemTypeDropdown.append(`<option value="${itemType.id}">${itemType.code_name}</option>`);
+      });
+    });
+  }
+
+  // Event listener for group dropdown
+  $('#groupDropdown').change(populateItemTypes);
+</script>
+
+</html>

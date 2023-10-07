@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/newStyle.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        /* Light color for even rows */
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #ffff;
+        }
+
+        /* Dark color for odd rows */
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgb(244, 244, 247);
+        }
+
+        .breadcrumdiv {
+            margin-left: 4px;
+
+
+        }
+
+        ul.breadcrumb {
+
+            list-style: none;
+            padding-bottom: 5px;
+            padding-top: 15px;
+
+        }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 15px;
+        }
+
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: ">\00a0";
+        }
+
+          ul.breadcrumb li a {
+      color: #4f46e5;
+      text-decoration: none;
+    }
+      ul.breadcrumb li:last-child a {
+      color: #64748b;
+      /* Change the color to the grey color you prefer */
+
+    }
+        ul.breadcrumb li a:hover {
+
+            text-decoration: underline;
+        }
+
+        #line {
+            padding-bottom: 5px;
+            padding-right: 10px;
+            padding-left: 12px;
+            height: 40px;
+            /* Set the height of the container div */
+
+            display: flex;
+            align-items: center;
+            /* Vertically center the content */
+            justify-content: center;
+            /* Horizontally center the content */
+        }
+
+        #line-content {
+            /* font-size: 24px; /* Adjust the font size for the content */
+            /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+            background-color: #cbd5e1;
+            width: 1px;
+            height: 70%;
+        }
+
+    </style>
+
+</head>
+
+<body id="body-pd">
+   
+    {{>side}}
+    {{#if message}}
+    <div class="alert alert-info  opacity-0">{{message}}</div>
+    {{/if}}
+    {{#if message}}
+    <div class="alert alert-info">{{message}}</div>
+    {{/if}}
+    <div class="col-md-12 row-md-5 mx-0 main_container " style="padding-right:0px; margin-top:2px">
+        <div class="row-md-4 subtitle d-flex justify-content-between align-items-center" style="margin-top: 60px;" >
+
+ <div class="row-md-4 subtitle d-flex justify-content-start align-items-center w-75" style="margin-top: 5px;">
+             <div class="block">
+                <h4 class="flex-grow-1 " style="font-size: 29px     color: #1e293b;
+    font-weight: 800;">Product Master List
+            </div>
+                <div id="line">
+                    <span id="line-content"></span> <!-- Content inside the div -->
+                </div>
+               <div class="breadcrumdiv">
+        <ul class="breadcrumb">
+            <li><a href="#"> Home</a></li>
+            <li><a href="#">Master</a></li>
+            <li><a href="#">Product Master List</a></li>
+
+        </ul>
+    </div>
+            </div>
+           
+            <button type="button" class="btn btn-light btn-md  text-light h-25"
+                style="background-color: #ff9f43;font-weight:500"><a href="/product"
+                    style="text-decoration: none;color:white">+ Add New Product</a></button>
+        </div>
+
+        <div class="container  col-md-12 me-class" style="padding-right:24px">
+            <div class="input-group py-2">
+                <div class="form-inline d-flex">
+                </div>
+
+            </div>
+
+
+            <div class="container-table pt-2 p-0 mt-4 table-responsive">
+                <form style="overflow-x: hidden;">
+                    <table class="table table-custom" id="product_table">
+                        <thead>
+                            <tr>
+                                {{!-- <th scope="col ">Product ID</th> --}}
+                                <th scope="col ">Product Name</th>
+                                <th scope="col ">Description</th>
+                                <th scope="col ">Image</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+    {{!--
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script> --}}
+
+    {{!--
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script> --}}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+
+
+    <script>
+        $(document).ready(function () {
+
+            const dataTable = $('#product_table').DataTable({
+               /* language: {
+                    lengthMenu: '<span class="show-label">Show Entries</span> <span class="dataTables_select">MENU</span>'
+                }, */
+                'processing': true,
+                'serverSide': true,
+                'serverMethod': 'get',
+                'ajax': {
+                    'url': '/productsMasterList'
+                },
+                'aaSorting': [],
+                'columns': [
+                    { data: 'itemName' },
+                    { data: 'description' },
+                    {
+                        data: 'imageUrl',
+                        "render": function (data) {
+                            return `<img src="public/uploads/${data}"style="width:100px; height:100px"">`;
+                        }
+                    },
+                    {
+                        data: "itemId",
+                        'render': function (data, type, row) {
+                            return "<a href='/updateProduct/" + data + "'>EDIT</a>";
+                        }
+                    }
+                ]
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/newStyle.css">
+
+  <style>
+    .icons-short {
+      position: absolute;
+      left: 8%;
+      top: 50%;
+      color: gray;
+    }
+
+
+    .icons-icons {
+      position: absolute !important;
+      left: 1% !important;
+      bottom: 0% !important;
+      margin-bottom: 8px;
+      color: gray;
+
+    }
+
+    .input-field-second::placeholder {
+      position: relative !important;
+      padding-left: 25px !important;
+    }
+
+    .input-field::placeholder {
+
+      padding-left: 30px !important;
+    }
+
+    .input-field {
+      padding-left: 30px !important;
+      position: relative !important;
+    }
+
+    .breadcrumdiv {
+      margin-left: 4px;
+
+
+    }
+
+    ul.breadcrumb {
+
+      list-style: none;
+
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+
+    ul.breadcrumb li {
+      display: inline;
+      font-size: 15px;
+    }
+
+
+    ul.breadcrumb li:last-child a {
+      color: grey;
+      /* Change the color to the grey color you prefer */
+
+    }
+
+    ul.breadcrumb li+li:before {
+      padding: 8px;
+      color: black;
+      content: ">\00a0";
+    }
+
+    ul.breadcrumb li a {
+      color: #3019fa;
+      text-decoration: none;
+    }
+
+    ul.breadcrumb li a:hover {
+      color: #0808f0;
+      text-decoration: underline;
+    }
+
+    .shub-wrap {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    #line {
+      padding-bottom: 5px;
+      padding-right: 10px;
+      padding-left: 12px;
+      height: 40px;
+      /* Set the height of the container div */
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      /* Vertically center the content */
+      justify-content: center;
+      /* Horizontally center the content */
+    }
+
+    #line-content {
+      /* font-size: 24px; /* Adjust the font size for the content */
+      /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+      background-color: #cbd5e1;
+      width: 1px;
+      height: 70%;
+    }
+  </style>
+</head>
+
+<body>
+
+  {{>side}}
+  <div class="breadcrumdiv">
+    <ul class="breadcrumb m-0">
+      <li><i class="fa-solid fa-house"></i><a href="#"> Home</a></li>
+      <li><a href="#">Master</a></li>
+      <li><a href="#">Product Category Mapping</a></li>
+
+    </ul>
+  </div>
+  <div class="height-100 ">
+    {{#if message}}
+    <div class="alert alert-info">{{message}}</div>
+    {{/if}}
+    <div class="store   col-md-12 " style="display: flex;justify-content:space-between;margin-top:20px">
+      <div class="shub-wrap col-md-10">
+        <div class="cross-section">
+          <h3 class="m-0" style="font-size: 24px;">Product Category Mapping</h3>
+        </div>
+        <div id="line">
+          <span id="line-content"></span> <!-- Content inside the div -->
+        </div>
+        <div class="breadcrumdiv">
+          <ul class="breadcrumb m-0">
+            <li><a href="#"> Home</a></li>
+            <li><a href="#">Master</a></li>
+            <li><a href="#">Product Category Mapping</a></li>
+
+          </ul>
+        </div>
+      </div>
+
+      {{!-- <a href="/productDetailsList" style="text-decoration: none;margin:auto 20px"> <i
+          class="fa fa-xmark text-dark fa-2x"></i></a> --}}
+    </div>
+    <div class="col-md-6 main-table-data container main-table-box">
+      <form action="/productCategoryMapping" method="post" class="form-form">
+        <div class="form-group py-2">
+          <div class="col-md-12 title-title">
+            <h3 class="pt-4 h4-title">Product Category </h3>
+          </div>
+          <label for="exampleFormControlSelect1">Store</label>
+          <select class="form-control input-field  " name="outletId" id="exampleFormControlSelect1">
+            <option >Select Store</option>
+            {{#each store}}
+            <option value="{{outletId}}"> {{ storeName }} </option>
+            {{/each}}
+          </select>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-store icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlSelect1">Product</label>
+          <select class="form-control input-field" name="itemId" id="exampleFormControlSelect1" required>
+            <option value="" disabled selected>Select Product</option>
+            {{#each product}}
+            <option value="{{itemId}}"> {{ itemName }} </option>
+            {{/each}}
+          </select>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-box icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlSelect1">Category 1</label>
+          <select class="form-control input-field" name="cat1" id="exampleFormControlSelect1" required>
+            <option value="" disabled selected>Select Category</option>
+            {{#each category}}
+            <option value="{{shortDescription}}"> {{ shortDescription }} </option>
+            {{/each}}
+          </select>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-layer-group icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlSelect1">Category 2</label>
+          <select class="form-control input-field " name="cat2" id="exampleFormControlSelect1" required>
+            <option value="" disabled selected>Select Category</option>
+            {{#each category}}
+            <option value="{{longDescription}}"> {{ longDescription }} </option>
+            {{/each}}
+          </select>
+            <div class="icon-context input-field">
+            <i class="fa-solid fa-layer-group icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="applied_to_all" name="store_selection"
+            id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Applied to all Stores
+          </label>
+        </div>
+        <div class="container" style="padding: 20px 0px;">
+          <div class="row">
+            <div class="col-md-12 form-buttons p-0 m-0 d-flex">
+              <button class="button-15" role="button" type="submit" style="margin:10px">Save</button>
+
+              <button class="button-15" role="button" type="reset" style="margin:10px 0px">Cancel</button>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+
+</html>

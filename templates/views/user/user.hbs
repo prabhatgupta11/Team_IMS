@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/newStyle.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* hide input field up down button*/
+    input::-webkit-inner-spin-button,
+    input::-webkit-outer-spin-button {
+      appearance: none;
+      margin: 0px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .icons-short {
+      position: absolute;
+      left: 8%;
+      top: 50%;
+      color: gray;
+    }
+
+    .pra-pra {
+      -webkit-text-stroke: thin;
+      font-size: 1.4rem;
+      line-height: 2rem;
+      color: #1e293b;
+      font-weight: 500 !important;
+    }
+
+
+
+    .icons-icons {
+      position: absolute !important;
+      left: 1% !important;
+      bottom: 0% !important;
+      margin-bottom: 8px;
+      color: gray;
+
+    }
+
+    .input-field-second::placeholder {
+      position: relative !important;
+      padding-left: 25px !important;
+    }
+
+    .input-field::placeholder {
+
+      padding-left: 30px !important;
+    }
+
+    .input-field {
+      padding-left: 30px !important;
+      position: relative !important;
+    }
+
+    .input-field::placeholder {
+      padding-left: 0px !important;
+    }
+
+    .input-field-second {
+      padding-left: 25px !important;
+
+    }
+
+    .breadcrumdiv {
+      margin-left: 4px;
+
+
+    }
+
+    ul.breadcrumb {
+
+      list-style: none;
+
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+
+    ul.breadcrumb li {
+      display: inline;
+      font-size: 18px;
+    }
+
+    ul.breadcrumb li+li:before {
+      padding: 8px;
+      color: black;
+      content: ">\00a0";
+    }
+
+    ul.breadcrumb li a {
+      color: #3019fa;
+      text-decoration: none;
+    }
+
+    ul.breadcrumb li a:hover {
+      color: #0808f0;
+      text-decoration: underline;
+    }
+
+    /* Light color for even rows */
+    .table-custom tbody tr:nth-child(even) {
+      background-color: #ffff;
+    }
+
+    /* Dark color for odd rows */
+    .table-custom tbody tr:nth-child(odd) {
+      background-color: rgb(244, 244, 247);
+    }
+
+    .breadcrumdiv {
+      margin-left: 4px;
+
+
+    }
+
+    ul.breadcrumb {
+
+      list-style: none;
+      padding-bottom: 5px;
+      padding-top: 15px;
+
+    }
+
+    ul.breadcrumb li {
+      display: inline;
+      font-size: 15px;
+    }
+
+
+    ul.breadcrumb li:last-child a {
+      color: grey;
+      /* Change the color to the grey color you prefer */
+
+    }
+
+    ul.breadcrumb li+li:before {
+      padding: 8px;
+      color: black;
+      content: ">\00a0";
+    }
+
+    ul.breadcrumb li a {
+      color: #3019fa;
+      text-decoration: none;
+    }
+
+    ul.breadcrumb li a:hover {
+
+      text-decoration: underline;
+    }
+
+    #line {
+      padding-bottom: 5px;
+      padding-right: 10px;
+      padding-left: 12px;
+      height: 40px;
+      /* Set the height of the container div */
+
+      display: flex;
+      align-items: center;
+      /* Vertically center the content */
+      justify-content: center;
+      /* Horizontally center the content */
+    }
+
+    #line-content {
+      /* font-size: 24px; /* Adjust the font size for the content */
+      /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+      background-color: #cbd5e1;
+      width: 1px;
+      height: 70%;
+    }
+
+    ul.breadcrumb li:last-child a {
+      color: grey;
+      /* Change the color to the grey color you prefer */
+
+    }
+  </style>
+</head>
+
+<body>
+  {{>side}}
+  <div class="height-100 ">
+    <h3 class="pt-4">Add User</h3>
+    {{#if message}}
+    <div class="alert alert-info">{{message}}</div>
+    {{/if}}
+    <div class="store   col-md-12 pt-3" style="display: flex;justify-content:space-between">
+      {{!-- <div class="cross-section">
+        <h3>Create User</h3>
+      </div> --}}
+      <div class="me-two d-flex justify-content-center align-items-center">
+        <div class="block">
+          <h4 class="flex-grow-1 listtocon " style="font-size: 24px; margin-top:0px;">Create User
+        </div>
+        <div id="line">
+          <span id="line-content"></span> <!-- Content inside the div -->
+        </div>
+        <div class="breadcrumdiv">
+          <ul class="breadcrumb">
+            <li><a href="#"> Home</a></li>
+            <li><a href="#">Master</a></li>
+            <li><a href="#">Create User</a></li>
+
+          </ul>
+        </div>
+
+      </div>
+
+
+      <a href="/userList" style="text-decoration: none;margin-right:20px margin-top=" 25px";"> <i
+          class="fa fa-xmark text-dark fa-2x"></i></a>
+    </div>
+
+    <form action="/createUser" method="post" class="form-form">
+      <div class="col-md-6 main-table-data container main-table-box" style="margin-top:8px;">
+        <div class="col-md-12 title-title">
+          <h3 class="pt-4 h4-title">Add User Details</h3>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">First Name<span class="text-danger">*</span></label>
+             <input class="form-control input-field" placeholder="Enter Your First Name" name="firstName"
+        id="firstName" required oninput ="AlphabateValidate(this)">
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-user icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Last Name<span class="text-danger">*</span></label>
+          <input class="form-control input-field" placeholder="Enter Your Last Name " name="lastName"
+            id="exampleFormControlTextarea1" oninput ="AlphabateValidate(this)" required></input>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-user icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Email<span class="text-danger">*</span></label>
+          <input class="form-control input-field" type="email" placeholder="Enter Your Email " name="email"
+            id="exampleFormControlTextarea1" oninput="EmailValidate(this)" required></input>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-envelope icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Mobile Number<span class="text-danger">*</span></label>
+          <input class="form-control input-field" type="number" placeholder="Enter Your Number " name="mobileNumber"
+            id="mobileNo" required oninput="MobileValidate(this)"></input>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-phone icons-icons"></i>
+          </div>
+        </div>
+<div class="form-group py-2 relative">
+            <span id="eye" class="form-group"><i class="fa-solid fa-eye-slash" style="position:relative; top:25px; z-index:99"></i></span>
+          <label for="exampleFormControlTextarea1">Password<span class="text-danger">*</span></label>
+          <input class="form-control input-field pass-field" type="password" placeholder="Enter Your Password " name="password"
+            id="exampleFormControlTextarea1" required></input>
+           
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-lock icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+
+          <label for="exampleFormControlSelect1">Role<span class="text-danger">*</span></label>
+          <select id="roleSelect" name="role" class="form-control input-field" style="padding-left:30px !important"
+            required>
+            <option value="" disabled selected>Select Role</option>
+            <option value="super admin">Super Admin</option>
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+          </select>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-pencil icons-icons"></i>
+          </div>
+
+        </div>
+        <div class="form-group py-2">
+
+          <label for="exampleFormControlSelect1">Manager<span class="text-danger">*</span></label>
+          <select id="managerSelect" name="managerFk" class="form-control ">
+            {{!-- {{#each user}}
+            <option>Select Manager</option>
+            <option value="id">{{ email }}</option>
+            {{/each}} --}}
+          </select>
+        </div>
+        <div class="form-group py-2 ">
+          <label class="formlabel fw-bold" style="display: block;">Select Store<span class="text-danger">*</span></label>
+          <div class="md-form mb-4  active-pink-textarea-2" style="display: inherit;" id="storeList">
+          </div>
+
+        </div>
+        <div class="container" style="padding: 20px 0px;">
+          <div class="row">
+            <div class="col-md-12 form-buttons p-0 m-0 d-flex">
+              <button class="button-15" role="button" type="submit" style="margin:10px">Save</button>
+
+              <button class="button-15" role="button" type="reset" style="margin:10px 0px">Reset</button>
+            </div>
+
+          </div>
+        </div>
+    </form>
+  </div>
+
+
+  </div>
+</body>
+
+<script>
+  // Password Eye Code for hide and unhide
+  const EyeButton =()=>{
+  const eye = document.getElementById('eye')
+  const eyeinput = document.querySelector('.pass-field')
+  eye.addEventListener('click',()=>{
+    if(eyeinput.value !== ''){
+      if(eyeinput.getAttribute('type') === 'password'){
+      eyeinput.setAttribute('type','text')
+      eye.childNodes[0].classList.remove("fa-eye-slash")
+      eye.childNodes[0].classList.add("fa-eye")
+   }
+   else{
+    eyeinput.setAttribute('type','password');
+    eye.childNodes[0].classList.add("fa-eye-slash")
+    eye.childNodes[0].classList.remove("fa-eye")
+   }
+  
+    }
+   
+  })
+}
+EyeButton()
+</script>
+
+
+
+
+
+<script>
+
+  // Contact Number Validations
+
+ function MobileValidate(inputElement) {
+// Check only 10 digit number validation
+     inputElement.addEventListener('input',()=>{
+     const maxlength = 10;
+    let input = inputElement.value;
+    if(input.length > maxlength){
+      inputval = input.slice(0,maxlength)
+      inputElement.value =inputval
+    }
+   })
+   //check pattern
+    if (/^[9876]\d{10}$/.test(inputElement.value)) {
+        inputElement.setCustomValidity('');
+    } else {
+        inputElement.setCustomValidity("Please Enter a Valid Mobile Number");
+    }
+
+    inputElement.addEventListener('blur', () => {
+        if (!/^[9876]\d{10}$/.test(inputElement.value)) {
+            inputElement.reportValidity();
+        }
+    });
+
+    
+}
+
+// Only Text Input Validation
+ function AlphabateValidate(inputElement) {
+    if (/^[a-zA-Z]+$/.test(inputElement.value)) {
+        inputElement.setCustomValidity('');
+    } else {
+        inputElement.setCustomValidity("Please Enter a Valid Name");
+    }
+
+    inputElement.addEventListener('blur', () => {
+        if (!/^[9876]\d{9}$/.test(inputElement.value)) {
+            inputElement.reportValidity();
+        }
+    });
+}
+
+// Email Input Validation
+ function EmailValidate(inputElement) {
+    if (/^^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputElement.value)) {
+        inputElement.setCustomValidity('');
+    } else {
+        inputElement.setCustomValidity("Please Enter a Valid Email Address");
+    }
+
+    inputElement.addEventListener('blur', () => {
+        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputElement.value)) {
+            inputElement.reportValidity();
+        }
+    });
+}
+
+
+</script>
+
+
+
+
+
+{{!--
+<script>
+  const roleSelect = document.getElementById('roleSelect');
+  const managerSelect = document.getElementById('managerSelect');
+  const storeList = document.getElementById('storeList');
+
+  roleSelect.addEventListener('change', () => {
+    const selectedRole = roleSelect.value;
+
+    if (selectedRole === 'super admin') {
+      // Hide the manager select
+      managerSelect.style.display = 'none';
+    } else if (selectedRole === 'admin') {
+      // Populate manager options with superadmin emails
+      managerSelect.style.display = 'block'; // Show the manager select
+      managerSelect.innerHTML = `
+        <option value="">Select Manager</option>
+        {{#each user}}
+          {{#ifEquals role "super admin"}}
+            <option value="{{ id }}">{{ email }}</option>
+          {{/ifEquals}}
+        {{/each}}
+      `;
+    } else if (selectedRole === 'user') {
+      // Populate manager options with admin emails
+      managerSelect.style.display = 'block'; // Show the manager select
+      managerSelect.innerHTML = `
+        <option value="">Select Manager</option>
+        {{#each user}}
+          {{#ifEquals role "admin"}}
+            <option value="{{ id }}">{{ email }}</option>
+          {{/ifEquals}}
+        {{/each}}
+      `;
+    }
+  });
+</script> --}}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+
+  $(document).ready(function () {
+    const roleSelect = $('#roleSelect');
+    const managerSelect = $('#managerSelect');
+    const storeList = $('#storeList');
+
+    roleSelect.on('change', function () {
+      const selectedRole = roleSelect.val();
+
+      if (selectedRole === 'super admin') {
+        // Hide the manager select
+        managerSelect.hide();
+
+        // Clear the store list when changing roles
+        storeList.empty();
+
+        // Populate all stores with checked checkboxes
+        populateAllStores(true);
+      } else if (selectedRole === 'admin' || selectedRole === 'user') {
+        // Show the manager select
+        managerSelect.show();
+
+        // Clear the store list when changing roles
+        storeList.empty();
+
+        if (selectedRole === 'admin') {
+          // Populate manager options with super admin emails for the "admin" role
+          populateManagerOptions('super admin');
+        } else if (selectedRole === 'user') {
+          // Populate manager options with admin emails for the "user" role
+          populateManagerOptions('admin');
+        }
+      }
+    });
+
+    managerSelect.on('change', function () {
+      const userId = managerSelect.val();
+
+      // Use an API endpoint to fetch the user's selected stores based on userId
+      $.get(`/getSelectedStores/${userId}`, function (selectedStores) {
+        // Clear the previous content in #storeList
+        storeList.empty();
+
+        // Loop through the selectedStores and create checkboxes with labels
+        selectedStores.forEach(function (data) {
+          const checkbox = $('<input>').prop({
+            id: 'myCheckBox_' + data.outletId,
+            name: 'outletId',
+            value: data.outletId,
+            type: 'checkbox',
+            checked: data.checked,
+          });
+
+          checkbox.on('change', function () {
+            const isChecked = $(this).prop('checked');
+            if (!isChecked) {
+              // Handle deselection here
+              // Remove the store from the user's selection on the server-side
+              $.post(`/deselectStore/${userId}/${data.outletId}`, function (response) {
+                console.log(response);
+              });
+            }
+          });
+
+          const label = $('<label>').prop({
+            for: 'myCheckBox_' + data.outletId,
+          }).html(data.storeName);
+
+          storeList.append(checkbox)
+            .append(label)
+            .append($('<br>'));
+        });
+      });
+    });
+
+    // Function to populate manager options based on role
+    function populateManagerOptions(role) {
+      // Use an API endpoint to fetch the managers based on role
+      $.get(`/getManagers/${role}`, function (managers) {
+        managerSelect.empty();
+        managerSelect.append($('<option>').val('-1').text('Select Manager'));
+
+        managers.forEach(function (manager) {
+          managerSelect.append($('<option>').val(manager.id).text(manager.email));
+        });
+      });
+    }
+
+    // Function to populate all stores with checkboxes
+    function populateAllStores(checked) {
+      // Use an API endpoint to fetch all stores
+      $.get('/getAllStores', function (stores) {
+        storeList.empty();
+
+        stores.forEach(function (store) {
+          const checkbox = $('<input>').prop({
+            id: 'myCheckBox_' + store.outletId,
+            name: 'outletId',
+            value: store.outletId,
+            type: 'checkbox',
+            checked: checked,
+          });
+
+          checkbox.on('change', function () {
+            const isChecked = $(this).prop('checked');
+            if (!isChecked) {
+              // Handle deselection here
+              // Remove the store from the user's selection on the server-side
+              $.post(`/deselectStore/${userId}/${store.outletId}`, function (response) {
+                console.log(response);
+              });
+            }
+          });
+
+          const label = $('<label>').prop({
+            for: 'myCheckBox_' + store.outletId,
+          }).html(store.storeName);
+
+          storeList.append(checkbox)
+            .append(label)
+            .append($('<br>'));
+        });
+      });
+    }
+  });
+</script>
+
+
+
+</html>

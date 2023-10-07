@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/newStyle.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+   <style>
+        /* Light color for even rows */
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #ffff;
+        }
+
+        /* Dark color for odd rows */
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgb(244, 244, 247);
+        }
+
+        .breadcrumdiv {
+            margin-left: 4px;
+
+
+        }
+
+        ul.breadcrumb {
+
+            list-style: none;
+            padding-top: 25px;
+        
+
+        }
+     ul.breadcrumb li {
+            display: inline;
+            font-size: 15px;
+        }
+
+        
+        ul.breadcrumb li:last-child a {
+    color: grey; /* Change the color to the grey color you prefer */
+   
+}
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: ">\00a0";
+        }
+
+        ul.breadcrumb li a {
+      color: #4f46e5;
+      text-decoration: none;
+    }
+      ul.breadcrumb li:last-child a {
+      color: #64748b;
+      /* Change the color to the grey color you prefer */
+
+    }
+
+        ul.breadcrumb li a:hover {
+
+            text-decoration: underline;
+        }
+
+        #line {
+            padding-bottom: 5px;
+            padding-right: 10px;
+            padding-left: 12px;
+            height: 40px;
+            /* Set the height of the container div */
+    margin-top: 15px;
+            display: flex;
+            align-items: center;
+            /* Vertically center the content */
+            justify-content: center;
+            /* Horizontally center the content */
+        }
+
+        #line-content {
+            /* font-size: 24px; /* Adjust the font size for the content */
+            /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+            background-color: #cbd5e1;
+            width: 1px;
+            height: 70%;
+        }
+    </style>
+</head>
+
+<body id="body-pd">
+  
+  
+  {{>side}}
+  {{#if message}}
+      <div class="alert alert-info opacity-0">{{message}}</div>
+      {{/if}}
+      {{#if message}}
+      <div class="alert alert-info">{{message}}</div>
+      {{/if}}
+  <form action="/manufacturerApprovalList" method="get">
+  <div class="col-md-12 row-md-5 mx-0 main_container " style="padding-right:0px; margin-top:2px">
+
+            <div class="row-md-4 subtitle d-flex justify-content-between align-items-center" style="margin-top: 50px;">
+      
+ 
+         <div class="row-md-4 subtitle d-flex justify-content-start align-items-center w-75" style="margin-top: 0px;">
+              <div class="block">
+        <h4 class="flex-grow-1 listtocon " style="font-size: 24px;">Manufacturer Approval List
+      </div>
+                <div id="line">
+                    <span id="line-content"></span> <!-- Content inside the div -->
+                </div>
+          <div class="breadcrumdiv">
+        <ul class="breadcrumb">
+       <li><a href="#" > Home</a></li>
+        <li><a href="#">Approval</a></li>
+        <li><a href="#">Manufacturer Approval List</a></li>
+         
+      </ul>
+    </div>
+            </div>
+     
+     <div>
+    {{!-- <button type="button" class="btn btn-light btn-md  text-light h-25"
+        style="background-color: #ff9f43;font-weight:500"><a href="/storeMaster"
+          style="text-decoration: none;color:white">+ Add New Store</a></button> --}}
+     </div>
+  
+    </div>
+  
+    {{!-- <div class="row-md-4 subtitle d-flex justify-content-between my-4 align-items-center">
+      {{#if message}}
+      <div class="alert alert-info">{{message}}</div>
+      {{/if}}
+    
+      <button type="button" class="btn btn-light btn-md  text-light h-25"
+        style="background-color: #ff9f43;font-weight:500"><a href="/storeMaster"
+          style="text-decoration: none;color:white">+ Add New Store</a></button>
+    </div> --}}
+
+    <div class="container me-class col-md-12" style="padding-right:24px">
+      <div class="input-group py-2">
+        <div class="form-inline d-flex">
+          {{!-- <i class="fa-solid fa-filter d-flex justify-content-center align-items-center"
+            style="font-size: 24px;color:orange"></i> --}}
+          {{!-- <div class="form-outline">
+            <input id="search-input" type="search" id="form1" name="form1" class="form-control border text-dark"
+              placeholder="Search..." style="border-radius: 20px 0 0 20px;" />
+          </div> --}}
+          {{!-- <button id="search-button" type="submit" class="btn btn-dark" style="border-radius: 0 20px 20px 0;">
+            <i class="fas fa-search "></i>
+          </button> --}}
+        </div>
+
+      </div>
+
+
+      <div class="container-table pt-2 p-0 table-responsive">
+        <form style="overflow-x: hidden;">
+          <h4 class="h4-title p-0 pb-4">Approval List</h4>
+          <table class="table table-custom" id="store_table" style="width:100%">
+            
+            <div class="md-form col-md-3 active-pink-textarea-2 d-flex" style="width: 40%;">
+              <label for="approvalStatus" class="formlabel col-md-4" style="white-space: nowrap;">Approval Status</label>
+              <select id="approvalStatus" name="approvalStatus" class="form-control">
+                <option value="">Select</option>
+                <option value="pending" {{#isEqual approvalStatus "pending" }}selected{{/isEqual}}>Pending</option>
+                <option value="approved" {{#isEqual approvalStatus "approved" }}selected{{/isEqual}}>Approved</option>
+                <option value="rejected" {{#isEqual approvalStatus "rejected" }}selected{{/isEqual}}>Rejected</option>
+              </select>
+            </div>
+
+            <thead>
+              <tr>
+                <th>Manufacturer Name</th>
+                <th>Status</th>
+                <th>Select</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each manufacturer}}
+              <tr>
+                <td>{{this.shortDescription}}</td>
+                <td>{{this.approve_b}}</td>
+                <td><input type="checkbox" name="selectedManufacturers" value="{{this.manufacturerId}}"></td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          <div class="col-md-12 form-buttons p-0 m-0 d-flex  align-items-center" style="gap: 10px;">
+                       <button class="button-15" role="button" type="submit" style="margin:10px 0px">Get List</button>
+            <button class="button-15" id="approveButton" role="button" type="submit" style="margin:10px 0px">Approved</button>
+            <button class="button-15" id="rejectButton" role="button" type="submit"  >Rejected</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+  <!-- Add this script within the <head> section or just before the closing </body> tag -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const approveButton = document.querySelector('#approveButton');
+      const rejectButton = document.querySelector('#rejectButton');
+
+      approveButton.addEventListener('click', function (event) {
+       // event.preventDefault();
+        performAction('approved');
+      });
+
+      rejectButton.addEventListener('click', function (event) {
+       // event.preventDefault();
+        performAction('rejected');
+      });
+
+      function performAction(action) {
+        const selectedCheckboxes = document.querySelectorAll('input[name="selectedManufacturers"]:checked');
+        const selectedManufacturerIds = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
+   //console.log(selectedStoreIds)
+        // Now you can send the selectedStoreIds to your server using AJAX or a form submission
+        // Include the action and selectedStoreIds in the request to update the approval status
+
+        // For example, using fetch to send the data to the server:
+        fetch('/updateManufacturerApprovalStatus', {
+          method: 'POST',
+          body: JSON.stringify({ action, selectedManufacturerIds }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(data => {
+            // Handle the response from the server, maybe show a success message
+        console.log(data)
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      }
+    });
+  </script>
+
+</form>
+</body >
+
+</html >

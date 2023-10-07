@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/newStyle.css">
+  <title>Supplier Master</title>
+  <link rel="stylesheet" href="css/order.css">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <style>
+    body {
+      background-color: rgb(244, 244, 247) !important;
+    }
+
+    .sup-int[type='text'] {
+      padding-left: 30px;
+    }
+
+    .table-custom tbody tr:nth-child(even) {
+      background-color: #ffff;
+    }
+
+
+    /* Dark color for odd rows */
+    .table-custom tbody tr:nth-child(odd) {
+      background-color: rgb(244, 244, 247);
+    }
+
+    .tr-head th {
+      text-align: center;
+    }
+
+    .breadcrumdiv {
+      margin-left: 4px;
+      margin-top: 0px;
+
+    }
+
+    ul.breadcrumb {
+
+      list-style: none;
+
+      padding-top: 15px;
+
+    }
+
+    ul.breadcrumb li {
+      display: inline;
+      font-size: 15px;
+    }
+
+    ul.breadcrumb li+li:before {
+      padding: 8px;
+      color: black;
+      content: ">\00a0";
+    }
+
+    ul.breadcrumb li a {
+      color: #4f46e5;
+      text-decoration: none;
+
+    }
+
+    ul.breadcrumb li a:hover {
+      color: #0808f0;
+      text-decoration: underline;
+    }
+
+    #formdata {
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+      width: 60%;
+      padding: 8px 20px 18px 20px;
+      background-color: white;
+
+
+    }
+
+    #formdata h5 {
+      padding-top: 30px;
+
+    }
+
+    #billing-form h1 {
+      text-align: left;
+      font-size: 29px;
+    }
+
+    /* Media query for mobile devices */
+    @media (max-width: 576px) {
+      .breadcrumdiv {
+        margin-top: 30px;
+      }
+
+      ul.breadcrumb li {
+        font-size: 14px;
+      }
+
+      #formdata {
+
+        width: 100%;
+
+      }
+
+      .input-field::placeholder {
+
+        padding-left: 30px !important;
+      }
+
+      .input-field {
+        padding-left: 30px !important;
+        position: relative !important;
+      }
+
+      input::-webkit-inner-spin-button,
+      input::-webkit-outer-spin-button {
+        appearance: none;
+        margin: 0px;
+      }
+
+
+      /* Add more mobile-specific styles here */
+    }
+
+    #line {
+      padding-bottom: 5px;
+      padding-right: 10px;
+      padding-left: 12px;
+      height: 40px;
+      /* Set the height of the container div */
+
+      display: flex;
+      align-items: center;
+      /* Vertically center the content */
+      justify-content: center;
+      /* Horizontally center the content */
+    }
+
+    #line-content {
+      /* font-size: 24px; /* Adjust the font size for the content */
+      /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+      background-color: #cbd5e1;
+      width: 1px;
+      height: 70%;
+    }
+
+    ul.breadcrumb li:last-child a {
+      color: grey;
+      /* Change the color to the grey color you prefer */
+
+    }
+  </style>
+</head>
+
+<body id="body-pd">
+
+  {{>side}}
+  <div class=" m-0" style="padding: 10px;">
+
+    <div class="col-md-12 subtitle d-flex justify-content-between align-items-center w-100"
+      style="margin-top: 50px;     padding-bottom: 0px;">
+
+      <div class="me-two d-flex justify-content-center align-items-center">
+
+        <div class="block">
+          <h4 class="flex-grow-1 listtocon " style="font-size: 24px; margin-top:0px ;  margin-bottom: 18px;">Supplier
+            Master
+        </div>
+        <div id="line">
+          <span id="line-content"></span> <!-- Content inside the div -->
+        </div>
+        <div class="breadcrumdiv">
+          <ul class="breadcrumb">
+            <li><a href="#"> Home</a></li>
+            <li><a href="#">Master</a></li>
+            <li><a href="#">Supplier Master</a></li>
+
+          </ul>
+        </div>
+      </div>
+
+      {{!-- <a href="/supplierMasterList" style="text-decoration: none;margin-right:20px ;margin-top: 25px;"> <i
+          class="fa fa-xmark text-dark fa-2x"></i></a> --}}
+      <a href="/suppliersMasterList" style="text-decoration: none;margin-right:20px ;margin-top: 25px;"> <i
+          class="fa fa-xmark text-dark fa-2x"></i></a>
+    </div>
+  </div>
+  <div>
+     {{#if message}}
+      <div class="alert alert-info">{{message}}</div>
+      {{/if}}
+
+
+    <form id="supplierForm" action="/createSuplierdata" method="post">
+
+      <div id="formdata">
+        <h4>Supplier Details</h4>
+
+         <label for="store">Store  <span class="text-danger">*</span></label>
+        <div class="cons" style="position: relative;">
+          <div class="icon-context input-field" style="position: absolute; top:8px;left:10px ">
+            <i class="fa-solid fa-store icons-icons" style="font-size: 15px;"></i>
+          </div>
+
+          <select name="outletId" id="store" class="store-select" style="padding-left: 30px;font-size:14px" required>
+               {{!-- <option value="" disabled selected> Select Store</option> --}}
+            <option value=""> Select Store</option>
+            {{#each store}}
+            <option value='{{outletId}}'>{{storeName}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+
+        <label for="Code" class="label-block">Code :</label>
+        <div class="sup-containe" style="position: relative;">
+          <input type="text" id="Code" name="Code" class="sup-int" placeholder="Enter Supplier Code" />
+          <div class="sup-icon" style="position:absolute; left:10px;top:15%">
+            <i style='font-size:12px' class='fas'>&#xf121;</i>
+          </div>
+        </div>
+    
+        
+
+        <label for="Name" class="label-block">Name <span class="text-danger">*</span> :</label>
+        <input type="text" id="Name" name="Name" placeholder="&#128100; Enter Supplier Name" required 
+          title="Please enter only letters"/>
+
+        <label for="ContactPersonName" class="label-block">Contact Person Name:</label>
+        <input type="text" id="ContactPersonName" name="ContactPersonName" placeholder="&#128100; Enter Contact Person"
+          pattern="[A-Za-z ]+" title="Please enter only letters" />
+
+
+
+
+        <label for="ContactNo">Contact No <span class="text-danger">*</span> :</label>
+        <input type="number" id="ContactNo" name="ContactNo" placeholder="&#x260E; Enter Contact Number" required
+          maxlength="20" title="Please enter a 10-digit phone number"
+          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+
+        <label for="AadharNo">Aadhar No:</label>
+        <input type="number" id="AadharNo" name="AadharNo" placeholder="&#9751;  Enter Aadhar Number"
+          title="Please enter a 12-digit Aadhar Number" maxlength="12"
+          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+
+
+
+
+        <label for="Pincode">Pincode:</label>
+        <input type="number" id="Pincode" name="Pincode" placeholder="&#9951;  Enter Pincode" maxlength="6"
+          title="Please enter a 6-digit Pin Code Number"
+          oninput="javascript : if(this.value > this.maxLength) this.value = this.value.slice(0,this.maxLength)" />
+
+
+
+
+        <label for="Email">Email <span class="text-danger">*</span> :</label>
+        <input type="email" id="Email" name="Email" placeholder="&#x2709;  Enter Email" required />
+
+        <label for="GSTNo">GST No:</label>
+        <input type="text" id="GSTNo" name="GSTNo" placeholder="&#9951; Enter GST No."
+          oninput="convertToUpperCase(this)" minlength="15" maxlength="15" title="Please enter a 15-digit GST Number" />
+
+
+
+        <label for="PAN">PAN:</label>
+        <input type="text" id="PAN" name="PAN" placeholder="&#9751; Enter PAN" oninput="convertToUpperCase(this)"
+          minlength="10" maxlength="10" title="Please enter a 10-digit PAN Number" />
+
+
+        <label for="CreditLimit">Credit Limit:</label>
+        <input type="number" id="CreditLimit" name="CreditLimit" placeholder="Enter Credit Limit" />
+
+        <label for="CreditDays">Credit Days:</label>
+        <input type="number" id="CreditDays" name="CreditDays" placeholder="Enter Credit Days" />
+
+
+        <label for="Status" class="label-block">Status:</label>
+        <select id="Status" name="Status">
+          <option value="Active" selected>Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+
+        <label for="Address">Address:</label>
+        <div>
+          <textarea id="Address" name="Address" rows="4" placeholder="Enter Address" cols="72"
+            style="width: 100%;"></textarea><br><br>
+        </div>
+      </div>
+
+  </div>
+  </div>
+
+  <button type="submit"
+    style="border-radius: 10px; margin-top:30px; margin-bottom:30px; background-color:#4723d9;">Submit</button>
+
+  </form>
+
+
+
+  </div>
+
+
+
+
+</body>
+<script>
+
+
+
+  document.getElementById("CreditLimit").value = 0;
+  // validation 
+  // Convert into upper case
+  function convertToUpperCase(input) {
+    input.value = input.value.toUpperCase();
+  }
+
+  // Validation for contact number 
+  const contactNoValidation = document.getElementById('ContactNo');
+  contactNoValidation.addEventListener('input', () => {
+    const contactNoValue = contactNoValidation.value;
+    if (/^[9876]\d{9}$/.test(contactNoValue)) {
+      contactNoValidation.setCustomValidity('');
+    } else {
+      contactNoValidation.setCustomValidity('Please enter a valid 10-digit contact number');
+    }
+  });
+
+
+
+
+  const addhar = document.getElementById('AadharNo');
+
+  addhar.addEventListener('input', function () {
+    const addharval = addhar.value;
+    if (/^[0-9]{12}$/.test(addharval)) {
+      addhar.setCustomValidity("");
+    } else {
+      addhar.setCustomValidity("Please enter a valid 12-digit Aadhar Number");
+    }
+  });
+
+
+
+  // PAN number validation 
+  const panNoValidation = document.getElementById('PAN');
+
+  panNoValidation.addEventListener('input', () => {
+    const validPanNo = /^[A-Z]{5}[0-9]{4}[A-Z]$/.test(panNoValidation.value);
+
+    if (validPanNo) {
+      panNoValidation.setCustomValidity('');
+    } else {
+      panNoValidation.setCustomValidity('Please enter a valid PAN number');
+    }
+  });
+
+
+
+  // GST number validation 
+  const gstNoValidation = document.getElementById('GSTNo');
+
+  gstNoValidation.addEventListener('input', () => {
+    const validGstNo = /^(\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[Z]{1}[A-Z\d]{1})$/.test(gstNoValidation.value);
+
+    if (validGstNo) {
+      gstNoValidation.setCustomValidity('');
+    } else {
+      gstNoValidation.setCustomValidity('Please enter a valid GST number');
+    }
+  });
+
+</script>
+
+</html>

@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/public/css/newStyle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update User</title>
+    <style>
+        /* Light color for even rows */
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #ffff;
+        }
+
+        /* Dark color for odd rows */
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgb(244, 244, 247);
+        }
+
+        .breadcrumdiv {
+            margin-left: 4px;
+
+
+        }
+
+        ul.breadcrumb {
+
+            list-style: none;
+            padding-bottom: 5px;
+            padding-top: 15px;
+
+        }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 15px;
+        }
+
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: ">\00a0";
+        }
+
+        ul.breadcrumb li a {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+
+        ul.breadcrumb li:last-child a {
+            color: #64748b;
+            /* Change the color to the grey color you prefer */
+
+        }
+
+        ul.breadcrumb li a:hover {
+
+            text-decoration: underline;
+        }
+
+        #line {
+            padding-bottom: 5px;
+            padding-right: 10px;
+            padding-left: 12px;
+            height: 40px;
+            /* Set the height of the container div */
+
+            display: flex;
+            align-items: center;
+            /* Vertically center the content */
+            justify-content: center;
+            /* Horizontally center the content */
+        }
+
+        #line-content {
+            /* font-size: 24px; /* Adjust the font size for the content */
+            /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+            background-color: #cbd5e1;
+            width: 1px;
+            height: 70%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="breadcrumdiv">
+        <ul class="breadcrumb">
+            <li><i class="fa-solid fa-house"></i><a href="#"> Home</a></li>
+            <li><a href="#">Master</a></li>
+            <li><a href="#">Update User</a></li>
+
+        </ul>
+    </div>
+    {{>side}}
+    <div class="height-100 ">
+
+        {{#if message}}
+        <div class="alert alert-info">{{message}}</div>
+        {{/if}}
+        <div class="store mt-4  col-md-12" style="display: flex;justify-content:space-between">
+            {{!-- <div class="cross-section">
+                <h3>Update User</h3>
+            </div> --}}
+            <div class="row-md-4 subtitle d-flex justify-content-start align-items-center w-75"
+                style="margin-top: 5px;">
+                <div class="block">
+                    <h4 class="flex-grow-1 listtocon " style="font-size: 24px; margin-top:0px;">Update User
+                </div>
+                <div id="line">
+                    <span id="line-content"></span> <!-- Content inside the div -->
+                </div>
+                <div class="breadcrumdiv">
+                    <ul class="breadcrumb ">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Master</a></li>
+                        <li><a href="#">User List</a></li>
+                        <li><a href="#">Update User</a></li>
+
+                    </ul>
+                </div>
+            </div>
+
+
+            <a href="/userList" style="text-decoration: none;margin-right:20px; margin-top:25px"> <i
+                    class="fa fa-xmark text-dark fa-2x"></i></a>
+        </div>
+
+        <form action="/updateUser/{{user.id}}" method="post" class="form-form">
+            <div class="col-md-6 main-table-data container main-table-box" style="margin-top: 4px;">
+                <div class="col-md-12 title-title">
+                    <h3 class="pt-4 h4-title">Update User Details</h3>
+                </div>
+                <div class="form-group py-2">
+                    <label for="exampleFormControlTextarea1">First Name<span class="text-danger">*</span></label>
+                    <input class="form-control" placeholder="Enter Your First Name" name="firstName"
+                        value="{{user.firstName}}" id="exampleFormControlTextarea1"></input>
+                </div>
+                <div class="form-group py-2">
+                    <label for="exampleFormControlTextarea1">Last Name<span class="text-danger">*</span></label>
+                    <input class="form-control" placeholder="Enter Your Last Name " name="lastName"
+                        value="{{user.lastName}}" id="exampleFormControlTextarea1"></input>
+                </div>
+                <div class="form-group py-2">
+                    <label for="exampleFormControlTextarea1">Email<span class="text-danger">*</span></label>
+                    <input class="form-control" type="email" placeholder="Enter Your Email " name="email" {{user.email}}
+                        value="{{user.email}}" id="exampleFormControlTextarea1"></input>
+                </div>
+                <div class="form-group py-2">
+                    <label for="exampleFormControlTextarea1">Mobile Number<span class="text-danger">*</span></label>
+                    <input class="form-control" type="number" placeholder="Enter Your Mobile Number "
+                        name="mobileNumber" value="{{user.mobileNumber}}" id="exampleFormControlTextarea1"></input>
+                </div>
+                <div class="form-group py-2">
+
+                    <label for="exampleFormControlSelect1">Role<span class="text-danger">*</span></label>
+                    <select id="roleSelect" name="role" class="form-control">
+                        <option value="{{user.role}}">{{user.role}}</option>
+                        <option value="super admin" {{#ifEquals role "super admin" }}selected{{/ifEquals}}>
+                            super admin</option>
+                        <option value="admin" {{#ifEquals role "admin" }}selected{{/ifEquals}}>admin
+                        </option>
+                        <option value="user" {{#ifEquals role "user" }}selected{{/ifEquals}}>user</option>
+                    </select>
+                </div>
+                <div class="form-group py-2">
+
+                    <label for="exampleFormControlSelect1">Manager<span class="text-danger">*</span></label>
+                    <select id="managerSelect" name="managerFk" class="form-control" disabled>
+                        <option value={{id}}>{{manager.email}}</option>
+                        {{#if editMode}}
+                        <!-- Show only the current user's manager in non-edit mode -->
+                        {{!-- <option value="{{ user.id }}">{{ user.email }}</option> --}}
+                        {{/if}}
+                    </select>
+                </div>
+                <div class="form-group py-2 ">
+                    <label class="formlabel fw-bold" style="display: block;">Select Store<span class="text-danger">*</span></label>
+                    <div class="md-form mb-4  active-pink-textarea-2" style="display: inherit;" id="storeList">
+                    </div>
+
+                </div>
+
+                <div class="container" style="padding: 20px 0px;">
+                    <div class="row">
+                        <div class="col-md-12 form-buttons p-0 m-0 d-flex">
+                            <button class="button-15" role="button" type="submit" style="margin:10px">Save</button>
+
+                            <button class="button-15" role="button" type="reset" style="margin:10px 0px">Reset</button>
+                        </div>
+
+                    </div>
+                </div>
+        </form>
+    </div>
+
+
+    </div>
+</body>
+{{!--
+<script>
+    const roleSelect = document.getElementById('roleSelect');
+    const managerSelect = document.getElementById('managerSelect');
+    console.log(managerSelect)
+    roleSelect.addEventListener('change', () => {
+        const selectedRole = roleSelect.value;
+
+        if (selectedRole === 'user') {
+            // Populate manager options with admin emails
+            console.log(selectedRole)
+            managerSelect.innerHTML = `
+                    <option value="">Select Manager</option>
+                    {{#each allUsers}}
+                        {{#ifEquals role "admin"}}
+                            <option value="{{ id }}">{{ email }}</option>
+                        {{/ifEquals}}
+                    {{/each}}
+                `;
+        } else {
+            // Clear manager options
+            managerSelect.innerHTML = '<option value="-1">Select Manager</option>';
+        }
+    });
+</script> --}}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{!--
+<script>
+    $(document).ready(function () {
+        $('#managerSelect').on('change', function () {
+            const userId = $(this).val();
+            // Use an API endpoint to fetch the user's selected stores based on userId
+            $.get(`/getSelectedStores/${userId}`, function (selectedStores) {
+                const storeList = $('#storeList');
+
+                // Clear the previous content in #storeList
+                storeList.empty();
+
+                // Loop through the selectedStores and create checkboxes with labels
+                selectedStores.forEach(function (data) {
+                    const checkbox = $(document.createElement('input')).prop({
+                        id: 'myCheckBox_' + data.outletId,
+                        name: 'outletId',
+                        value: data.outletId,
+                        type: 'checkbox',
+                        checked: data.checked
+                    });
+
+                    checkbox.on('change', function () {
+                        const isChecked = $(this).prop('checked');
+                        if (!isChecked) {
+                            // Handle deselection here
+                            // Remove the store from the user's selection on the server-side
+                            $.post(`/deselectStore/${userId}/${data.outletId}`, function (response) {
+                                console.log(response);
+                            });
+                        }
+                    });
+
+                    storeList.append(checkbox)
+                        .append(
+                            $(document.createElement('label')).prop({
+                                for: 'myCheckBox_' + data.outletId
+                            }).html(data.storeName)
+                        )
+                        .append(document.createElement('br'));
+                });
+            });
+        });
+    });
+</script> --}}
+
+{{!--
+<script>
+    $(document).ready(function () {
+        const roleSelect = $('#roleSelect');
+        const managerSelect = $('#managerSelect');
+        const storeList = $('#storeList');
+
+        roleSelect.on('change', function () {
+            const selectedRole = roleSelect.val();
+
+            if (selectedRole === 'super admin') {
+                populateAllStores(true);
+                // Hide the manager select
+                managerSelect.hide();
+
+                // Clear the store list when changing roles
+                storeList.empty();
+
+                // Populate all stores with checked checkboxes
+
+            } else if (selectedRole === 'admin' || selectedRole === 'user') {
+                // Show the manager select
+                managerSelect.show();
+
+                // Clear the store list when changing roles
+                storeList.empty();
+
+                if (selectedRole === 'admin') {
+                    // Populate manager options with super admin emails for the "admin" role
+                    populateManagerOptions('super admin');
+                } else if (selectedRole === 'user') {
+                    // Populate manager options with admin emails for the "user" role
+                    populateManagerOptions('admin');
+                }
+            }
+        });
+
+        managerSelect.on('change', function () {
+            const userId = managerSelect.val();
+
+            // Use an API endpoint to fetch the user's selected stores based on userId
+            $.get(`/getSelectedStores/${userId}`, function (selectedStores) {
+                // Clear the previous content in #storeList
+                storeList.empty();
+
+                // Loop through the selectedStores and create checkboxes with labels
+                selectedStores.forEach(function (data) {
+                    const checkbox = $('<input>').prop({
+                        id: 'myCheckBox_' + data.outletId,
+                        name: 'outletId',
+                        value: data.outletId,
+                        type: 'checkbox',
+                        checked: data.checked,
+                    });
+
+                    checkbox.on('change', function () {
+                        const isChecked = $(this).prop('checked');
+                        if (!isChecked) {
+                            // Handle deselection here
+                            // Remove the store from the user's selection on the server-side
+                            $.post(`/deselectStore/${userId}/${data.outletId}`, function (response) {
+                                console.log(response);
+                            });
+                        }
+                    });
+
+                    const label = $('<label>').prop({
+                        for: 'myCheckBox_' + data.outletId,
+                    }).html(data.storeName);
+
+                    storeList.append(checkbox)
+                        .append(label)
+                        .append($('<br>'));
+                });
+            });
+        });
+
+        // Function to populate manager options based on role
+        function populateManagerOptions(role) {
+            // Use an API endpoint to fetch the managers based on role
+            $.get(`/getManagers/${role}`, function (managers) {
+                managerSelect.empty();
+                managerSelect.append($('<option>').val('-1').text('Select Manager'));
+
+                managers.forEach(function (manager) {
+                    managerSelect.append($('<option>').val(manager.id).text(manager.email));
+                });
+            });
+        }
+
+        // Function to populate all stores with checkboxes
+        function populateAllStores(checked) {
+            // Use an API endpoint to fetch all stores
+            $.get('/getAllStores', function (stores) {
+                storeList.empty();
+
+                stores.forEach(function (store) {
+                    const checkbox = $('<input>').prop({
+                        id: 'myCheckBox_' + store.outletId,
+                        name: 'outletId',
+                        value: store.outletId,
+                        type: 'checkbox',
+                        checked: checked,
+                    });
+
+                    checkbox.on('change', function () {
+                        const isChecked = $(this).prop('checked');
+                        if (!isChecked) {
+                            // Handle deselection here
+                            // Remove the store from the user's selection on the server-side
+                            $.post(`/deselectStore/${userId}/${store.outletId}`, function (response) {
+                                console.log(response);
+                            });
+                        }
+                    });
+
+                    const label = $('<label>').prop({
+                        for: 'myCheckBox_' + store.outletId,
+                    }).html(store.storeName);
+
+                    storeList.append(checkbox)
+                        .append(label)
+                        .append($('<br>'));
+                });
+            });
+        }
+    });
+</script> --}}
+
+{{!-- <script>
+    $(document).ready(function () {
+        const roleSelect = $('#roleSelect');
+        const managerSelect = $('#managerSelect');
+        const storeList = $('#storeList');
+
+        // Function to populate all stores with checkboxes
+        function populateAllStores(checked) {
+            // Use an API endpoint to fetch all stores for the selected role
+            const selectedRole = roleSelect.val();
+            const userId = {{ user.id }}
+        };
+
+        $.get(`/getSelectedStores/${userId}`, function (stores) {
+            storeList.empty();
+
+            stores.forEach(function (store) {
+                const checkbox = $('<input>').prop({
+                    id: 'myCheckBox_' + store.outletId,
+                    name: 'outletId',
+                    value: store.outletId,
+                    type: 'checkbox',
+                    checked: store.checked,
+                });
+
+                checkbox.on('change', function () {
+                    const isChecked = $(this).prop('checked');
+                    if (!isChecked) {
+                        // Handle deselection here
+                        // Remove the store from the user's selection on the server-side
+                        $.post(`/deselectStore/${userId}/${store.outletId}`, function (response) {
+                            console.log(response);
+                        });
+                    }
+                });
+
+                const label = $('<label>').prop({
+                    for: 'myCheckBox_' + store.outletId,
+                }).html(store.storeName);
+
+                storeList.append(checkbox)
+                    .append(label)
+                    .append($('<br>'));
+            });
+        });
+    }
+
+  // Load initial stores based on the selected role when the page loads
+  const initialRole = roleSelect.val();
+    if (initialRole) {
+        if (initialRole === 'super admin') {
+            populateAllStores(true);
+            managerSelect.hide();
+        } else if (initialRole === 'admin' || initialRole === 'user') {
+            managerSelect.show();
+            if (initialRole === 'admin') {
+                populateManagerOptions('super admin');
+                populateAllStores(false);
+            } else if (initialRole === 'user') {
+                populateManagerOptions('admin');
+                populateAllStores(false);
+            }
+            /*  populateAllStores(false); // Populate stores for the initial role */
+        }
+    }
+
+    roleSelect.on('change', function () {
+        const selectedRole = roleSelect.val();
+
+        if (selectedRole === 'super admin') {
+            populateAllStores(true);
+            managerSelect.hide();
+            storeList.empty();
+        } else if (selectedRole === 'admin' || selectedRole === 'user') {
+            managerSelect.show();
+            storeList.empty();
+
+            if (selectedRole === 'admin') {
+                // Populate manager options with super admin emails for the "admin" role
+                populateManagerOptions('super admin');
+            } else if (selectedRole === 'user') {
+                // Populate manager options with admin emails for the "user" role
+                populateManagerOptions('admin');
+            }
+        }
+    });
+
+    // Function to populate manager options based on role
+    function populateManagerOptions(role) {
+        // Use an API endpoint to fetch the managers based on role
+        $.get(`/getManagers/${role}`, function (managers) {
+            console.log(managers, 123)
+            managerSelect.empty();
+            managerSelect.append($('<option>').val('-1').text('Select Manager'));
+
+            managers.forEach(function (manager) {
+                managerSelect.append($('<option>').val(manager.id).text(manager.email));
+            });
+        });
+    }
+});
+</script> --}}
+
+{{!-- latest --}}
+
+<script>
+$(document).ready(function () {
+    const roleSelect = $('#roleSelect');
+    const managerSelect = $('#managerSelect');
+    const storeList = $('#storeList');
+    
+
+
+     managerSelect.on('change', function () {
+        const userId = managerSelect.val()
+        $.get(`/getEditSelectedStores/${userId}`, function (stores) {
+            storeList.empty();
+
+            
+            stores.forEach(function (store) {
+                const checkbox = $('<input>').prop({
+                    id: 'myCheckBox_' + store.outletId,
+                    name: 'outletId',
+                    value: store.outletId,
+                    type: 'checkbox',
+                    checked: store.checked,
+                });
+
+                checkbox.on('change', function () {
+                    const isChecked = $(this).prop('checked');
+                    if (!isChecked) {
+                        // Handle deselection here
+                        // Remove the store from the user's selection on the server-side
+                        $.post(`/deselectStore/${userId}/${store.outletId}`, function (response) {
+                            console.log(response);
+                        });
+                    }
+                });
+
+                const label = $('<label>').prop({
+                    for: 'myCheckBox_' + store.outletId,
+                }).html(store.storeName);
+
+                storeList.append(checkbox)
+                    .append(label)
+                    .append($('<br>'));
+            });
+        })
+
+     })
+
+    // Function to populate all stores with checkboxes
+    function populateAllStores(checked) {
+        // Use an API endpoint to fetch all stores for the selected role
+        const selectedRole = roleSelect.val();
+       const userId = {{ user.id }};
+        const managerId = {{user.managerFk}} 
+        // Make sure {{ user.id }} is properly defined
+        // Use the fetched data to populate the storeList
+        $.get(`/getSelectedManagerStores/${managerId}/${userId}`, function (stores) {
+            storeList.empty();
+
+            stores.forEach(function (store) {
+                const checkbox = $('<input>').prop({
+                    id: 'myCheckBox_' + store.outletId,
+                    name: 'outletId',
+                    value: store.outletId,
+                    type: 'checkbox',
+                    checked: store.checked,
+                });
+
+                checkbox.on('change', function () {
+                    const isChecked = $(this).prop('checked');
+                    if (!isChecked) {
+                        // Handle deselection here
+                        // Remove the store from the user's selection on the server-side
+                        $.post(`/deselectStore/${userId}/${store.outletId}`, function (response) {
+                            console.log(response);
+                        });
+                    }
+                });
+
+                const label = $('<label>').prop({
+                    for: 'myCheckBox_' + store.outletId,
+                }).html(store.storeName);
+
+                storeList.append(checkbox)
+                    .append(label)
+                    .append($('<br>'));
+            });
+        });
+    }
+
+    // Load initial stores based on the selected role when the page loads
+    const initialRole = roleSelect.val();
+    if (initialRole) {
+        if (initialRole === 'super admin') {
+            populateAllStores(true);
+            managerSelect.hide();
+        } else if (initialRole === 'admin' || initialRole === 'user') {
+            managerSelect.show();
+            storeList.empty();
+            if (initialRole === 'admin') {
+                // Populate manager options with super admin emails for the "admin" role
+                populateManagerOptions('super admin');
+                populateAllStores(false);
+            } else if (initialRole === 'user') {
+                // Populate manager options with admin emails for the "user" role
+                populateManagerOptions('admin');
+                populateAllStores(false);
+            }
+            // populateAllStores(false); // Populate stores for the initial role
+        }
+    }
+
+ /*   roleSelect.on('change', function () {
+        const selectedRole = roleSelect.val();
+
+        if (selectedRole === 'super admin') {
+            populateAllStores(true);
+            managerSelect.hide();
+            storeList.empty();
+        } else if (selectedRole === 'admin' || selectedRole === 'user') {
+            managerSelect.show();
+            storeList.empty();
+
+            if (selectedRole === 'admin') {
+                // Populate manager options with super admin emails for the "admin" role
+                populateManagerOptions('super admin');
+            } else if (selectedRole === 'user') {
+                // Populate manager options with admin emails for the "user" role
+                populateManagerOptions('admin');
+            }
+        }
+    }); */
+
+    // Function to populate manager options based on role
+    function populateManagerOptions(role) {
+        // Use an API endpoint to fetch the managers based on role
+        $.get(`/getManagers/${role}`, function (managers) {
+            
+            managerSelect.empty();
+            managerSelect.append($('<option>').val('{{previousManager.id}}').text('{{previousManager.email}}'));
+
+            managers.forEach(function (manager) {
+                managerSelect.append($('<option>').val(manager.id).text(manager.email));
+            });
+
+        });
+    }
+});
+</script>
+
+
+{{!-- 
+<script>
+$(document).ready(function () {
+    const roleSelect = $('#roleSelect');
+    const managerSelect = $('#managerSelect');
+    const storeList = $('#storeList');
+    const userId = {{ user.id }}; // Make sure {{ user.id }} is properly defined
+
+    // Function to populate stores in checkboxes
+    function populateStores(stores) {
+        storeList.empty();
+
+        stores.forEach(function (store) {
+            const checkbox = $('<input>').prop({
+                id: 'myCheckBox_' + store.outletId,
+                name: 'outletId',
+                value: store.outletId,
+                type: 'checkbox',
+                checked: store.checked,
+            });
+
+            checkbox.on('change', function () {
+                const isChecked = $(this).prop('checked');
+                if (!isChecked) {
+                    // Handle deselection here
+                    // Remove the store from the user's selection on the server-side
+                    $.post(`/deselectStore/${userId}/${store.outletId}`, function (response) {
+                        console.log(response);
+                    });
+                }
+            });
+
+            const label = $('<label>').prop({
+                for: 'myCheckBox_' + store.outletId,
+            }).html(store.storeName);
+
+            storeList.append(checkbox)
+                .append(label)
+                .append($('<br>'));
+        });
+    }
+
+    // Load the user's selected stores when the page loads
+    $.get(`/getSelectedStores/${userId}`, function (userStores) {
+        // Load the selected manager's ID from the user's data, if available
+        const selectedManagerId = {{ user.managerFk }}; // Replace with the actual field name
+        console.log(selectedManagerId)
+        if (selectedManagerId) {
+            // Get and populate the selected manager's stores
+            $.get(`/getSelectedStores/${selectedManagerId}`, function (managerStores) {
+                // Merge user's selected stores with manager's stores
+                const allStores = managerStores.map(function (managerStore) {
+                    const userStore = userStores.find(function (userStore) {
+                        return userStore.outletId === managerStore.outletId;
+                    });
+                    if (userStore) {
+                        managerStore.checked = true;
+                    }
+                    return managerStore;
+                });
+                populateStores(allStores);
+            });
+        } else {
+            // If no manager is selected for the user, just populate the user's stores
+            populateStores(userStores);
+        }
+    });
+
+    // Handle manager selection change
+    managerSelect.on('change', function () {
+        const selectedManagerId = managerSelect.val();
+
+        if (selectedManagerId) {
+            // Get and populate the selected manager's stores
+            $.get(`/getSelectedStores/${selectedManagerId}`, function (managerStores) {
+                // Merge user's selected stores with manager's stores
+                const allStores = managerStores.map(function (managerStore) {
+                    const userStore = userStores.find(function (userStore) {
+                        return userStore.outletId === managerStore.outletId;
+                    });
+                    if (userStore) {
+                        managerStore.checked = true;
+                    }
+                    return managerStore;
+                });
+                populateStores(allStores);
+            });
+        } else {
+            // If no manager is selected, clear the checkboxes
+            storeList.empty();
+        }
+    });
+
+    // Function to populate manager options based on role
+    function populateManagerOptions(role) {
+        // Use an API endpoint to fetch the managers based on role
+        $.get(`/getManagers/${role}`, function (managers) {
+            managerSelect.empty();
+            managers.forEach(function (manager) {
+                managerSelect.append($('<option>').val(manager.id).text(manager.email));
+            });
+        });
+    }
+
+    // Load initial data when the page loads
+    const initialRole = roleSelect.val();
+    if (initialRole) {
+        if (initialRole === 'super admin') {
+            managerSelect.hide();
+            // Show no stores for super admin
+            storeList.empty();
+        } else if (initialRole === 'admin' || initialRole === 'user') {
+            managerSelect.show();
+            // Populate manager options based on the selected role
+            populateManagerOptions(initialRole);
+        }
+    }
+});
+</script> --}}
+
+
+
+
+{{!-- <script> 
+$(document).ready(function () {
+    const roleSelect = $('#roleSelect');
+    const managerSelect = $('#managerSelect');
+    const storeList = $('#storeList');
+    
+    // Assuming you have the manager's ID available in a variable like managerId
+    const managerId = {{ user.managerFk }};
+    const userId = {{user.id}}
+    
+    console.log(managerId,userId);
+    
+    // Fetch and populate the manager's stores based on the managerId
+    $.get(`/getManagerStoresandcheckedUserStore/${managerId}/${userId}`, function (stores) {
+        storeList.empty();
+
+        stores.forEach(function (store) {
+            const checkbox = $('<input>').prop({
+                id: 'myCheckBox_' + store.outletId,
+                name: 'outletId',
+                value: store.outletId,
+                type: 'checkbox',
+                checked: store.checked,
+            });
+
+            checkbox.on('change', function () {
+                const isChecked = $(this).prop('checked');
+                if (!isChecked) {
+                    // Handle deselection here
+                    // Remove the store from the user's selection on the server-side
+                    $.post(`/deselectStore/${managerId}/${store.outletId}`, function (response) {
+                        console.log(response);
+                    });
+                }
+            });
+
+            const label = $('<label>').prop({
+                for: 'myCheckBox_' + store.outletId,
+            }).html(store.storeName);
+
+            storeList.append(checkbox)
+                .append(label)
+                .append($('<br>'));
+        });
+    });
+});
+</script> --}}
+
+
+
+</html>

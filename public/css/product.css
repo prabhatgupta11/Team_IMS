@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@300&family=Satisfy&family=Ubuntu:wght@300;400&display=swap');
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    font-family:'Poppins', sans-serif   ;
+}
+html,body{
+    width: 100%;
+    height: 100%;
+
+}
+
+
+.icons-short{
+    position: absolute;
+    left: 8%;
+    top: 50%;
+    color: gray;
+}
+
+
+.icons-icons{
+    position: absolute;
+    left: 4%;
+    top: 50%;
+    color: gray;
+    
+}
+
+.input-field-second{
+    padding-left: 10px !important;
+}
+
+.input-field-second::placeholder{
+    padding-left: 30px !important;
+}
+
+.input-field-second::placeholder{
+    position: relative;
+}
+.input-field::placeholder{
+    position: relative;
+    padding-left: 10px;
+}
+.input-field{
+    padding-left: 40px !important;
+}
+
+
+ 
+ .input-field:focus{
+     padding-left: 40px;
+ }
+
+.icon-context:focus{
+    padding-left: 40px;
+}
+ 
+.ger-title{
+    padding-bottom: 10px;
+}
+.ger-title h3{
+    font-weight: 600;
+    font-size: 23px;
+}
+label{
+    font-size: 16px;
+    font-weight: 600;
+    color: rgb(53, 73, 73);
+}
+
+.form-select{
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    font-size: 14px;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+}
+
+
+
+.ger-title i{
+    font-size: 22px;
+}
+.border-gen,.form-select{
+    margin-bottom: 20px;
+    background: white;
+    border-radius: 10px;
+}
+
+
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+.ger-title{
+    margin-top: 90px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid lightgray;
+}
+.ineone-main-contianer{
+    background-color: rgb(244,244,247);
+}
+
+
+
+.border-gen{
+    padding: 20px;
+    margin-top: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Master List</title>
+    <link rel="stylesheet" href="css/newStyle.css">
+    {{!--
+    <link rel="stylesheet" href="css/newStyle.css"> --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+    <style>
+        /* Light color for even rows */
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #ffff;
+        }
+
+        /* Dark color for odd rows */
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgb(244, 244, 247);
+        }
+
+        .breadcrumdiv {
+            margin-left: 4px;
+
+
+        }
+
+        ul.breadcrumb {
+
+            list-style: none;
+            padding-bottom: 5px;
+            padding-top: 15px;
+
+        }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 15px;
+        }
+
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: ">\00a0";
+        }
+
+        ul.breadcrumb li a {
+            color: #3019fa;
+            text-decoration: none;
+        }
+
+        ul.breadcrumb li a:hover {
+
+            text-decoration: underline;
+        }
+
+        #line {
+            padding-bottom: 5px;
+            padding-right: 10px;
+            padding-left: 12px;
+            height: 40px;
+            /* Set the height of the container div */
+
+            display: flex;
+            align-items: center;
+            /* Vertically center the content */
+            justify-content: center;
+            /* Horizontally center the content */
+        }
+
+        #line-content {
+            /* font-size: 24px; /* Adjust the font size for the content */
+            /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+            background-color: #cbd5e1;
+            width: 1px;
+            height: 70%;
+        }
+
+        ul.breadcrumb li:last-child a {
+            color: grey;
+            /* Change the color to the grey color you prefer */
+
+        }
+    </style>
+</head>
+
+<body id="body-pd">
+
+    {{>side}}
+
+    <div class="col-md-12 row-md-5 mx-0 main_container " style="padding-right:0px; margin-top:70px">
+        <div class="row-md-4 subtitle d-flex justify-content-between align-items-center" style="margin-top: 60px;">
+            <div class="row-md-4 subtitle d-flex justify-content-start align-items-center w-75"
+                style="margin-top: 5px;">
+                <div class="block">
+                    <h4 class="flex-grow-1 " style="font-size: 29px     color: #1e293b;
+    font-weight:800;">Category Master List
+                </div>
+                <div id="line">
+                    <span id="line-content"></span> <!-- Content inside the div -->
+                </div>
+                <div class="breadcrumdiv">
+                    <ul class="breadcrumb">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Master</a></li>
+                        <li><a href="#">Category Master List</a></li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-light btn-md  text-light h-25"
+                style="background-color: #ff9f43;font-weight:500"><a href="/categoryMaster"
+                    style="text-decoration: none;color:white">+ Add Category Master</a></button>
+        </div>
+  {{#if message}}
+    <div class="alert alert-info">{{message}}</div>
+    {{/if}}
+
+        <div class="container col-md-12 me-class" style="padding-right:24px">
+            <div class="input-group py-2">
+                <div class="form-inline d-flex">
+
+                </div>
+
+            </div>
+
+
+            <div class="container-table pt-2 p-0 mt-4 table-responsive">
+                <form style="overflow-x: hidden;">
+                    <table class="table table-custom" id="state_table">
+                        <thead>
+                            <tr>
+
+                                <th scope="col ">Name</th>
+                                {{!-- <th scope="col ">Code Level</th> --}}
+                                <th scope="col ">Status</th>
+                                <th scope="col ">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablebody">
+
+                        </tbody>
+
+                        {{!-- {{#each data}} --}}
+
+                        <tr>
+
+                    </table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            const dataTable = $('#state_table').DataTable({
+                "language": {
+                    "lengthMenu": "Show _MENU_ Entries"
+                },
+                'processing': true,
+                'serverSide': true,
+                'ajax': {
+                    'url': '/codeCategoryDetailsList',
+                    'type': 'GET'
+                },
+                'columns': [
+                    { data: 'code_name' },
+                   // { data: 'code_level' },
+                    { data: 'Active' },
+                    {
+                        data: 'rowguid',
+                        'render': function (data, type, row) {
+                            return "<a href='/updateCategoryMaster/" + data + "'>EDIT</a>";
+                        }
+                    },
+                ],
+            });
+        });
+    </script>
+    {{!--
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tableBody = document.getElementById("tablebody");
+
+            // Fetch supplier data
+            fetch(/getAllsupplierdata)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(supplier => {
+
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                        <td>${supplier.Code}</td>
+                        <td>${supplier.Name}</td>
+                        <td>${supplier.Email}</td>
+                        <td><a href='/updateSupplierMaster/${supplier.rowguid}'>Edit</a></td>
+                    `;
+                        tableBody.appendChild(row);
+                    });
+
+
+                    /*var alleditbtn=document.querySelectorAll(".edit-btn");
+                       console.log(7777,alleditbtn)
+                       for(let i=0;i<alleditbtn.length;i++)
+                       {
+                          alleditbtn[i].addEventListener("click", () => {
+                              alert(button is clicked ${alleditbtn[i].value})
+                          const supplierUuid = alleditbtn[i].value;
+                          // Assuming you want to navigate to the edit page with the supplierId as a parameter
+                          window.location.href = /supplierMasterUpdate/${supplierUuid};
+                      });
+                       }*/
+                })
+                .catch(error => console.error('Error fetching supplier data:', error));
+
+        });
+
+        // code of edit-btn
+
+    </script> --}}
+
+
+</body>
+
+</html>

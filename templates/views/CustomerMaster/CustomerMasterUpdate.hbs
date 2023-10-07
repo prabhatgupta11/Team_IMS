@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/public/css/order.css">
+  <title>Customer Master Update</title>
+  <link rel="stylesheet" href="/public/css/order.css">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <style>
+    body {
+      background-color: rgb(244, 244, 247) !important;
+    }
+
+    .sup-int[type='text'] {
+      /*padding-left: 30px;*/
+    }
+
+    .table-custom tbody tr:nth-child(even) {
+      background-color: #ffff;
+    }
+
+
+    /* Dark color for odd rows */
+    .table-custom tbody tr:nth-child(odd) {
+      background-color: rgb(244, 244, 247);
+    }
+
+    .tr-head th {
+      text-align: center;
+    }
+
+    .breadcrumdiv {
+      margin-left: 4px;
+      margin-top: 0px;
+
+    }
+
+    ul.breadcrumb {
+
+      list-style: none;
+
+      padding-top: 15px;
+
+    }
+
+    ul.breadcrumb li {
+      display: inline;
+      font-size: 15px;
+    }
+
+    ul.breadcrumb li+li:before {
+      padding: 8px;
+      color: black;
+      content: ">\00a0";
+    }
+
+    ul.breadcrumb li a {
+      color: #4f46e5;
+      text-decoration: none;
+
+    }
+
+    ul.breadcrumb li a:hover {
+      color: #0808f0;
+      text-decoration: underline;
+    }
+
+    #formdata {
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+      width: 60%;
+      padding: 8px 20px 18px 20px;
+      background-color: white;
+
+
+    }
+
+    #formdata h5 {
+      padding-top: 30px;
+
+    }
+
+    #billing-form h1 {
+      text-align: left;
+      font-size: 29px;
+    }
+
+    /* Media query for mobile devices */
+    @media (max-width: 576px) {
+      .breadcrumdiv {
+        margin-top: 30px;
+      }
+
+      ul.breadcrumb li {
+        font-size: 14px;
+      }
+
+      #formdata {
+
+        width: 100%;
+
+      }
+
+      .input-field::placeholder {
+
+        padding-left: 30px !important;
+      }
+
+      .input-field {
+        padding-left: 30px !important;
+        position: relative !important;
+      }
+
+
+      /* Add more mobile-specific styles here */
+    }
+
+    #line {
+      padding-bottom: 5px;
+      padding-right: 10px;
+      padding-left: 12px;
+      height: 40px;
+      /* Set the height of the container div */
+
+      display: flex;
+      align-items: center;
+      /* Vertically center the content */
+      justify-content: center;
+      /* Horizontally center the content */
+    }
+
+    #line-content {
+      /* font-size: 24px; /* Adjust the font size for the content */
+      /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+      background-color: #cbd5e1;
+      width: 1px;
+      height: 70%;
+    }
+
+    ul.breadcrumb li:last-child a {
+      color: grey;
+      /* Change the color to the grey color you prefer */
+
+    }
+  </style>
+</head>
+
+<body id="body-pd">
+
+  {{>side}}
+  <div class=" m-0" style="padding: 10px;">
+
+    <div class="col-md-12 subtitle d-flex justify-content-between align-items-center w-100"
+      style="margin-top: 50px;     padding-bottom: 0px;">
+
+      <div class="me-two d-flex justify-content-center align-items-center">
+
+        <div class="block">
+          <h4 class="flex-grow-1 listtocon " style="font-size: 24px; margin-top:0px ;  margin-bottom: 18px;">Customer
+            Master Update
+        </div>
+        <div id="line">
+          <span id="line-content"></span> <!-- Content inside the div -->
+        </div>
+        <div class="breadcrumdiv">
+          <ul class="breadcrumb">
+            <li><a href="#"> Home</a></li>
+            <li><a href="#">Master</a></li>
+            <li><a href="#">Customer Master Update</a></li>
+
+          </ul>
+        </div>
+      </div>
+
+      {{!-- <a href="/orderList" style="text-decoration: none;margin-right:20px ;margin-top: 25px;"> <i
+          class="fa fa-xmark text-dark fa-2x"></i></a> --}}
+      <a href="/customerMasterList" style="text-decoration: none;margin-right:20px ;margin-top: 25px;"> <i
+          class="fa fa-xmark text-dark fa-2x"></i></a>
+    </div>
+  </div>
+  <div>
+    {{#if message}}
+    <div class="alert alert-info">{{message}}</div>
+    {{/if}}
+
+    <form id="customerForm" action="/customerMasterUpdate/{{customer.rowguid}}" method="post">
+      {{!-- <h1>Order Billing</h1> --}}
+      <div id="formdata">
+        <h4>Enter Customer Master details</h4>
+        <label for="Code" class="label-block">Code:</label>
+
+        <input type="text" id="Code" name="Code" class="sup-int" placeholder="Enter Customer Code"
+          value="{{customer.Code}}">
+        <div class="sup-icon">
+
+        </div>
+
+
+
+
+        <label for="Name" class="label-block">Name  <span class="text-danger">*</span>:</label>
+        <input type="text" id="Name" name="Name" placeholder="&#128100; Enter Customer Name" value="{{customer.Name}}" required
+          pattern="[A-Za-z ]+" title="Please enter only letters">
+
+        <label for="ContactPersonName" class="label-block">Contact Person Name:</label>
+        <input type="text" id="ContactPersonName" name="ContactPersonName" placeholder="&#128100; Enter Contact Person Name"
+          value="{{customer.ContactPersonName}}" pattern="[A-Za-z ]+" title="Please enter only letters" >
+
+
+
+
+        <label for="ContactNo">Contact No 1  <span class="text-danger">*</span>:</label>
+        <input type="number" id="ContactNo1" name="ContactNo1" placeholder="&#x260E; Enter Contact Number"
+          value="{{customer.ContactNo1}}" required maxlength="10" title="Please enter a 10-digit phone number">
+
+
+        <label for="ContactNo">Contact No 2 :</label>
+        <input type="number" id="ContactNo2" name="ContactNo2" placeholder="&#x260E; Enter Contact Number"
+          value="{{customer.ContactNo2}}"  maxlength="10" title="Please enter a 10-digit phone number">
+
+        <label for="AadharNo">Aadhar No:</label>
+        <input type="number" id="AadharNo" name="AadharNo" placeholder="&#9751;  Enter Aadhar Number"
+          value="{{customer.AadharNo}}" minlength="10" maxlength="12" title="Please enter a 12-digit Aadhar Number">
+
+
+
+        <label for="Pincode">Pincode:</label>
+        <input type="number" id="Pincode" name="Pincode" placeholder="&#9951;  Enter Pincode"
+          value="{{customer.Pincode}}" maxlength="6" title="Please enter a 6-digit Pin Code Number">
+
+
+
+
+        <label for="Email">Email  <span class="text-danger">*</span>:</label>
+        <input type="email" id="Email" name="Email" placeholder="&#x2709;  Enter Email" value="{{customer.Email}}"
+          required>
+
+        <label for="GSTNo">GST No:</label>
+        <input type="text" id="GSTNo" name="GSTNo" placeholder="&#9951; Enter GST No." value="{{customer.GSTNo}}"
+          oninput="convertToUpperCase(this)" minlength="15" maxlength="15" title="Please enter a 15-digit GST Number">
+
+
+
+        <label for="PAN">PAN:</label>
+        <input type="text" id="PAN" name="PAN" placeholder="&#9751; Enter PAN" value="{{customer.PAN}}"
+          oninput="convertToUpperCase(this)" minlength="10" maxlength="10" title="Please enter a 10-digit PAN Number">
+
+
+        <label for="Status" class="label-block">Status:</label>
+        <select id="Status" name="Status">
+             <option value="{{customer.Status}}">{{customer.Status}}</option>
+          {{!-- <option>{{customer.Status}}</option>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option> --}}
+        </select>
+
+        <label for="Address">Address:</label>
+        <div>
+          <textarea id="Address" name="Address" rows="4" placeholder="Enter Address" cols="72"
+            style="width: 100%;">{{customer.Address}}</textarea>
+        </div>
+      </div>
+
+  </div>
+  </div>
+
+  {{!-- submit button --}}
+  <button type="submit"
+    style="border-radius: 10px; margin-top:30px; margin-bottom:30px; background-color:#4723d9;">Submit</button>
+
+  </form>
+
+
+
+  </div>
+
+
+
+
+</body>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const statusSelect = document.getElementById("Status");
+
+        let statusArray = ["Active", "Inactive"]
+
+        statusArray.forEach((ele) => {
+            const option = document.createElement("option");
+            if (statusSelect.value !== ele) {
+                option.value = ele;
+                option.textContent = ele;
+                statusSelect.appendChild(option);
+            }
+        })
+    })
+</script>

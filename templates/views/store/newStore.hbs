@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/newStyle.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    a {
+      text-decoration: none;
+    }
+
+    .input-para {
+      display: none;
+    }
+
+    .icons-short {
+      position: absolute;
+      left: 8%;
+      top: 50%;
+      color: gray;
+    }
+
+    .pra-pra {
+      -webkit-text-stroke: thin;
+      font-size: 1.4rem;
+      line-height: 2rem;
+      color: #1e293b;
+      font-weight: 500 !important;
+    }
+
+
+
+    .icons-icons {
+      position: absolute !important;
+      left: 1% !important;
+      bottom: 0% !important;
+      margin-bottom: 8px;
+      color: gray;
+
+    }
+
+    .input-field-second::placeholder {
+      position: relative !important;
+      padding-left: 25px !important;
+    }
+
+    .input-field::placeholder {
+
+      padding-left: 30px !important;
+    }
+
+    .input-field {
+      padding-left: 30px !important;
+      position: relative !important;
+    }
+
+    .input-field::placeholder {
+      padding-left: 0px !important;
+    }
+
+    .input-field-second {
+      padding-left: 25px !important;
+
+    }
+
+    .breadcrumdiv {
+      margin-left: 4px;
+
+
+    }
+
+    ul.breadcrumb {
+
+      list-style: none;
+
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+
+    ul.breadcrumb li {
+      display: inline;
+      font-size: 18px;
+    }
+
+    ul.breadcrumb li+li:before {
+      padding: 8px;
+      color: black;
+      content: ">\00a0";
+    }
+
+    ul.breadcrumb li a {
+      color: #3019fa;
+      text-decoration: none;
+    }
+
+    ul.breadcrumb li a:hover {
+      color: #0808f0;
+      text-decoration: underline;
+    }
+
+    /* Light color for even rows */
+    .table-custom tbody tr:nth-child(even) {
+      background-color: #ffff;
+    }
+
+    /* Dark color for odd rows */
+    .table-custom tbody tr:nth-child(odd) {
+      background-color: rgb(244, 244, 247);
+    }
+
+    .breadcrumdiv {
+      margin-left: 4px;
+
+
+    }
+
+    ul.breadcrumb {
+
+      list-style: none;
+      padding-bottom: 5px;
+      padding-top: 15px;
+
+    }
+
+    ul.breadcrumb li {
+      display: inline;
+      font-size: 15px;
+    }
+
+
+    ul.breadcrumb li:last-child a {
+      color: grey;
+      /* Change the color to the grey color you prefer */
+
+    }
+
+    ul.breadcrumb li+li:before {
+      padding: 8px;
+      color: black;
+      content: ">\00a0";
+    }
+
+    ul.breadcrumb li a {
+      color: #3019fa;
+      text-decoration: none;
+    }
+
+    ul.breadcrumb li a:hover {
+
+      text-decoration: underline;
+    }
+
+    #line {
+      padding-bottom: 5px;
+      padding-right: 10px;
+      padding-left: 12px;
+      height: 40px;
+      /* Set the height of the container div */
+
+      display: flex;
+      align-items: center;
+      /* Vertically center the content */
+      justify-content: center;
+      /* Horizontally center the content */
+    }
+
+    #line-content {
+      /* font-size: 24px; /* Adjust the font size for the content */
+      /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+      background-color: #cbd5e1;
+      width: 1px;
+      height: 70%;
+    }
+
+    ul.breadcrumb li:last-child a {
+      color: grey;
+      /* Change the color to the grey color you prefer */
+
+    }
+  </style>
+</head>
+
+<body>
+  {{>side}}
+  <div class="height-100 ">
+    <h3 class="pt-4">Add Store</h3>
+    {{#if message}}
+    <div class="alert alert-info">{{message}}</div>
+    {{/if}}
+    <div class="store   col-md-12 pt-3" style="display: flex;justify-content:space-between">
+      {{!-- <div class="cross-section">
+        <h3>Create User</h3>
+      </div> --}}
+      <div class="me-two d-flex justify-content-center align-items-center">
+        <div class="block">
+          <h4 class="flex-grow-1 listtocon " style="font-size: 24px; margin-top:0px;">Create Store
+        </div>
+        <div id="line">
+          <span id="line-content"></span> <!-- Content inside the div -->
+        </div>
+        <div class="breadcrumdiv">
+          <ul class="breadcrumb">
+            <li><a href="#"> Home</a></li>
+            <li><a href="#">Master</a></li>
+            <li><a href="#">Create Store</a></li>
+
+          </ul>
+        </div>
+
+      </div>
+
+
+      <a href="/newStoreList" style="text-decoration: none;margin-right:20px margin-top=" 25px";"> <i
+          class="fa fa-xmark text-dark fa-2x"></i></a>
+    </div>
+
+    <form action="/createNewStore" method="post" class="form-form">
+      <div class="col-md-6 main-table-data container main-table-box" style="margin-top:8px;">
+        <div class="col-md-12 title-title">
+          <h3 class="pt-4 h4-title">Add Store Details</h3>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Code</label>
+          <input class="form-control input-field " placeholder="Enter Your Code" name="code" id="code">
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-code icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Store Name <span class="text-danger">*</span></label>
+          <input class="form-control input-field" placeholder="Enter Your Store Name " type="text" name="storeName"
+            id="name" required oninput="AlphabateValidate(this)"></input>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-user icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlSelect1">Business Type <span class="text-danger">*</span></label>
+          <select id="businessType" name="businessType" class="form-control input-field"
+            style="padding-left:30px !important" required>
+            <option value="" disabled selected>Select Business Type</option>
+            <option value="FRANCHISE">FRANCHISE</option>
+            <option value="DISTRIBUTION CENTER">DISTRIBUTION CENTER</option>
+            <option value="BRANCH">BRANCH</option>
+          </select>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-business-time icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Address1</label>
+
+          <textarea class="form-control input-field px-1" cols="" rows="" type="text"
+            placeholder="&#9751; Enter Your Address " name="address1" id="address1"></textarea>
+          {{!-- <div class="icon-context input-field">
+            <i class="fa-solid fa-envelope icons-icons"></i>
+          </div> --}}
+
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Address2</label>
+          <textarea class="form-control input-field px-1" type="text" placeholder="&#9751; Enter Your Address "
+            name="address2" id="address2"></textarea>
+          {{!-- <div class="icon-context input-field">
+            <i class="fa-solid fa-envelope icons-icons"></i>
+          </div> --}}
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlSelect1">State</label>
+          <select id="state" name="state" class="form-control input-field" style="padding-left:30px !important"
+            >
+            <option value="">Select State</option>
+            {{#each state}}
+            <option value="{{id}}">{{Name}}</option>
+            {{/each}}
+          </select>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-landmark icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Pin Code</label>
+          <input class="form-control input-field" type="text" placeholder="Enter Your Pin Code here " name="pincode"
+            id="pinCode" maxlength="6" oninput="pinCodeValidate(this)"></input>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-location-dot icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Contact Person Name</label>
+          <input class="form-control input-field" type="text" placeholder="Enter Your Name " name="contactPersonName"
+            id="contactPersonName"
+          title="Please enter only letters" ></input>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-id-card icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="contactNo">Contact No 1 <span class="text-danger">*</span></label>
+          <input class="form-control input-field validateContact1" type="tel" placeholder="0-987-654-321"
+            name="contactNo1" id="contactNo" title="Please enter a 10-digit contact number"
+            oninput="contactNoValidate(this)" maxlength="10" required></input>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-mobile-screen-button icons-icons"></i>
+          </div>
+          <p class="input-validated1 mb-0 "></p>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Contact No 2</label>
+          <input class="form-control input-field validateContact2" type="text" placeholder="0-987-654-321 "
+            name="contactNo2" id="contactNo" maxlength="10" oninput="contactNoValidate(this)"></input>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-mobile-screen-button icons-icons"></i>
+          </div>
+          <p class="input-validated2 mb-0 "></p>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">GST No</label>
+          <input class="form-control input-field " type="text" placeholder="Enter Your GST number " name="GSTNo"
+            id="gstNo" maxlength="15"  oninput="gstNoValidate(this)"></input>
+          <div class="icon-context input-field">
+            <i class="fa-regular fa-money-bill-1 icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">PAN No</label>
+          <input class="form-control input-field" type="text" placeholder="Enter Your Contact number " name="panNo"
+            id="panNo" maxlength="10" oninput="convertToUpperCase(this)" onblur="panNoValidate(this)"></input>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-id-card icons-icons"></i>
+          </div>
+        </div>
+        {{!-- <div class="form-group py-2">
+          <label for="exampleFormControlSelect1">Category</label>
+          <select id="category" name="category" class="form-control input-field" style="padding-left:30px !important"
+            required>
+            <option value="" disabled selected>Select Category</option>
+            <option value="grocery">Grocery</option>
+            <option value="electronics">Electronics</option>
+          </select>
+          <div class="icon-context input-field">
+            <i class="fa-brands fa-dropbox icons-icons"></i>
+          </div>
+        </div> --}}
+        <div class="form-group py-2 d-flex flex-column">
+          <label for="exampleFormControlSelect1">Category<span class="text-danger">*</span></label>
+          <input type="text" id="category-search" placeholder="Search Categories" class="my-2 w-50" style='border:1px solid #bdbdbd'>
+          <div class="checkbox-options  " id="category-checkboxes">
+            {{#each category}}
+            <div class="d-flex">
+            <input type="checkbox" id="category-{{this}}" name="category[]" value="{{this.id}}">
+            <label for="category-{{this}}" >{{this.code_name}}</label>
+            </div>  
+            
+            {{/each}}
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlSelect1">Tax State</label>
+          <select id="taxState" name="taxState" class="form-control input-field" style="padding-left:30px !important"
+            >
+            <option value="">Select Tax State</option>
+           {{#each state}}
+            <option value="{{id}}">{{Name}}</option>
+            {{/each}}
+          </select>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-landmark icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlSelect1">Status</label>
+          <select id="status" name="status" class="form-control input-field" style="padding-left:30px !important">
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-battery-half icons-icons"></i>
+          </div>
+        </div>
+        <div class="form-group py-2">
+          <label for="exampleFormControlTextarea1">Display Order</label>
+          <input class="form-control input-field" type="number" placeholder="Display Order " name="displayOrder"
+            id="displayOrder"></input>
+          <div class="icon-context input-field">
+            <i class="fa-solid fa-arrow-down-short-wide icons-icons"></i>
+          </div>
+        </div>
+        <div class="container" style="padding: 20px 0px;">
+          <div class="row">
+            <div class="col-md-12 form-buttons p-0 m-0 d-flex">
+              <button class="button-15" role="button" type="submit" style="margin:10px">Save</button>
+
+              <button class="button-15" role="button" type="reset" style="margin:10px 0px">Reset</button>
+            </div>
+          </div>
+        </div>
+
+    </form>
+  </div>
+  </div>
+</body>
+
+
+
+
+<script>
+  // Only Text Input Validation
+ function AlphabateValidate(inputElement) {
+  let pattern = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\\-="'\s]+$/
+    if (pattern.test(inputElement.value)) {
+        inputElement.setCustomValidity('');
+    } else {
+        inputElement.setCustomValidity("Please Enter a Valid Name");
+    }
+
+    inputElement.addEventListener('blur', () => {
+        if (!pattern.test(inputElement.value)) {
+            inputElement.reportValidity();
+        }
+    });
+}
+
+
+// Pin Code number validation
+ function pinCodeValidate(inputElement) {
+    if (/^[0-9]{6}$/.test(inputElement.value)) {
+        inputElement.setCustomValidity('');
+    } else {
+        inputElement.setCustomValidity("Please Enter a Valid Contact Number");
+    }
+
+    inputElement.addEventListener('blur', () => {
+        if (!/^[0-9]{6}$/.test(inputElement.value)) {
+            inputElement.reportValidity();
+        }
+    });   
+}
+
+// contact number validation
+ function contactNoValidate(inputElement) {
+    if (/^[9876]\d{9}$/.test(inputElement.value)) {
+        inputElement.setCustomValidity('');
+    } else {
+        inputElement.setCustomValidity("Please Enter a Valid Contact Number");
+    }
+
+    inputElement.addEventListener('blur', () => {
+        if (!/^[9876]\d{9}$/.test(inputElement.value)) {
+            inputElement.reportValidity();
+        }
+    });   
+}
+
+// Convert into upper case
+  function convertToUpperCase(input) {
+    input.value = input.value.toUpperCase();
+  }
+
+// GST Code number validation
+ function gstNoValidate(inputElement) {
+   function convertToUpperCase(inputElement) {
+    input.value = input.value.toUpperCase();
+  }
+  convertToUpperCase();
+    if (/^(\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[Z]{1}[A-Z\d]{1})$/.test(inputElement.value)) {
+        inputElement.setCustomValidity('');
+    } else {
+        inputElement.setCustomValidity("Please Enter a Valid Contact Number");
+    }
+
+    inputElement.addEventListener('blur', () => {
+        if (!/^(\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[Z]{1}[A-Z\d]{1})$/.test(inputElement.value)) {
+            inputElement.reportValidity();
+        }
+    });   
+}
+  
+// PAN number validation
+ function panNoValidate(inputElement) {
+    if (/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(inputElement.value)) {
+        inputElement.setCustomValidity('');
+    } else {
+        inputElement.setCustomValidity("Please Enter a Valid PAN Number");
+    }
+
+    inputElement.addEventListener('blur', () => {
+        if (!/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(inputElement.value)) {
+            inputElement.reportValidity();
+        }
+    });   
+}
+
+</script>
+
+
+{{!-- <script>
+
+
+  // Convert into upper case
+  function convertToUpperCase(input) {
+    input.value = input.value.toUpperCase();
+  }
+
+  // Validation for contact number 
+  /*  const contactNo1Validation = document.getElementById('contactNo1');
+  
+    contactNo1Validation.addEventListener('input', () => {
+      const contactNoValue = contactNo1Validation.value;
+  
+      if (/^[9876]\d{9}$/.test(contactNoValue)) {
+        contactNo1Validation.setCustomValidity('');
+      } else {
+        contactNo1Validation.setCustomValidity('Please enter a valid 10-digit contact number');
+      }
+    });
+  
+  
+    // Validation for contact number 2
+  
+    const contactNo2Validation = document.getElementById('contactNo2');
+  
+    contactNo2Validation.addEventListener('input', () => {
+      const contactNoValue = contactNo2Validation.value;
+  
+      if (/^[9876]\d{9}$/.test(contactNoValue)) {
+        contactNo2Validation.setCustomValidity('');
+      } else {
+        contactNo2Validation.setCustomValidity('Please enter a valid 10-digit contact number');
+      }
+    }); */
+
+  // PIN code validation 
+  const pinCodeValidation = document.getElementById('pinCode');
+
+  pinCodeValidation.addEventListener('input', () => {
+    const validPinCode = /^[0-9]{6}$/.test(pinCodeValidation.value);
+
+    if (validPinCode) {
+      pinCodeValidation.setCustomValidity('');
+    } else {
+      pinCodeValidation.setCustomValidity('Please enter a valid Pin Code number');
+    }
+  });
+
+  // PAN number validation 
+  const panNoValidation = document.getElementById('panNo');
+
+  panNoValidation.addEventListener('input', () => {
+    const validPanNo = /^[A-Z]{5}[0-9]{4}[A-Z]$/.test(panNoValidation.value);
+
+    if (validPanNo) {
+      panNoValidation.setCustomValidity('');
+    } else {
+      panNoValidation.setCustomValidity('Please enter a valid PAN number');
+    }
+  });
+
+  // GST number validation 
+  const gstNoValidation = document.getElementById('gstNo');
+
+  gstNoValidation.addEventListener('input', () => {
+    const validGstNo = /^(\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[Z]{1}[A-Z\d]{1})$/.test(gstNoValidation.value);
+
+    if (validGstNo) {
+      gstNoValidation.setCustomValidity('');
+    } else {
+      gstNoValidation.setCustomValidity('Please enter a valid GST number');
+    }  
+  });
+
+</script> --}}
+
+{{!-- <script>
+  // Handle category checkboxes and search
+  const categoryCheckboxes = document.querySelectorAll('input[name="category[]"]');
+  const categorySearchInput = document.getElementById('category-search');
+
+  categorySearchInput.addEventListener('input', () => {
+    const searchValue = categorySearchInput.value.trim().toLowerCase();
+    categoryCheckboxes.forEach((checkbox) => {
+      const label = checkbox.nextElementSibling;
+      
+      const category = label.textContent.toLowerCase();
+
+
+      if (category.includes(searchValue)) {
+        checkbox.style.display = 'block';
+      } else {
+        checkbox.style.display = 'none';
+        checkbox.checked = false; // Uncheck hidden checkboxes
+      }
+    });
+  });
+
+  categoryCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener('change', () => {
+      const selectedCategories = Array.from(categoryCheckboxes)
+        .filter((checkbox) => checkbox.checked)
+        .map((checkbox) => checkbox.value);
+
+      console.log('Selected Categories:', selectedCategories);
+    });
+  });
+
+</script> --}}
+
+<script>
+  // Handle category checkboxes and search
+const categoryCheckboxes = document.querySelectorAll('input[name="category[]"]');
+const categoryLabels = document.querySelectorAll('label[for^="category"]'); // Assuming your labels have "for" attributes starting with "category"
+const categorySearchInput = document.getElementById('category-search');
+
+categorySearchInput.addEventListener('input', () => {
+  const searchValue = categorySearchInput.value.trim().toLowerCase();
+
+  categoryCheckboxes.forEach((checkbox, index) => {
+    const label = categoryLabels[index];
+    const category = label.textContent.toLowerCase();
+
+    if (category.includes(searchValue)) {
+      label.style.display = 'block'; // Show the label
+      checkbox.style.display = 'block'; // Show the checkbox
+    } else {
+      label.style.display = 'none'; // Hide the label
+      checkbox.style.display = 'none'; // Hide the checkbox
+      checkbox.checked = false; // Uncheck hidden checkboxes
+    }
+  });
+});
+
+categoryCheckboxes.forEach((checkbox) => {
+  checkbox.addEventListener('change', () => {
+    const selectedCategories = Array.from(categoryCheckboxes)
+      .filter((checkbox) => checkbox.checked)
+      .map((checkbox) => checkbox.value);
+
+    console.log('Selected Categories:', selectedCategories);
+  });
+});
+
+</script>
+
+
+</html>

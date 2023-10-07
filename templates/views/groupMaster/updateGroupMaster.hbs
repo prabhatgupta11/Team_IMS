@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/newStyle.css">
+    <title>Update Group Master</title>
+    <link rel="stylesheet" href="/public/css/order.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            background-color: rgb(244, 244, 247) !important;
+        }
+         input::-webkit-inner-spin-button,input::-webkit-outer-spin-button{
+      appearance: none;
+      margin: 0px;
+    }
+
+
+        .sup-int[type='text'] {}
+
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #ffff;
+        }
+
+
+        /* Dark color for odd rows */
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: rgb(244, 244, 247);
+        }
+
+        .tr-head th {
+            text-align: center;
+        }
+
+        .breadcrumdiv {
+            margin-left: 4px;
+            margin-top: 0px;
+
+        }
+
+        ul.breadcrumb {
+
+            list-style: none;
+
+            padding-top: 15px;
+
+        }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 15px;
+        }
+
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: ">\00a0";
+        }
+
+        ul.breadcrumb li a {
+            color: #4f46e5;
+            text-decoration: none;
+
+        }
+
+        ul.breadcrumb li a:hover {
+            color: #0808f0;
+            text-decoration: underline;
+        }
+
+        #formdata {
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+            width: 60%;
+            padding: 8px 20px 18px 20px;
+            background-color: white;
+
+
+        }
+
+        #formdata h5 {
+            padding-top: 30px;
+
+        }
+
+        #billing-form h1 {
+            text-align: left;
+            font-size: 29px;
+        }
+
+        /* Media query for mobile devices */
+        @media (max-width: 576px) {
+            .breadcrumdiv {
+                margin-top: 30px;
+            }
+
+            ul.breadcrumb li {
+                font-size: 14px;
+            }
+
+            #formdata {
+
+                width: 100%;
+
+            }
+
+            .input-field::placeholder {
+
+                padding-left: 30px !important;
+            }
+
+            .input-field {
+                padding-left: 30px !important;
+                position: relative !important;
+            }
+
+
+            /* Add more mobile-specific styles here */
+        }
+
+        #line {
+            padding-bottom: 5px;
+            padding-right: 10px;
+            padding-left: 12px;
+            height: 40px;
+            /* Set the height of the container div */
+
+            display: flex;
+            align-items: center;
+            /* Vertically center the content */
+            justify-content: center;
+            /* Horizontally center the content */
+        }
+
+        #line-content {
+            /* font-size: 24px; /* Adjust the font size for the content */
+            /*  font-weight: 0px;  /* Adjust the font weight for a thinner appearance */
+            background-color: #cbd5e1;
+            width: 1px;
+            height: 70%;
+        }
+
+        ul.breadcrumb li:last-child a {
+            color: grey;
+            /* Change the color to the grey color you prefer */
+
+        }
+    </style>
+</head>
+
+<body id="body-pd">
+
+    {{>side}}
+    <div class=" m-0" style="padding: 10px;">
+
+        <div class="col-md-12 subtitle d-flex justify-content-between align-items-center w-100"
+            style="margin-top: 50px;     padding-bottom: 0px;">
+
+            <div class="me-two d-flex justify-content-center align-items-center">
+
+                <div class="block">
+                    <h4 class="flex-grow-1 listtocon " style="font-size: 24px; margin-top:0px ;  margin-bottom: 18px;">
+                        Update Group Master
+                </div>
+                <div id="line">
+                    <span id="line-content"></span> <!-- Content inside the div -->
+                </div>
+                <div class="breadcrumdiv">
+                    <ul class="breadcrumb">
+                        <li><a href="#"> Home</a></li>
+                        <li><a href="#">Group Master List</a></li>
+                        <li><a href="#">Update Group Master</a></li>
+
+                    </ul>
+                </div>
+            </div>
+
+            {{!-- <a href="/stateMasterList" style="text-decoration: none;margin-right:20px ;margin-top: 25px;"> <i
+                    class="fa fa-xmark text-dark fa-2x"></i></a> --}}
+            <a href="/groupMasterList" style="text-decoration: none;margin-right:20px ;margin-top: 25px;"> <i
+                    class="fa fa-xmark text-dark fa-2x"></i></a>
+        </div>
+    </div>
+    <div>
+        {{#if message}}
+        <div class="alert alert-info">{{message}}</div>
+        {{/if}}
+
+        <form id="statemasterform" action="/groupMasterUpdate/{{itemType.rowguid}}" method="post">
+            {{!-- <h1>Order Billing</h1> --}}
+            <div id="formdata">
+                <h4>Enter Group details</h4>
+
+                
+                <label for="Status" class="label-block">Department  <span class="text-danger">*</span></label>
+                <select id="category" name="ParentPk">
+                    <option value={{val.id}}>{{val.code_name}}</option>
+                </select>
+
+                <label for="Code" class="label-block">Name  <span class="text-danger">*</span></label>
+                <div class="sup-containe" style="position: relative;">
+                    <input type="text" id="Code" name="code_name" class="sup-int" placeholder="Enter state Code"
+                        value="{{itemType.code_name}}" required>
+
+                </div>
+
+                <label for="Display_order">Display Order:</label>
+                <input type="number" id="Display_order" name="displayorder" placeholder="Enter Display Order"
+                    value="{{itemType.displayorder}}" min="0">
+
+                <label for="Status" class="label-block">Status:</label>
+                <select id="Status" name="Active">
+                     <option value="{{itemType.Active}}">{{itemType.Active}}</option>
+                </select>
+
+            </div>
+
+    </div>
+    </div>
+
+    <button type="submit"
+        style="border-radius: 10px; margin-top:30px; margin-bottom:30px; background-color:#4723d9;">Submit</button>
+
+    </form>
+
+
+
+    </div>
+
+
+
+
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const departmentSelect = document.getElementById("category");
+        const statusSelect = document.getElementById("Status");
+
+        let statusArray = ["Active", "Inactive"]
+
+        statusArray.forEach((ele) => {
+            const option = document.createElement("option");
+            if (statusSelect.value !== ele) {
+                option.value = ele;
+                option.textContent = ele;
+                statusSelect.appendChild(option);
+            }
+        })
+
+
+        //departmentSelect.innerHTML = '<option value="{{val.id}}">{{val.code_name}}</option>';
+
+
+        fetch("/allgroup")
+            .then((res) => {
+                return res.json();
+            })
+
+            .then((data) => {
+
+
+                data.forEach((ele) => {
+                    const option = document.createElement("option");
+                    if (ele.Active !== "Inactive") {
+                        console.log(typeof(departmentSelect.value))
+                        if (ele.id!== +departmentSelect.value) {
+                            console.log(ele)
+                            option.value = ele.id;
+                            option.textContent = ele.code_name;
+                            departmentSelect.appendChild(option);
+                        }
+                    }
+
+                })
+
+
+            })
+            .then((err) => {
+                console.log(err)
+            })
+
+    });
+
+</script>

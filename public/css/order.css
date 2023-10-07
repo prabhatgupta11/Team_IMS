@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@300&family=Satisfy&family=Ubuntu:wght@300;400&display=swap');
+
+
+body{
+    font-family:'Poppins', sans-serif !important;
+}
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#formdata{
+    padding:20px;
+    border-radius:10px;
+}
+
+h1 {
+    text-align: center;
+}
+
+h4{
+    padding-top:15px;
+    font-size: 1.3rem;
+    line-height: 2rem;
+    color: #1e293b;
+    font-weight: 500 !important;
+    -webkit-text-stroke: thin;
+}
+.button-15{
+background-color: #4723d9;
+border: 1px solid #0077CC;
+border-radius: 4px;
+box-sizing: border-box;
+color: #FFFFFF;
+cursor: pointer;
+direction: ltr;
+display: block;
+margin-top:15px;
+font-family: "SF Pro Text","SF Pro Icons","AOS Icons","Helvetica Neue",Helvetica,Arial,sans-serif;
+font-size: 14px;
+font-weight: 400;
+letter-spacing: -.022em;
+line-height: 1.47059;
+min-width: 30px;
+overflow: visible;
+padding: 4px 15px;
+text-align: center;
+vertical-align: baseline;
+user-select: none;
+-webkit-user-select: none;
+touch-action: manipulation;
+white-space: nowrap;
+
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    height:20%;
+}
+
+select{
+    width:100% !important;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    color:#4f4f4f;
+    font-size: 16px;
+}
+
+button {
+    display: block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    /* padding: 8px; */
+    text-align: center;
+
+}
+
+td{
+    padding:5 px !important
+}
+
+
+#add-product-btn:hover {
+    background-color: navy;
+}
+
+#type{
+ 
+    background-color: #007BFF;
+    color: white;
+    font-weight:600;
+    width: 10%;
+    align-items: center;
+    margin: auto;
+    
+}
