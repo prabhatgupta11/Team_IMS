@@ -1,5 +1,4 @@
 let express = require('express');
-var cors = require('cors')
 let router = express.Router();
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -701,17 +700,32 @@ router.post('/stockInOut', stockInOutController.stockInOut)
 // Stock In Api
 
 router.get('/stockIn', async function (req, res) {
-  // const userId = req.session.userDetail.id
-  // const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
-  // let userStores = []
-  // userStores = userStoreMapping.map(mapping => mapping.storeFk)
-  //const store = await Store.findAll({where : {outletId : userStores}})
-  const store = await Store.findAll()
+//   const userId = req.session.userDetail.id
+//   const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
+//   let userStores = []
+//   userStores = userStoreMapping.map(mapping => mapping.storeFk)
+//   const store = await Store.findAll({where : {outletId : userStores}})
+//  let storeIds = []
+//  storeIds = store.map(mapping => mapping.outletId)
+const store = await Store.findAll()
   const product = await NewProduct.findAll()
-  const supplier = await SupplierMaster.findAll()
-  res.render('stockInOut/stockIn', { title: 'Express', message: req.flash('message'), store, product,supplier });
+  // const supplier = await SupplierMaster.findAll({where : {storeFk : storeIds}})
+  res.render('stockInOut/stockIn', { title: 'Express', message: req.flash('message'), store, product });
 });
 
+// store wise all supplier populate into supplier dropdown
+router.get('/suppliers/:outletId', async function (req,res) {
+  const outletId = req.params.outletId
+  const suppliers = await SupplierMaster.findAll({where : {storeFk : outletId}})
+  res.json(suppliers)
+})
+
+// populate the supplier detail into stock In
+router.get('/allSuppliers/:supplierId', async function (req,res) {
+  const supplierId = req.params.supplierId
+  const suppliers = await SupplierMaster.findAll({where : {id : supplierId}})
+  res.json(suppliers)
+})
 router.post('/createStockIn', stockInOutController.addStockIn)
 
 // Stock Out Api
@@ -932,12 +946,13 @@ router.post('/updateUserStoreMappingApprovalStatus', userStoreMapping.updateUser
 // Order Billing Api
 
 router.get('/order', async function (req, res) {
- const userId = req.session.userDetail.id
-const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
-let userStores = []
-userStores = userStoreMapping.map(mapping => mapping.storeFk)
-  const store = await Store.findAll({where : {outletId : userStores}})
+//  const userId = req.session.userDetail.id
+// const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
+// let userStores = []
+// userStores = userStoreMapping.map(mapping => mapping.storeFk)
+//   const store = await Store.findAll({where : {outletId : userStores}})
 
+const store = await Store.findAll()
   const product = await Product.findAll()
   const productStock = await ProductStock.findAll()
   res.render('order/order', { title: 'Express', message: req.flash('message'), store, product,productStock });
@@ -968,12 +983,11 @@ router.get('/orderDetailsList', async function (req, res) {
       { customerName: { [Op.like]: `%${req.query.search.value}%` } },
       { totalAmount: { [Op.like]: `%${req.query.search.value}%` } },
       { createdAt: { [Op.like]: `%${req.query.search.value}%` } },
-      // { '$order_item.storeName$': { [Op.like]: `%${req.query.search.value}%` } },
+      { '$order_item.storeName$': { [Op.like]: `%${req.query.search.value}%` } },
     ];
   }
 
   const order = await Order.findAll({
-    
     include: [
       {
         model: OrderItems,
@@ -984,18 +998,6 @@ router.get('/orderDetailsList', async function (req, res) {
     offset: start,
     where: where
   })
-   
-  // console.log(77777777777,order.orderId)
-  // const  customerOrderId=order.orderId
-
-  // const outletIdByOrderid = await ProductPrice.findAll({
-  //   where: { orderFk: customerOrderId },
-  //   attributes: ['outletId']
-  // });
-
-  // const storeName=await Store.findOne({where:{outletId}})
-  
-
 
   const count = await Order.count()
 
@@ -1009,7 +1011,7 @@ router.get('/orderDetailsList', async function (req, res) {
     data_arr.push({
       'orderId': order[i].orderId,
       'customerName': order[i].customerName,
-       //'storeName': order[i].order_item.storeName,
+      'storeName': order[i].order_item.storeName,
       'totalAmount': order[i].totalAmount,
       'createdAt': formattedDate
 
@@ -1034,14 +1036,12 @@ router.get('/updateOrder/:id', async function (req, res) {
   const orderItems = await ProductPrice.findOne({ where: { orderFk : req.params.id } })
   // const store = await Store.findAll({where : {approve_b : 'approved'}})
   const product = await Product.findAll({where : {approve_b : 'approved'}})
-const previousStore = await Store.findOne({outletId : orderItems.outletId})
-
+const previousStore = await Store.findOne({outletId : orderItems.storeFk})
   const userId = req.session.userDetail.id
   const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
   let userStores = []
   userStores = userStoreMapping.map(mapping => mapping.storeFk)
     const store = await Store.findAll({where : {outletId : userStores}})
-
 
   res.render('order/orderUpdate', { title: 'Express', message: req.flash('message'), order, store, product,orderItems,previousStore });
 });
@@ -1102,10 +1102,10 @@ router.get("/getpriceById/:itemId", async(req, res) => {
  }
 });
 
-//  route for the orderUpdate
+//for the orderUpdate
 // Define a route to fetch orderItems by order ID
 router.get('/getOrderItems/:id', async function (req, res) {
-  const orderItems = await ProductPrice.findAll({ where: { orderFk: req.params.id } });
+  const orderItems = await ProductPrice.findAll({ where: { orderPK: req.params.id } });
   res.json(orderItems);
 })
 
@@ -1361,65 +1361,56 @@ router.post("/createSuplierdata", supplierMasterController.createSuplier);
 
 
 router.get('/suppliersMasterList', async function (req, res) {
-  // const userId = req.session.userDetail.id
-  // const userStoreMapping = await UserStoreMapping.findAll({where : {userFk : userId}})
-  // let userStores = []
-  // userStores = userStoreMapping.map(mapping => mapping.storeFk)
-    // const store = await Store.findAll({where : {outletId : userStores}})
-    const store = await Store.findAll()
-
-  res.render('supplierMaster/supplierMasterList', { title: 'Express',store, message: req.flash('message') });
+  res.render('supplierMaster/supplierMasterList', { title: 'Express', message: req.flash('message') });
 });
 
 
-router.post('/supplierDetailsList', async function (req, res) {  // Change to POST request
-  let draw = req.body.draw;
-  let start = parseInt(req.body.start);
-  let length = parseInt(req.body.length);
-  let outletId = req.body.outletId;  // Retrieve outletId from the request
+router.get('/supplierDetailsList', async function (req, res) {
+  let draw = req.query.draw;
 
+  let start = parseInt(req.query.start);
 
-  let where = {};
+  let length = parseInt(req.query.length);
 
-  if (req.body.search.value) {
-      where[Op.or] = [
-          { Code: { [Op.like]: `%${req.body.search.value}%` } },
-          { Name: { [Op.like]: `%${req.body.search.value}%` } },
-          { Email: { [Op.like]: `%${req.body.search.value}%` } },
-      ];
+  let where = {}
+
+  if (req.query.search.value) {
+    where[Op.or] = [
+      { Code: { [Op.like]: `%${req.query.search.value}%` } },
+      { Name: { [Op.like]: `%${req.query.search.value}%` } },
+      { Email: { [Op.like]: `%${req.query.search.value}%` } },
+    ];
   }
 
-  if (outletId) {
- 
-    where.storeFk = outletId  // Filter by outletId if provided
-  }
+  const supplier = await SupplierMaster.findAll({
+    limit: length,
+    offset: start,
+    where: where
+  })
 
-  const supplier = await SupplierMaster.findAndCountAll({
-      where: where,
-      limit: length,
-      offset: start
-  });
+  const count = await SupplierMaster.count()
 
-  let data_arr = [];
-  for (let i = 0; i < supplier.rows.length; i++) {
-      data_arr.push({
-          'Code': supplier.rows[i].Code,
-          'Name': supplier.rows[i].Name,
-          'Email': supplier.rows[i].Email,
-          'rowguid': supplier.rows[i].rowguid
-      });
+  let data_arr = []
+  for (let i = 0; i < supplier.length; i++) {
+
+
+    data_arr.push({
+      'Code': supplier[i].Code,
+      'Name': supplier[i].Name,
+      'Email': supplier[i].Email,
+      'rowguid':supplier[i].rowguid
+    });
   }
 
   let output = {
-      'draw': draw,
-      'iTotalRecords': supplier.count,
-      'iTotalDisplayRecords': supplier.count,
-      'aaData': data_arr
+    'draw': draw,
+    'iTotalRecords': count,
+    'iTotalDisplayRecords': count,
+    'aaData': data_arr
   };
 
-  res.json(output);
+  res.json(output)
 });
-
 
 
 router.get('/updateSupplierMaster/:uuid', async function (req, res) {

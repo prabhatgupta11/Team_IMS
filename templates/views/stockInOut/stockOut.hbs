@@ -9,6 +9,70 @@
     <link rel="stylesheet" href="/public/css/product.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
+        .scrollmenu {
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;
+            border: 1px !important;
+            border-radius: 10px !important;
+
+        }
+
+        .new-icon-short {
+            position: absolute;
+            left: 4% !important;
+            top: 50%;
+            color: gray;
+        }
+
+        .input-field {
+            padding-left: 31px !important;
+        }
+
+        .tr-head th {
+            font-weight: 800 !important;
+        }
+
+        th {
+            text-align: center !important;
+        }
+
+        .if-second {
+            padding-left: 40px !important;
+        }
+
+        div.scrollmenu {
+            background-color: #ffffff;
+            overflow-x: auto;
+            /* Enable horizontal scrolling */
+            white-space: nowrap;
+            max-width: 100%;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        input,
+        select {
+            border: 1px solid lightgray;
+        }
+
+        div.scrollmenu table {
+            width: 100%;
+            /* Set the table to be 100% width */
+            min-width: 800px;
+        }
+
+        div.scrollmenu a {
+            display: inline-block;
+            color: black;
+            text-align: center;
+            padding: 14px;
+            text-decoration: none;
+        }
+
+        div.scrollmenu a:hover {
+            background-color: #f0f0f0;
+        }
+
         /* Light color for even rows */
         .table-custom tbody tr:nth-child(even) {
             background-color: #ffff;
@@ -103,7 +167,7 @@
         <ul class="breadcrumb">
             <li><i class="fa-solid fa-house"></i><a href="#"> Home</a></li>
             <li><a href="#">Master</a></li>
-            <li><a href="#">Stock Out</a></li>
+            <li><a href="#">Stock In Out</a></li>
 
         </ul>
     </div>
@@ -131,18 +195,18 @@
                 </ul>
             </div>
         </div>
-        <div>
+        {{!-- <div>
 
             <a href="/newProductList" style="text-decoration: none;margin-right:20px"> <i
                     class="fa fa-xmark text-dark fa-2x"></i></a>
-        </div>
+        </div> --}}
 
     </div>
 
 
 
-    <form action="/createNewProduct" method="post" enctype="multipart/form-data">
-        <div class="lineone-main-contianer col-md-12">
+    <form action="/createStockOut" method="post">
+        <div class="lineone-main-contianer col-md-11">
             <div class="row">
                 <div class="border-gen col-md-9 ">
                     <div class="ger-title col-md-9 my-2">
@@ -152,25 +216,38 @@
                         </div>
                     </div>
 
-                    <div class="col-md-9 first-gen-section">
+                    <div class="col-md-12 first-gen-section">
                         <div class="row mt-3">
-                            <div class="item-section-gen col-md-12">
+                            <div class="item-section-gen col-md-12 d-none">
                                 <label for="exampleInputEmail1">Stock Type <span class="text-danger">*</span></label>
-                                <select class="form-select " name="type" aria-label="Default select example"
-                                    style="border-radius: 10px; padding-left: 40px;" required>
-                                    <option value="Out" disabled selected>Stock Out</option>
+                                <select class="form-select " name="stockType" aria-label="Default select example"
+                                    style="border-radius: 10px; padding-left: 40px;">
+                                    {{!-- <option value="">select Stock</option> --}}
+                                    <option value="Out">Stock Out</option>
                                 </select>
                                 <div class="icon-context input-field">
                                     <i class="fa-solid fa-store icon-input"></i>
                                 </div>
 
                             </div>
+                            <div class="item-section-gen col-md-10">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Order Date <span
+                                            class="text-danger">*</span></label>
+                                    <input type="date" class="form-control input-field" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" name="orderDate" placeholder="Enter Order Date"
+                                        required>
+                                    <div class="icon-context">
+                                        <i class="fa-solid fa-calendar-days icons-short" style="left: 4%;"></i>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                         <div class="row">
-                            <div class="item-section-gen col-md-12">
+                            <div class="item-section-gen col-md-10">
                                 <label for="exampleInputEmail1">Store<span class="text-danger">*</span></label>
-                                <select class="form-select " id="departmentDropdown" name="outletId"
+                                <select class="form-select " id="storeDropdown" name="outletId"
                                     aria-label="Default select example" style="border-radius: 10px; padding-left: 40px;"
                                     required>
                                     <option value="" disabled selected>Select Store</option>
@@ -183,281 +260,162 @@
                                 </div>
 
                             </div>
-                            <div class="item-section-gen col-md-12">
-                                <label for="exampleInputEmail1">Supplier<span
-                                        class="text-danger">*</span></label>
-                                <select class="form-select" name="supplierCustomer" aria-label="Default select example"
-                                    style="border-radius: 10px; padding-left: 40px;" required>
-                                    <option value="" disabled selected>Select Customer</option>
-                                    {{#each group}}
-                                    <option value="{{id}}"> {{ code_name }} </option>
-                                    {{/each}}
+                            <div class="item-section-gen col-md-10">
+                                <div class="block d-flex flex-column">
+                                    <label for="exampleInputEmail1">Customer<span class="text-danger">*</span></label>
+                                    <div class="d-flex align-items-center">
+                                        <input type="text" id="supplierSearch" class="w-50 py-1 pl-2  mb-2  "
+                                            placeholder="Search for a supplier" onkeyup="searchSuppliers()"
+                                            style="border: 1px solid lightgray;" />
+                                        <button class="button-15  mb-2 " role="button" type="button"
+                                            style="margin:0px 10px 0px 10px"><a href="/supplierMaster"
+                                                class="text-white text-decoration-none"> + New
+                                                Supplier</a></button>
+                                    </div>
+                                </div>
+
+                                <select class="form-select" id="supplierDropdown" name="supplierCustomer"
+                                    aria-label="Default select example"
+                                    style="border-radius: 10px; padding-left: 40px; " required>
+                                    <option value="" disabled selected>Select Supplier</option>
                                 </select>
                                 <div class="icon-context input-field">
-                                    <i class="fa-solid fa-store icon-input"></i>
+                                    <i class="fa-solid fa-truck-field icon-input" style=" top:64%"></i>
                                 </div>
 
                             </div>
-
-                            <div class="item-section-gen col-md-12">
-                                <label for="exampleInputEmail1">Product<span class="text-danger">*</span></label>
-                                <select class="form-select " id="groupDropdown" name="itemId"
-                                    aria-label="Default select example" style="border-radius: 10px; padding-left: 40px;"
-                                    required>
-                                    <option value="" disabled selected>Select Product</option>
-                                    {{#each product}}
-                                    <option value="{{itemId}}"> {{ itemName }} </option>
-                                    {{/each}}
-                                </select>
-                                <div class="icon-context input-field">
-                                    <i class="fa-solid fa-store icon-input"></i>
+                            <div class="row col-md-10 pr-0 ">
+                                <div class="item-section-gen col-md-12 pr-0">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Customer Name <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" class="form-control   if-second bg-light " id="supplierName"
+                                            aria-describedby="emailHelp" name="name" placeholder=" Enter Customer Name"
+                                            required readonly>
+                                        <div class="icon-context">
+                                            <i class="fa-solid fa-user icons-short new-icon-short"></i>
+                                        </div>
+                                    </div>
                                 </div>
-
+                                <div class="item-section-gen col-md-6 pr-0">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Email<span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control if-second bg-light" id="supplierEmail"
+                                            aria-describedby="emailHelp" name="email" placeholder="Enter Customer Email"
+                                            required readonly>
+                                        <div class="icon-context">
+                                            <i class="fa-solid fa-envelope icons-short"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-section-gen col-md-6 pr-0">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Mobile No<span
+                                                class="text-danger">*</span></label>
+                                        <input type="number" class="form-control if-second bg-light" id="supplierMobile"
+                                            aria-describedby="emailHelp" name="mobileNo"
+                                            placeholder="Enter Customer Mobile Number" required readonly>
+                                        <div class="icon-context">
+                                            <i class="fa-solid fa-phone icons-short"></i>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="row ">
-                                <div class="item-section-gen col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">HSN Code <span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" class="form-control input-field" id="exampleInputEmail1"
-                                            aria-describedby="emailHelp" name="hsnCode" placeholder="Enter HSN Code"
-                                            required>
-                                        <div class="icon-context">
-                                            <i class="fa-solid fa-user icons-short"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item-section-gen col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Batch No <span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" class="form-control input-field" id="exampleInputEmail1"
-                                            aria-describedby="emailHelp" name="batchNo" placeholder="Enter Batch No"
-                                            required>
-                                        <div class="icon-context">
-                                            <i class="fa-solid fa-user icons-short"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 first-gen-section">
-                                    <div class="row mt-3">
-                                        <div class="item-section-gen col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Mfg Date <span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" class="form-control input-field"
-                                                    id="exampleInputEmail1" aria-describedby="emailHelp" name="mfgDate"
-                                                    placeholder="Enter Mfg Date" required>
-                                                <div class="icon-context">
-                                                    <i class="fa-solid fa-user icons-short"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="item-section-gen col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Exp Date <span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" class="form-control input-field"
-                                                    id="exampleInputEmail1" aria-describedby="emailHelp" name="expDate"
-                                                    placeholder="Enter Exp Date" required>
-                                                <div class="icon-context">
-                                                    <i class="fa-solid fa-user icons-short"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="item-section-gen col-md-12">
-                                            <label for="exampleInputEmail1">Free Qty <span
-                                                    class="text-danger">*</span></label>
-                                            <select class="form-select " name="freeQty"
-                                                aria-label="Default select example"
-                                                style="border-radius: 10px; padding-left: 40px;" required>
-                                                <option value="" disabled selected>Select Qty</option>
-                                                <option value="Y">Yes</option>
-                                                <option value="N">No</option>
-
-                                            </select>
-                                            <div class="icon-context input-field">
-                                                <i class="fa-solid fa-store icon-input"></i>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="item-section-gen col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Qty<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" class="form-control input-field"
-                                                    id="exampleInputEmail1" aria-describedby="emailHelp" name="qty"
-                                                    placeholder="Enter Quantity" required>
-                                                <div class="icon-context">
-                                                    <i class="fa-solid fa-user icons-short"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item-section-gen col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Purchase Price<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" class="form-control input-field"
-                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                    name="purchasePrice" placeholder="Enter Purchase Price" required>
-                                                <div class="icon-context">
-                                                    <i class="fa-solid fa-user icons-short"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item-section-gen col-md-12">
-                                            <label for="exampleInputEmail1">Discount Type <span
-                                                    class="text-danger">*</span></label>
-                                            <select class="form-select " name="discountType"
-                                                aria-label="Default select example"
-                                                style="border-radius: 10px; padding-left: 40px;" required>
-                                                <option value="" disabled selected>Select Qty</option>
-                                                <option value="Flate">Flate</option>
-                                                <option value="Percentage">Percentage</option>
-
-                                            </select>
-                                            <div class="icon-context input-field">
-                                                <i class="fa-solid fa-store icon-input"></i>
-                                            </div>
-
-                                        </div>
-                                        <div class="item-section-gen col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Discount<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" class="form-control input-field"
-                                                    id="exampleInputEmail1" aria-describedby="emailHelp" name="discount"
-                                                    placeholder="Enter Discount" required>
-                                                <div class="icon-context">
-                                                    <i class="fa-solid fa-user icons-short"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item-section-gen col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Original Price<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" class="form-control input-field"
-                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                    name="originalPrice" placeholder="Enter Original Price" required>
-                                                <div class="icon-context">
-                                                    <i class="fa-solid fa-user icons-short"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item-section-gen col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">MRP<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" class="form-control input-field"
-                                                    id="exampleInputEmail1" aria-describedby="emailHelp" name="mrp"
-                                                    placeholder="Enter MRP" required>
-                                                <div class="icon-context">
-                                                    <i class="fa-solid fa-user icons-short"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item-section-gen col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Sale Price<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" class="form-control input-field"
-                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                    name="salePrice" placeholder="Enter Sale Price" required>
-                                                <div class="icon-context">
-                                                    <i class="fa-solid fa-user icons-short"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item-section-gen col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Cost Price Without Tax<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" class="form-control input-field"
-                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                    name="costPriceWithoutTax" placeholder="Enter Cost Price" required>
-                                                <div class="icon-context">
-                                                    <i class="fa-solid fa-user icons-short"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item-section-gen col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Tax Percentage<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" class="form-control input-field"
-                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                    name="taxPercentage" placeholder="Enter Tax Percentage" required>
-                                                <div class="icon-context">
-                                                    <i class="fa-solid fa-user icons-short"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item-section-gen col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Tax Amount<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" class="form-control input-field"
-                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                    name="taxAmount" placeholder="Enter Tax Amount" required>
-                                                <div class="icon-context">
-                                                    <i class="fa-solid fa-user icons-short"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item-section-gen col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Base UOM / packing<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" class="form-control input-field"
-                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                    name="taxAmount" placeholder="Enter Base UOM / packing" required>
-                                                <div class="icon-context">
-                                                    <i class="fa-solid fa-user icons-short"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item-section-gen col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Base UOM Volume / pack <span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" class="form-control input-field"
-                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                    name="taxAmount" placeholder="Enter Base UOM Volume / pack"
-                                                    required>
-                                                <div class="icon-context">
-                                                    <i class="fa-solid fa-user icons-short"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="container btn-context" style="padding-left: 20px;">
-                                            <div class="row">
-                                                <div class="col-md-12 form-buttons p-0 m-0 d-flex">
-                                                    <button class="button-15" role="button" type="submit"
-                                                        style="margin:10px">Save</button>
-
-                                                    <button class="button-15" role="button" type="reset"
-                                                        style="margin:10px 0px">Reset</button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
+                            <div class=" my-3 col-md-10 d-flex justify-content-between  align-item-center">
+                                <button type="button" class="delete-row-btn button-15" id="add-product-btn">Add
+                                    Product</button>
+                                <button type="button" class="delete-row-btn button-15"><a
+                                        class="text-decoration-none text-white" href="/newProduct"> + New
+                                        Product</a></button>
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
+
+
+        </div>
+        <div class="scrollmenu">
+            <table id="product-table" class="table">
+
+                <thead>
+                    <div class="row">
+                        <tr class="tr-head">
+
+                            <div class="col-md-2">
+                                <th>Product</th>
+                            </div>
+                            <div class="col-md-2">
+                                <th>HSN Code</th>
+                            </div>
+                            <div class="col-md-1">
+                                <th>Batch No</th>
+                            </div>
+                            <div class="col-md-1">
+                                <th>Mfg Date</th>
+                            </div>
+                            <div class="col-md-1">
+                                <th>Exp Date</th>
+                            </div>
+                            <div class="col-md-1">
+                                <th>Free Qty</th>
+                            </div>
+                            <div class="col-md-2">
+                                <th>Quantity</th>
+                            </div>
+                            <div class="col-md-2">
+                                <th>Purchase Price</th>
+                            </div>
+                            <div class="col-md-1 d-none">
+                                <th class="d-none">Discount Type</th>
+                            </div>
+                            <div class="col-md-1">
+                                <th>Discount</th>
+                            </div>
+                            <div class="col-md-1">
+                                <th>Original Price</th>
+                            </div>
+                            <div class="col">
+                                <th class="col-md-3">Market Price</th>
+                            </div>
+                            <div class="col-md-2">
+                                <th>Sale Price</th>
+                            </div>
+                            <div class="col-md-1">
+                                <th>Cost Price Without Tax</th>
+                            </div>
+                            <div class="col-md-1">
+                                <th>Tax Percentage</th>
+                            </div>
+                            <div class="col-md-1">
+                                <th>Tax Amount </th>
+                            </div>
+                            <div class="col-md-1">
+                                <th class='d-none'>Base UOM / packing</th>
+                            </div>
+                            <div class="col-md-2">
+                                <th class='d-none'>Base UOM Volume / pack</th>
+                            </div>
+                            <div class="col-md-2">
+                                <th>Action</th>
+                            </div>
+                        </tr>
+                    </div>
+                </thead>
+                <tbody id="product-list">
+
+                </tbody>
+            </table>
+        </div>
+        <div class="container btn-context m-0" style="padding-left: 20px;">
+            <div class="row">
+                <div class="col-md-12 form-buttons p-0 m-0 d-flex">
+                    <button class="button-15" role="button" type="submit" style="margin:10px">Save</button>
+
+                    <button class="button-15" role="button" type="reset" style="margin:10px 0px">Reset</button>
+                </div>
+            </div>
+        </div>
     </form>
 </body>
 
@@ -471,79 +429,156 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-
 <script>
-    const uploadedImage = document.getElementById('uploadedImage');
-    const imageBox = document.getElementById('image-show');
-    const fileInput = document.querySelector('input[type="file"]');
-    const removeButton = document.getElementById('remove-img');
+    function searchSuppliers() {
+        var input, filter, select, option, txtValue;
+        input = document.getElementById('supplierSearch');
+        filter = input.value.toUpperCase();
+        select = document.getElementById('supplierSelect');
+        option = select.getElementsByTagName('option');
 
-    fileInput.addEventListener('change', () => {
-        const file = fileInput.files[0];
-        const imageUrl = URL.createObjectURL(file);
-        console.log(imageUrl);
-        uploadedImage.src = imageUrl;
-        imageBox.classList.add("image-box-opacity");
-    });
+        for (var i = 0; i < option.length; i++) {
+            txtValue = option[i].textContent;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                option[i].style.display = '';
+                console.log(txtValue.toUpperCase().indexOf(filter))
+            }
+            else {
+                option[i].style.display = 'none';
+            }
 
-    removeButton.addEventListener('click', () => {
-        uploadedImage.src = '';
-        fileInput.value = '';
-        imageBox.classList.remove("image-box-opacity");
-    });
+        }
+    }
 </script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{!-- <script>
+    // Function to populate the Supplier dropdown based on the selected store
+    function populateSuppliers() {
+        const outletId = $('#storeDropdown').val();
+        $.get(`/suppliers/${outletId}`, function (suppliers) {
+            const supplierDropdown = $('#supplierDropdown');
+            supplierDropdown.empty();
+            supplierDropdown.append('<option value="">Select Supplier</option>');
+            suppliers.forEach(function (supplier) {
+                supplierDropdown.append(`<option value="${supplier.id}">${supplier.Name}</option>`);
+            });
+        });
+    }
+
+    // Event listener for store dropdown
+    $('#storeDropdown').change(populateSuppliers);
+
+    $('#supplierDropdown').change(function () {
+        // Get the selected supplier value when the store dropdown changes
+        const supplierId = $('#supplierDropdown').val();
+        $.get(`/allSuppliers/${supplierId}`, function (suppliers) {
+            if (suppliers.length > 0) {
+                const supplier = suppliers[0]; // Get the first (and only) object in the array
+                const supplierNameInput = $('#supplierName');
+                const supplierEmailInput = $('#supplierEmail');
+                const supplierMobileInput = $('#supplierMobile');
+
+                // Populate the input fields with the supplier data
+                supplierNameInput.val(supplier.Name);
+                supplierEmailInput.val(supplier.Email);
+                supplierMobileInput.val(supplier.ContactNo);
+            }
+        });
+    });
+
+</script> --}}
+
 <script>
-    // Function to populate the department dropdown based on the selected category
-    function populateDepartments() {
-        const categoryId = $('#categoryDropdown').val();
-        $.get(`/departments/${categoryId}`, function (departments) {
-            const departmentDropdown = $('#departmentDropdown');
-            departmentDropdown.empty();
-            departmentDropdown.append('<option value="">Select Department</option>');
-            departments.forEach(function (department) {
-                departmentDropdown.append(`<option value="${department.id}">${department.code_name}</option>`);
-            });
+    let addbtn = document.getElementById("add-product-btn");
+    let tablebody = document.getElementById("product-list")
+
+
+    addbtn.addEventListener("click", () => {
+        const newRow = document.createElement("tr");
+
+        newRow.innerHTML = `
+    <td class="px-0" style="width:20%">
+      <select name="itemId" class="product-select rounded-3 p-1 mx-2">
+        <option value="">Select Product</option>
+        {{#each product}}
+        <option value='{{itemId}}'>{{itemName}}</option>
+        {{/each}}
+      </select>
+    </td>
+    <td><input type="number" name="hsnCode[]" class="col-md-12 p-1 mx-2"></td>
+    <td><input type="number" name="batchNo[]" class=" col-md-12 p-1 mx-2"></td>
+    <td><input type="date" name="mfgDate[]" class=" col-md-12 p-1 mx-2"></td>
+    <td><input type="date" name="expDate[]" class="col-md-12 p-1 mx-2"></td>
+    <td class="px-0" style="width:20%">
+      <select name="freeQty[]" class="product-select rounded-3 p-1 mx-2">
+        <option value="">Select Free Qty</option>
+         <option value="Yes">Yes</option>
+          <option value="No">No</option>
+      </select>
+    </td>
+    <td><input type="number" name="qty[]" class=" col-md-12  p-1 mx-2"></td>
+    <td><input type="number" name="purchasePrice[]" class=" col-md-12  p-1 mx-2 "></td>
+    <td class = 'd-none'><input type="text"  name="discountType[]" class="col-md-12  p-1 mx-2" value = "percentage"></td>
+    <td><input type="number" name="discount[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><input type="number" name="originalPrice[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><input type="number" name="mrp[]" class=" col-md-12 p-1 mx-2 "></td> 
+    <td><input type="number" name="salePrice[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><input type="number" name="costPriceWithoutTax[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><input type="number" name="taxPercentage[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><input type="number" name="taxAmount[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td class = 'd-none'><input type="number" name="packing[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td class = 'd-none'><input type="number" name="pack[]" class=" col-md-12 p-1 mx-2 "></td>
+    <td><i class="fa-solid fa-trash delete-row-btn ml-auto"></i></td>
+  `;
+        tablebody.appendChild(newRow);
+        removeRow(newRow);
+
+        // Attach event listeners for Quantity, Purchase Price, and Discount Percentage
+        const quantityInput = newRow.querySelector('input[name="qty[]"]');
+        const purchasePriceInput = newRow.querySelector('input[name="purchasePrice[]"]');
+        const discountPercentageInput = newRow.querySelector('input[name="discount[]"]');
+        const originalPriceInput = newRow.querySelector('input[name="originalPrice[]"]');
+
+        quantityInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+        purchasePriceInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+        discountPercentageInput.addEventListener("input", () => updateOriginalPrice.call(newRow));
+
+        // Initial calculation when adding a new row
+        updateOriginalPrice.call(newRow);
+
+        // fetchProductsForSelectedStore(newRow);
+        // updateTotal();
+    });
+
+    function updateOriginalPrice() {
+        // Get the input fields for Quantity, Purchase Price, Discount Percentage, and Original Price
+        const quantityInput = this.querySelector('input[name="qty[]"]');
+        const purchasePriceInput = this.querySelector('input[name="purchasePrice[]"]');
+        const discountPercentageInput = this.querySelector('input[name="discount[]"]');
+        const originalPriceInput = this.querySelector('input[name="originalPrice[]"]');
+
+        // Parse the values from input fields
+        const quantity = parseFloat(quantityInput.value) || 0;
+        const purchasePrice = parseFloat(purchasePriceInput.value) || 0;
+        const discountPercentage = parseFloat(discountPercentageInput.value) || 0;
+
+        // Calculate Original Price
+        const originalPrice = quantity * purchasePrice - (quantity * purchasePrice * (discountPercentage / 100));
+
+        // Update the Original Price field with the calculated value
+        originalPriceInput.value = originalPrice.toFixed(2); // Format to two decimal places
+    }
+
+
+    function removeRow(row) {
+        const deleteBtn = row.querySelector(".delete-row-btn");
+        deleteBtn.addEventListener("click", function () {
+            row.remove();
         });
     }
 
-    // Event listener for category dropdown
-    $('#categoryDropdown').change(populateDepartments);
 
-    // Function to populate the group dropdown based on the selected department
-    function populateGroups() {
-        const departmentId = $('#departmentDropdown').val();
-        $.get(`/groups/${departmentId}`, function (groups) {
-            const groupDropdown = $('#groupDropdown');
-            groupDropdown.empty();
-            groupDropdown.append('<option value="">Select Group</option>');
-            groups.forEach(function (group) {
-                groupDropdown.append(`<option value="${group.id}">${group.code_name}</option>`);
-            });
-        });
-    }
-
-    // Event listener for department dropdown
-    $('#departmentDropdown').change(populateGroups);
-
-    // Function to populate the item type dropdown based on the selected group
-    function populateItemTypes() {
-        const groupId = $('#groupDropdown').val();
-        $.get(`/itemTypes/${groupId}`, function (itemTypes) {
-            const itemTypeDropdown = $('#itemTypeDropdown');
-            itemTypeDropdown.empty();
-            itemTypeDropdown.append('<option value="">Select Item Type</option>');
-            itemTypes.forEach(function (itemType) {
-                itemTypeDropdown.append(`<option value="${itemType.id}">${itemType.code_name}</option>`);
-            });
-        });
-    }
-
-    // Event listener for group dropdown
-    $('#groupDropdown').change(populateItemTypes);
 </script>
-
-
 
 </html>

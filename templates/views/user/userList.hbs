@@ -90,8 +90,12 @@
 
     {{>side}}
     <div class="col-md-12 row-md-5 mx-0 main_container " style="padding-right:0px; margin-top:0px">
-   
-       
+        {{#if message}}
+        <div class="alert alert-info opacity-0">{{message}}</div>
+        {{/if}}
+        {{#if message}}
+        <div class="alert alert-info">{{message}}</div>
+        {{/if}}
         <div class="row-md-4 subtitle d-flex justify-content-between align-items-center" style="margin-top: 60px;">
             {{!-- <div class="row-md-4 subtitle d-flex justify-content-start align-items-center w-75"
                 style="margin-top: 5px;">
@@ -136,9 +140,6 @@
             </div>
 
         </div>
-         {{#if message}}
-        <div class="alert alert-info">{{message}}</div>
-        {{/if}}
         {{!-- <div class="row-md-4 subtitle d-flex justify-content-between align-items-center">
             <div class="block cross-section">
                 {{#if message}}

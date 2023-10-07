@@ -190,17 +190,17 @@
     </div>
   </div>
   <div>
-     {{#if message}}
-      <div class="alert alert-info">{{message}}</div>
-      {{/if}}
 
 
     <form id="supplierForm" action="/createSuplierdata" method="post">
-
+      {{!-- <h1>Order Billing</h1> --}}
+      {{#if message}}
+      <div class="alert alert-info">{{message}}</div>
+      {{/if}}
       <div id="formdata">
         <h4>Supplier Details</h4>
 
-         <label for="store">Store  <span class="text-danger">*</span></label>
+         <label for="store">Store:</label>
         <div class="cons" style="position: relative;">
           <div class="icon-context input-field" style="position: absolute; top:8px;left:10px ">
             <i class="fa-solid fa-store icons-icons" style="font-size: 15px;"></i>
@@ -227,7 +227,7 @@
         
 
         <label for="Name" class="label-block">Name <span class="text-danger">*</span> :</label>
-        <input type="text" id="Name" name="Name" placeholder="&#128100; Enter Supplier Name" required 
+        <input type="text" id="Name" name="Name" placeholder="&#128100; Enter Name" required 
           title="Please enter only letters"/>
 
         <label for="ContactPersonName" class="label-block">Contact Person Name:</label>
@@ -334,7 +334,6 @@
 
 
   const addhar = document.getElementById('AadharNo');
-
   addhar.addEventListener('input', function () {
     const addharval = addhar.value;
     if (/^[0-9]{12}$/.test(addharval)) {
@@ -375,5 +374,71 @@
   });
 
 </script>
+
+
+
+{{!--
+<script>
+  document.getElementById("supplierForm").addEventListener("submit", function () {
+    //e.preventDefault();
+
+    // Collect form data
+    const formData = {
+      Code: document.getElementById("Code").value,
+      Name: document.getElementById("Name").value,
+      ContactPersonName: document.getElementById("ContactPersonName").value,
+      ContactNo: document.getElementById("ContactNo").value,
+      Email: document.getElementById("Email").value,
+      Address: document.getElementById("Address").value,
+      Pincode: document.getElementById("Pincode").value,
+      GSTNo: document.getElementById("GSTNo").value,
+      PAN: document.getElementById("PAN").value,
+      AadharNo: document.getElementById("AadharNo").value,
+      CreditLimit: parseFloat(document.getElementById("CreditLimit").value || 0), // Set default value to 0
+      CreditDays: parseInt(document.getElementById("CreditDays").value || 0), // Set default value to 0
+      Status: document.getElementById("Status").value,
+    };
+    // Display zero if the user hasn't entered any value for Credit Limit and Credit Days
+    document.getElementById("CreditLimit").value = formData.CreditLimit;
+    document.getElementById("CreditDays").value = formData.CreditDays;
+
+    // Log form data to the console (you can replace this with your backend submission logic)
+    console.log("Form Data:", formData);
+
+
+
+    fetch('/createSuplierdata', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Data sent:', data);
+
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  });
+
+
+
+
+  // to convert the userinput to uppercase
+  function convertToUpperCase(input) {
+    input.value = input.value.toUpperCase();
+  }
+
+  // Ensure Credit Limit and Credit Days default to 0 on page load
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("CreditLimit").value = 0;
+    document.getElementById("CreditDays").value = 0;
+  });
+
+
+</script> --}}
 
 </html>

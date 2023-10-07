@@ -16,10 +16,6 @@
         body {
             background-color: rgb(244, 244, 247) !important;
         }
- input::-webkit-inner-spin-button,input::-webkit-outer-spin-button{
-      appearance: none;
-      margin: 0px;
-    }
 
         .sup-int[type='text'] {
             padding-left: 30px;
@@ -198,14 +194,14 @@
 
             <div id="formdata">
                 <h4>Group Master Details</h4>
-                <label for="Category" class="label-block">Department  <span class="text-danger">*</span></label>
+                <label for="Category" class="label-block">Department:</label>
 
                 <select id="category" name="ParentPk" required>
 
                 </select>
 
-                <label for="Name" class="label-block">Name  <span class="text-danger">*</span></label>
-                <input type="text" id="code_name" name="code_name" placeholder="&#46820; Enter Group Name" required
+                <label for="Name" class="label-block">Name:</label>
+                <input type="text" id="code_name" name="code_name" oninput="AlphabateValidate(this)" placeholder="&#46820; Enter Group Name" required
                     title="Please enter only letters">
 
 
@@ -272,5 +268,21 @@
             })
 
     });
+
+    // Only Text Input Validation
+ function AlphabateValidate(inputElement) {
+    if (/^[a-zA-Z]+$/.test(inputElement.value)) {
+        inputElement.setCustomValidity('');
+    } else {
+        inputElement.setCustomValidity("Please Enter a Valid Name");
+    }
+
+    inputElement.addEventListener('blur', () => {
+        if (!/^[a-zA-Z]+$/.test(inputElement.value)) {
+            inputElement.reportValidity();
+        }
+    });
+}
+
 
 </script>

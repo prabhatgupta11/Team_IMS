@@ -16,11 +16,6 @@
         body {
             background-color: rgb(244, 244, 247) !important;
         }
-         input::-webkit-inner-spin-button,input::-webkit-outer-spin-button{
-      appearance: none;
-      margin: 0px;
-    }
-
 
         .sup-int[type='text'] {}
 
@@ -195,14 +190,7 @@
             {{!-- <h1>Order Billing</h1> --}}
             <div id="formdata">
                 <h4>Enter Group details</h4>
-
-                
-                <label for="Status" class="label-block">Department  <span class="text-danger">*</span></label>
-                <select id="category" name="ParentPk">
-                    <option value={{val.id}}>{{val.code_name}}</option>
-                </select>
-
-                <label for="Code" class="label-block">Name  <span class="text-danger">*</span></label>
+                <label for="Code" class="label-block">Name:</label>
                 <div class="sup-containe" style="position: relative;">
                     <input type="text" id="Code" name="code_name" class="sup-int" placeholder="Enter state Code"
                         value="{{itemType.code_name}}" required>
@@ -213,10 +201,24 @@
                 <input type="number" id="Display_order" name="displayorder" placeholder="Enter Display Order"
                     value="{{itemType.displayorder}}" min="0">
 
+
+                <label for="Status" class="label-block">Department:</label>
+                <select id="category" name="ParentPk">
+                    <option value={{val.id}}>{{val.code_name}}</option>
+                </select>
                 <label for="Status" class="label-block">Status:</label>
                 <select id="Status" name="Active">
                      <option value="{{itemType.Active}}">{{itemType.Active}}</option>
+                    {{!-- <option>{{itemType.Active}}</option> --}}
+                    {{!-- <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option> --}}
                 </select>
+
+
+
+                {{!-- <select id="category" name="ParentPk" required>
+
+                </select> --}}
 
             </div>
 
