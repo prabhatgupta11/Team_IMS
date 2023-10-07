@@ -83,6 +83,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         created_on: {
             type: DataTypes.DATE,
+            defaultValue:DataTypes.NOW
         },
         edit_by: {
             type: DataTypes.STRING,
@@ -101,7 +102,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
         },
         rowGuid: {
-            type: DataTypes.STRING,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4
         }
     },
        {

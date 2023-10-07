@@ -274,16 +274,19 @@
 
           </div>
         </thead>
-        <tbody id="product-list">
-
+        
+        <tbody id="product-list"  style="overflow: scroll;">
+    
         </tbody>
         <tfoot class="tfoot">
+     
           <tr>
 
             <td colspan="5" style="text-align: right;"><strong>Grand Total:</strong></td>
             <td><input type="number" name="totalAmount" id="grand-total" readonly></td>
 
           </tr>
+      
         </tfoot>
       </table>
   </div>
@@ -309,9 +312,16 @@
 
   addbtn.addEventListener("click", () => {
     const newRow = document.createElement("tr");
-
+    /*  if(containerfoot.style.display === 'none'){
+      console.log('worj')
+      containerfoot.style.display = 'block'
+    }
+    else{
+      containerfoot.style.display ='none'
+    } */
 
     newRow.innerHTML = `
+
     <td class="px-0" style="width:20%">
       <select name="itemId" class="product-select">
         <option value="">Select Product</option>
@@ -323,6 +333,7 @@
     <td><input type="number" name="total" class="total-cell col-md-10" readonly></td>
     <td><input type="number" name="taxPercentage" class="gst-input col-md-10"></td>
     <td><i class="fa-solid fa-trash delete-row-btn"></i></td>
+
   `;
     tablebody.appendChild(newRow);
     setupRowListeners(newRow);

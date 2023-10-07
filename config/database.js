@@ -1,7 +1,7 @@
 module.exports = {
     dbName: 'ims_project',
     user: 'root',
-    password: 'prabhat@11@@',
+    password: 'Shubu@123',
     host: 'localhost',
     dialect: 'mysql'
 }

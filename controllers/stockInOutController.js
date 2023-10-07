@@ -2,6 +2,7 @@ const db = require("../models")
 const StockInOut = db.stockInOut
 const ProductStock = db.productStock
 const ProductPrice = db.productPrice
+const Order = db.order
 
 // Update stock in product stock 
 
@@ -52,41 +53,116 @@ const stockInOut = async (req, res) => {
 
 }
 
-const addStockIn = async (req,res) => {
-try{
-const info = {
-        outletId,
-        stockType,
-        supplierCustomer,
-        itemId,
-        hsnCode,
-        batchNo,
-        mfgDate,
-        expDate,
-        freeQty,
-        qty,
-        purchasePrice,
-        discountType,
-        discount,
-        originalPrice,
-        mrp,
-        salePrice,
-        costPriceWithoutTax,
-        taxPercentage,
-        taxAmount,
-        packingType,
-        pack  
-} = req.body
+const addStockIn = async (req, res) => {
+    try {
 
-const stockIn = await ProductPrice.create(info)
-console.log(stockIn)
-req.flash('message', 'Stock Added Successfully')
-return res.redirect('/stockIn')
+        const {
+            stockType,
+            orderDate,
+            outletId,
+            supplierCustomer,
+            name,
+            email,
+            mobileNo,
+            itemId,
+            hsnCode,
+            batchNo,
+            mfgDate,
+            expDate,
+            freeQty,
+            qty,
+            purchasePrice,
+            discountType,
+            discount,
+            originalPrice,
+            mrp,
+            salePrice,
+            costPriceWithoutTax,
+            taxPercentage,
+            taxAmount,
+            packing,
+            pack
+        } = req.body
 
-}catch(err){
-    req.flash('message', 'Something Went Wrong')
-    return res.redirect('/stockIn')
-}
+console.log(888888888,req.body)
+        // Create an order with customer details
+        const order = await Order.create({
+            outletId: outletId,
+            orderDate: orderDate,
+            customerName: name,
+            customerMobile: mobileNo,
+            customerEmail: email,
+        });
+
+        let products = []
+        // Loop through the items (assuming itemId is a unique identifier for each product)
+        for (let i = 0; i < itemId.length; i++) {
+
+            const product = {
+                outletId: outletId,
+                stockType: stockType,
+                supplierCustomer: supplierCustomer,
+                itemId: itemId[i],
+                hsnCode: hsnCode[i],
+                batchNo: batchNo[i],
+                mfgDate: mfgDate[i],
+                expDate: expDate[i],
+                freeQty: freeQty[i],
+                qty: qty[i],
+                purchasePrice: purchasePrice[i],
+                discountType: discountType[i],
+                discount: discount[i],
+                originalPrice: originalPrice[i],
+                mrp: mrp[i],
+                salePrice: salePrice[i],
+                costPriceWithoutTax: costPriceWithoutTax[i],
+                taxPercentage: taxPercentage[i],
+                taxAmount: taxAmount[i],
+                packing: packing[i],
+                pack: pack[i]
+            };
+            products.push(product);
+
+        }
+        console.log(11111111,products)
+        // Create order items for each product
+        const orderItems = products.map(product => ({
+            orderFk: order.orderId,
+            outletId: product.outletId,
+            itemId: product.itemId,
+            stockType: stockType,
+            supplierCustomer: product.supplierCustomer,
+            hsnCode : product.hsnCode,
+            batchNo : product.batchNo,
+            mfgDate : product.mfgDate,
+            expDate : product.expDate,
+            freeQty : product.freeQty,
+            qty :product.qty,
+            purchasePrice : product.purchasePrice,
+            discountType: product.discountType,
+            discount: product.discount,
+            originalPrice: product.originalPrice,
+            mrp: product.mrp,
+            salePrice: product.salePrice,
+            costPriceWithoutTax: product.costPriceWithoutTax,
+            taxPercentage: product.taxPercentage,
+            taxAmount: product.taxAmount,
+            packingType : product.packing,
+            pack : product.pack
+
+        }));
+        console.log(22222222222,orderItems)
+
+        const stockIn = await ProductPrice.bulkCreate(orderItems)
+        console.log(stockIn)
+        req.flash('message', 'Stock Added Successfully')
+        return res.redirect('/stockIn')
+
+    } catch (err) {
+        console.log(err)
+        req.flash('message', 'Something Went Wrong')
+        return res.redirect('/stockIn')
+    }
 
 }
 

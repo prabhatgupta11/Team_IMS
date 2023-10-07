@@ -282,16 +282,11 @@
 
 </body>
 <script>
-  
-  
   // Function to fetch and append orderItems data
   function fetchAndAppendOrderItems(orderId) {
-   
     fetch(`/getOrderItems/${orderId}`)
       .then(response => response.json())
       .then(orderItems => {
-        console.log("working")
-        console.log(444,orderItems)
         const tableBody = document.getElementById("product-list");
 
         // Clear any existing rows in the table body

@@ -269,8 +269,7 @@
         </div>
         <div class="form-group py-2">
           <label for="exampleFormControlSelect1">State</label>
-          <select id="state" name="state" class="form-control input-field" style="padding-left:30px !important"
-            >
+          <select id="state" name="state" class="form-control input-field" style="padding-left:30px !important">
             <option value="">Select State</option>
             {{#each state}}
             <option value="{{id}}">{{Name}}</option>
@@ -291,8 +290,7 @@
         <div class="form-group py-2">
           <label for="exampleFormControlTextarea1">Contact Person Name</label>
           <input class="form-control input-field" type="text" placeholder="Enter Your Name " name="contactPersonName"
-            id="contactPersonName"
-          title="Please enter only letters" ></input>
+            id="contactPersonName" title="Please enter only letters"></input>
           <div class="icon-context input-field">
             <i class="fa-solid fa-id-card icons-icons"></i>
           </div>
@@ -319,7 +317,7 @@
         <div class="form-group py-2">
           <label for="exampleFormControlTextarea1">GST No</label>
           <input class="form-control input-field " type="text" placeholder="Enter Your GST number " name="GSTNo"
-            id="gstNo" maxlength="15"  oninput="gstNoValidate(this)"></input>
+            id="gstNo" maxlength="15" oninput="gstNoValidate(this)"></input>
           <div class="icon-context input-field">
             <i class="fa-regular fa-money-bill-1 icons-icons"></i>
           </div>
@@ -327,7 +325,7 @@
         <div class="form-group py-2">
           <label for="exampleFormControlTextarea1">PAN No</label>
           <input class="form-control input-field" type="text" placeholder="Enter Your Contact number " name="panNo"
-            id="panNo" maxlength="10" oninput="convertToUpperCase(this)" onblur="panNoValidate(this)"></input>
+            id="panNo" maxlength="10" oninput="panNoValidate(this)"></input>
           <div class="icon-context input-field">
             <i class="fa-solid fa-id-card icons-icons"></i>
           </div>
@@ -346,23 +344,23 @@
         </div> --}}
         <div class="form-group py-2 d-flex flex-column">
           <label for="exampleFormControlSelect1">Category<span class="text-danger">*</span></label>
-          <input type="text" id="category-search" placeholder="Search Categories" class="my-2 w-50" style='border:1px solid #bdbdbd'>
+          <input type="text" id="category-search" placeholder="Search Categories" class="my-2 w-50"
+            style='border:1px solid #bdbdbd'>
           <div class="checkbox-options  " id="category-checkboxes">
             {{#each category}}
             <div class="d-flex">
-            <input type="checkbox" id="category-{{this}}" name="category[]" value="{{this.id}}">
-            <label for="category-{{this}}" >{{this.code_name}}</label>
-            </div>  
-            
+              <input type="checkbox" id="category-{{this}}" name="category[]" value="{{this.id}}">
+              <label for="category-{{this}}">{{this.code_name}}</label>
+            </div>
+
             {{/each}}
           </div>
         </div>
         <div class="form-group py-2">
           <label for="exampleFormControlSelect1">Tax State</label>
-          <select id="taxState" name="taxState" class="form-control input-field" style="padding-left:30px !important"
-            >
+          <select id="taxState" name="taxState" class="form-control input-field" style="padding-left:30px !important">
             <option value="">Select Tax State</option>
-           {{#each state}}
+            {{#each state}}
             <option value="{{id}}">{{Name}}</option>
             {{/each}}
           </select>
@@ -408,95 +406,99 @@
 
 <script>
   // Only Text Input Validation
- function AlphabateValidate(inputElement) {
-  let pattern = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\\-="'\s]+$/
+  function AlphabateValidate(inputElement) {
+    let pattern = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\\-="'\s]+$/
     if (pattern.test(inputElement.value)) {
-        inputElement.setCustomValidity('');
+      inputElement.setCustomValidity('');
     } else {
-        inputElement.setCustomValidity("Please Enter a Valid Name");
+      inputElement.setCustomValidity("Please Enter a Valid Name");
     }
 
     inputElement.addEventListener('blur', () => {
-        if (!pattern.test(inputElement.value)) {
-            inputElement.reportValidity();
-        }
+      if (!pattern.test(inputElement.value)) {
+        inputElement.reportValidity();
+      }
     });
-}
+  }
 
 
-// Pin Code number validation
- function pinCodeValidate(inputElement) {
+  // Pin Code number validation
+  function pinCodeValidate(inputElement) {
     if (/^[0-9]{6}$/.test(inputElement.value)) {
-        inputElement.setCustomValidity('');
+      inputElement.setCustomValidity('');
     } else {
-        inputElement.setCustomValidity("Please Enter a Valid Contact Number");
+      inputElement.setCustomValidity("Please Enter a Valid Contact Number");
     }
 
     inputElement.addEventListener('blur', () => {
-        if (!/^[0-9]{6}$/.test(inputElement.value)) {
-            inputElement.reportValidity();
-        }
-    });   
-}
+      if (!/^[0-9]{6}$/.test(inputElement.value)) {
+        inputElement.reportValidity();
+      }
+    });
+  }
 
-// contact number validation
- function contactNoValidate(inputElement) {
+  // contact number validation
+  function contactNoValidate(inputElement) {
     if (/^[9876]\d{9}$/.test(inputElement.value)) {
-        inputElement.setCustomValidity('');
+      inputElement.setCustomValidity('');
     } else {
-        inputElement.setCustomValidity("Please Enter a Valid Contact Number");
+      inputElement.setCustomValidity("Please Enter a Valid Contact Number");
     }
 
     inputElement.addEventListener('blur', () => {
-        if (!/^[9876]\d{9}$/.test(inputElement.value)) {
-            inputElement.reportValidity();
-        }
-    });   
-}
+      if (!/^[9876]\d{9}$/.test(inputElement.value)) {
+        inputElement.reportValidity();
+      }
+    });
+  }
 
-// Convert into upper case
+  // Convert into upper case
   function convertToUpperCase(input) {
     input.value = input.value.toUpperCase();
   }
 
-// GST Code number validation
- function gstNoValidate(inputElement) {
-   function convertToUpperCase(inputElement) {
-    input.value = input.value.toUpperCase();
+  // GST Code number validation
+  function gstNoValidate(inputElement) {
+    inputElement.addEventListener('input', function () {
+      inputElement.value = inputElement.value.toUpperCase();
+      if (/^(\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[Z]{1}[A-Z\d]{1})$/.test(inputElement.value)) {
+        inputElement.setCustomValidity('');
+      } else {
+        inputElement.setCustomValidity("Please enter a valid GST Number");
+      }
+    });
+
+    inputElement.addEventListener('blur', () => {
+      if (!/^(\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[Z]{1}[A-Z\d]{1})$/.test(inputElement.value)) {
+        inputElement.reportValidity();
+      }
+    });
   }
-  convertToUpperCase();
-    if (/^(\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[Z]{1}[A-Z\d]{1})$/.test(inputElement.value)) {
-        inputElement.setCustomValidity('');
-    } else {
-        inputElement.setCustomValidity("Please Enter a Valid Contact Number");
-    }
 
-    inputElement.addEventListener('blur', () => {
-        if (!/^(\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[Z]{1}[A-Z\d]{1})$/.test(inputElement.value)) {
-            inputElement.reportValidity();
-        }
-    });   
-}
-  
-// PAN number validation
- function panNoValidate(inputElement) {
-    if (/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(inputElement.value)) {
+  // PAN number validation
+  function panNoValidate(inputElement) {
+    inputElement.addEventListener('input', function () {
+      inputElement.value = inputElement.value.toUpperCase()
+      if (/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(inputElement.value)) {
         inputElement.setCustomValidity('');
-    } else {
+      } else {
         inputElement.setCustomValidity("Please Enter a Valid PAN Number");
-    }
+      }
+    })
+
 
     inputElement.addEventListener('blur', () => {
-        if (!/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(inputElement.value)) {
-            inputElement.reportValidity();
-        }
-    });   
-}
+      if (!/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(inputElement.value)) {
+        inputElement.reportValidity();
+      }
+    });
+  }
 
 </script>
 
 
-{{!-- <script>
+{{!--
+<script>
 
 
   // Convert into upper case
@@ -568,12 +570,13 @@
       gstNoValidation.setCustomValidity('');
     } else {
       gstNoValidation.setCustomValidity('Please enter a valid GST number');
-    }  
+    }
   });
 
 </script> --}}
 
-{{!-- <script>
+{{!--
+<script>
   // Handle category checkboxes and search
   const categoryCheckboxes = document.querySelectorAll('input[name="category[]"]');
   const categorySearchInput = document.getElementById('category-search');
@@ -582,7 +585,7 @@
     const searchValue = categorySearchInput.value.trim().toLowerCase();
     categoryCheckboxes.forEach((checkbox) => {
       const label = checkbox.nextElementSibling;
-      
+
       const category = label.textContent.toLowerCase();
 
 
@@ -609,37 +612,37 @@
 
 <script>
   // Handle category checkboxes and search
-const categoryCheckboxes = document.querySelectorAll('input[name="category[]"]');
-const categoryLabels = document.querySelectorAll('label[for^="category"]'); // Assuming your labels have "for" attributes starting with "category"
-const categorySearchInput = document.getElementById('category-search');
+  const categoryCheckboxes = document.querySelectorAll('input[name="category[]"]');
+  const categoryLabels = document.querySelectorAll('label[for^="category"]'); // Assuming your labels have "for" attributes starting with "category"
+  const categorySearchInput = document.getElementById('category-search');
 
-categorySearchInput.addEventListener('input', () => {
-  const searchValue = categorySearchInput.value.trim().toLowerCase();
+  categorySearchInput.addEventListener('input', () => {
+    const searchValue = categorySearchInput.value.trim().toLowerCase();
 
-  categoryCheckboxes.forEach((checkbox, index) => {
-    const label = categoryLabels[index];
-    const category = label.textContent.toLowerCase();
+    categoryCheckboxes.forEach((checkbox, index) => {
+      const label = categoryLabels[index];
+      const category = label.textContent.toLowerCase();
 
-    if (category.includes(searchValue)) {
-      label.style.display = 'block'; // Show the label
-      checkbox.style.display = 'block'; // Show the checkbox
-    } else {
-      label.style.display = 'none'; // Hide the label
-      checkbox.style.display = 'none'; // Hide the checkbox
-      checkbox.checked = false; // Uncheck hidden checkboxes
-    }
+      if (category.includes(searchValue)) {
+        label.style.display = 'block'; // Show the label
+        checkbox.style.display = 'block'; // Show the checkbox
+      } else {
+        label.style.display = 'none'; // Hide the label
+        checkbox.style.display = 'none'; // Hide the checkbox
+        checkbox.checked = false; // Uncheck hidden checkboxes
+      }
+    });
   });
-});
 
-categoryCheckboxes.forEach((checkbox) => {
-  checkbox.addEventListener('change', () => {
-    const selectedCategories = Array.from(categoryCheckboxes)
-      .filter((checkbox) => checkbox.checked)
-      .map((checkbox) => checkbox.value);
+  categoryCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener('change', () => {
+      const selectedCategories = Array.from(categoryCheckboxes)
+        .filter((checkbox) => checkbox.checked)
+        .map((checkbox) => checkbox.value);
 
-    console.log('Selected Categories:', selectedCategories);
+      console.log('Selected Categories:', selectedCategories);
+    });
   });
-});
 
 </script>
 

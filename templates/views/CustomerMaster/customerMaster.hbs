@@ -203,50 +203,53 @@
 
 
         <label for="Name" class="label-block"> Name <span class="text-danger">*</span></label>
-        <input type="text" id="Name" name="Name" placeholder="&#128100; Enter Name" required pattern="[A-Za-z ]+"
-          title="Please enter only letters">
+        <input type="text" oninput="AlphabateValidate(this)" id="Name" name="Name" placeholder="&#128100; Enter Name"
+          required pattern="[A-Za-z ]+" title="Please enter only letters">
 
         <label for="ContactPersonName" class="label-block">Contact Person Name:</label>
-        <input type="text" id="ContactPersonName" name="ContactPersonName" placeholder="&#128100; Enter Contact Person"
-           title="Please enter only letters" >
+        <input type="text" oninput="AlphabateValidate(this)" id="ContactPersonName" name="ContactPersonName"
+          placeholder="&#128100; Enter Contact Person" title="Please enter only letters">
 
 
 
 
         <label for="ContactNo1">Contact No. 1 <span class="text-danger">*</span> :</label>
-        <input type="number" id="ContactNo1" name="ContactNo1" placeholder="&#x260E; Enter Contact Number 1" required
-          maxlength="10" title="Please enter a 10-digit phone number">
+        <input type="number" oninput="MobileValidate(this)" id="ContactNo1" name="ContactNo1"
+          placeholder="&#x260E; Enter Contact Number 1" required maxlength="10"
+          title="Please enter a 10-digit phone number">
 
-      <label for="ContactNo2">Contact No. 2:</label>
-        <input type="number" id="ContactNo2" name="ContactNo2" placeholder="&#x260E; Enter Contact Number 2" 
-          maxlength="10" title="Please enter a 10-digit phone number">
+        <label for="ContactNo2">Contact No. 2:</label>
+        <input type="number" id="ContactNo2" oninput="MobileValidate(this)" name="ContactNo2"
+          placeholder="&#x260E; Enter Contact Number 2" maxlength="10" title="Please enter a 10-digit phone number">
 
 
         <label for="AadharNo">Aadhar No:</label>
-        <input type="number" id="AadharNo" name="AadharNo" placeholder="&#9751;  Enter Aadhar Number"
-            title="Please enter a 12-digit Aadhar Number">
+        <input type="number" id="AadharNo" name="AadharNo" maxlength="12"  placeholder="&#9751;  Enter Aadhar Number"
+          title="Please enter a 12-digit Aadhar Number">
 
 
 
         <label for="Pincode">Pincode:</label>
-        <input type="number" id="Pincode" name="Pincode" placeholder="&#9951;  Enter Pincode"  maxlength="6"
-          title="Please enter a 6-digit Pin Code Number">
+        <input type="number" id="Pincode" name="Pincode" placeholder="&#9951;  Enter Pincode" maxlength="6"
+          title="Please enter a 6-digit Pin Code Number"
+          oninput="javascript:if(this.value.length > this.maxLength) this.value = this.value.slice(0,this.maxLength)">
 
 
 
 
         <label for="Email">Email <span class="text-danger">*</span> :</label>
-        <input type="email" id="Email" name="Email" placeholder="&#x2709;  Enter Email" required>
+        <input type="email" id="Email" oninput="EmailValidate(this)" name="Email" placeholder="&#x2709;  Enter Email"
+          required>
 
         <label for="GSTNo">GST No:</label>
-        <input type="text" id="GSTNo" name="GSTNo" placeholder="&#9951; Enter GST No." 
-          oninput="convertToUpperCase(this)" minlength="15" maxlength="15" title="Please enter a 15-digit GST Number">
+        <input type="text" id="GSTNo" name="GSTNo" placeholder="&#9951; Enter GST No." oninput="gstNoValidate(this)"
+          minlength="15" maxlength="15" title="Please enter a 15-digit GST Number">
 
 
 
         <label for="PAN">PAN:</label>
-        <input type="text" id="PAN" name="PAN" placeholder="&#9751; Enter PAN" 
-          oninput="convertToUpperCase(this)" minlength="10" maxlength="10" title="Please enter a 10-digit PAN Number">
+        <input type="text" id="PAN" name="PAN" placeholder="&#9751; Enter PAN" oninput="panNoValidate(this)"
+          minlength="10" maxlength="10" title="Please enter a 10-digit PAN Number">
 
 
         <label for="Status" class="label-block">Status:</label>
@@ -257,7 +260,7 @@
 
         <label for="Address">Address:</label>
         <div>
-          <textarea id="Address" name="Address" rows="4" placeholder="Enter Address" cols="72" 
+          <textarea id="Address" name="Address" rows="4" placeholder="Enter Address" cols="72"
             style="width: 100%;"></textarea><br><br>
         </div>
       </div>
@@ -279,119 +282,137 @@
 
 </body>
 <script>
-  //document.getElementById("supplierForm").addEventListener("submit", function () {
-    //e.preventDefault();
-
-    // Collect form data
-   /* const formData = {
-      Code: document.getElementById("Code").value,
-      Name: document.getElementById("Name").value,
-      ContactPersonName: document.getElementById("ContactPersonName").value,
-      ContactNo1: document.getElementById("ContactNo1").value,
-      ContactNo2: document.getElementById("ContactNo2").value,
-      Email: document.getElementById("Email").value,
-      Address: document.getElementById("Address").value,
-      Pincode: document.getElementById("Pincode").value,
-      GSTNo: document.getElementById("GSTNo").value,
-      PAN: document.getElementById("PAN").value,
-      AadharNo: document.getElementById("AadharNo").value,
-      Status: document.getElementById("Status").value,
-    };
-
-    console.log("Form Data:", formData);
-
-
-
-    fetch('/createCustomerMaster', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Data sent:', data);
-
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  });
-
-  /*
-  ////contact,addhar number validation
-   const contactNoInput = document.getElementById('ContactNo');
-    const AadharNoInput = document.getElementById('AadharNo');
-    const GSTNoInput = document.getElementById('GSTNo');
-      const PANNoInput = document.getElementById('PAN');
-      const PinCodeNoInput = document.getElementById('Pincode');
-      
-    
-   
-  
-      contactNoInput.addEventListener('input', () => {
-      const value = contactNoInput.value;
-      const valid = /^[0-9]{0,10}$/.test(value);
-  
-      if (valid || value === '') {
-        contactNoInput.setCustomValidity('');
-      } else {
-        contactNoInput.setCustomValidity('Please enter a maximum of 10 digits for the contact number');
-      }
-    });
-  
-   
-  
-    AadharNoInput.addEventListener('input', () => {
-      const valid = /^[0-9]{12}$/.test(AadharNoInput.value);
-  
-      if (valid) {
-        AadharNoInput.setCustomValidity('');
-      } else {
-        AadharNoInput.setCustomValidity('Please enter a 12-digit Aadhar number');
-      }
-    });
-  
-  PANNoInput.addEventListener('input', () => {
-      const valid = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(PANNoInput.value);
-  
-      if (valid) {
-          PANNoInput.setCustomValidity('');
-      } else {
-          PANNoInput.setCustomValidity('Please enter a valid PAN number (e.g., ABCDE1234F)');
-      }
-  });
-  
-  
-  
-  /*GSTNoInput.addEventListener('input', () => {
-          const valid = GSTNoInput.checkValidity();
-  
-          if (valid) {
-              GSTNoInput.setCustomValidity('');
-          } else {
-              GSTNoInput.setCustomValidity('Please enter a 15-digit GST Number');
-          }
-      });
-  */
-
-  /*
-  GSTNoInput.addEventListener('input', () => {
-      const valid = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9A-Z]{2}[0-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/.test(GSTNoInput.value);
-  
-      if (valid) {
-          GSTNoInput.setCustomValidity('');
-      } else {
-          GSTNoInput.setCustomValidity('Please enter a valid 15-digit GST number (e.g., 22ABCDE1234F1Z5)');
-      }
-  });
-  */
 
   // to convert the userinput to uppercase
   function convertToUpperCase(input) {
     input.value = input.value.toUpperCase();
   }
+
+  // Only Text Input Validation
+  function AlphabateValidate(inputElement) {
+    if (/^[a-zA-Z]+$/.test(inputElement.value)) {
+      inputElement.setCustomValidity('');
+    } else {
+      inputElement.setCustomValidity("Please Enter a Valid Name");
+    }
+
+    inputElement.addEventListener('blur', () => {
+      if (!/^[a-zA-Z]+$/.test(inputElement.value)) {
+        inputElement.reportValidity();
+      }
+    });
+  }
+
+  function MobileValidate(inputElement) {
+    // Check only 10 digit number validation
+    inputElement.addEventListener('input', () => {
+      const maxlength = 10;
+      let input = inputElement.value;
+      if (input.length > maxlength) {
+        inputval = input.slice(0, maxlength)
+        inputElement.value = inputval
+      }
+    })
+    //check pattern
+    if (/^[9876]\d{9}$/.test(inputElement.value)) {
+      inputElement.setCustomValidity('');
+    } else {
+      inputElement.setCustomValidity("Please Enter a Valid Mobile Number");
+    }
+
+    inputElement.addEventListener('blur', () => {
+      if (!/^[9876]\d{9}$/.test(inputElement.value)) {
+        inputElement.reportValidity();
+      }
+    });
+
+
+  }
+
+
+// aadhar validation
+  const addhar = document.getElementById('AadharNo');
+  addhar.addEventListener('input', function () {
+    const addharval = addhar.value;
+    if (/^[0-9]{12}$/.test(addharval)) {
+      addhar.setCustomValidity("");
+    } else {
+      addhar.setCustomValidity("Please enter a valid 12-digit Aadhar Number");
+    }
+  }
+  )
+  addhar.addEventListener('blur', () => {
+    const addharval = addhar.value;
+    if (!/^[0-9]{12}$/.test(addharval)) {
+      addhar.reportValidity()
+    }
+  });
+ addhar.addEventListener('input', () => {
+
+  if (addhar.value.length > addhar.maxLength) {
+    addhar.value = addhar.value.slice(0, addhar.maxLength);
+  }
+
+  })
+  
+
+
+
+
+  // Email Input Validation
+  function EmailValidate(inputElement) {
+    if (/^^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputElement.value)) {
+      inputElement.setCustomValidity('');
+    } else {
+      inputElement.setCustomValidity("Please Enter a Valid Email Address");
+    }
+
+    inputElement.addEventListener('blur', () => {
+      if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputElement.value)) {
+        inputElement.reportValidity();
+      }
+    });
+  }
+
+  function convertToUpperCase(input) {
+    input.value = input.value.toUpperCase();
+  }
+
+  // GST Code number validation
+  function gstNoValidate(inputElement) {
+  inputElement.addEventListener('input', function () {
+    this.value = this.value.toUpperCase();
+    if (/^(\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[Z]{1}[A-Z\d]{1})$/.test(this.value)) {
+      this.setCustomValidity('');
+    } else {
+      this.setCustomValidity("Please enter a valid GST Number");
+    }
+  });
+
+  inputElement.addEventListener('blur', () => {
+    if (!/^(\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[Z]{1}[A-Z\d]{1})$/.test(inputElement.value)) {
+      inputElement.reportValidity();
+    }
+  });
+}
+
+
+  // PAN number validation
+  function panNoValidate(inputElement) {
+    if (/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(inputElement.value)) {
+      inputElement.setCustomValidity('');
+    } else {
+      inputElement.setCustomValidity("Please Enter a Valid PAN Number");
+    }
+
+    inputElement.addEventListener('blur', () => {
+      if (!/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(inputElement.value)) {
+        inputElement.reportValidity();
+      }
+    });
+  }
+
+
 
 
 

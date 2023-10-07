@@ -28,10 +28,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
         },
         mfgDate: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
         },
         expDate: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
         },
         freeQty: {
             type: DataTypes.STRING,
@@ -80,6 +80,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         created_On: {
             type: DataTypes.DATE,
+            defaultValue:DataTypes.NOW
         },
         edit_By: {
             type: DataTypes.STRING,

@@ -259,12 +259,13 @@
 <div class="form-group py-2 relative">
             <span id="eye" class="form-group"><i class="fa-solid fa-eye-slash" style="position:relative; top:25px; z-index:99"></i></span>
           <label for="exampleFormControlTextarea1">Password<span class="text-danger">*</span></label>
-          <input class="form-control input-field pass-field" type="password" placeholder="Enter Your Password " name="password"
+          <input class="form-control input-field pass-field" type="password" oninput="PasswordValidation(this)" placeholder="Enter Your Password " name="password"
             id="exampleFormControlTextarea1" required></input>
            
           <div class="icon-context input-field">
             <i class="fa-solid fa-lock icons-icons"></i>
           </div>
+          <small>Input Password and Submit 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter</small>
         </div>
         <div class="form-group py-2">
 
@@ -284,7 +285,8 @@
         <div class="form-group py-2">
 
           <label for="exampleFormControlSelect1">Manager<span class="text-danger">*</span></label>
-          <select id="managerSelect" name="managerFk" class="form-control ">
+          <select id="managerSelect" name="managerFk" class="form-control" required>
+            <option disabled selected>Select Manager</option>
             {{!-- {{#each user}}
             <option>Select Manager</option>
             <option value="id">{{ email }}</option>
@@ -358,19 +360,37 @@ EyeButton()
     }
    })
    //check pattern
-    if (/^[9876]\d{10}$/.test(inputElement.value)) {
+    if (/^[9876]\d{9}$/.test(inputElement.value)) {
         inputElement.setCustomValidity('');
     } else {
         inputElement.setCustomValidity("Please Enter a Valid Mobile Number");
     }
 
     inputElement.addEventListener('blur', () => {
-        if (!/^[9876]\d{10}$/.test(inputElement.value)) {
+        if (!/^[9876]\d{9}$/.test(inputElement.value)) {
             inputElement.reportValidity();
         }
     });
 
     
+}
+
+// password validation 
+function PasswordValidation(inputElement){
+  var passformat=  /^[A-Za-z\d@$!%*?&]{8,}$/;
+  if(passformat.test(inputElement.value)){
+    inputElement.setCustomValidity('')
+  }
+  else{
+    inputElement.setCustomValidity("Password Is Not Strong")
+  }
+
+  inputElement.addEventListener('blur',()=>{
+    if(!passformat.test(inputElement.value)){
+      inputElement.reportValidity()
+    }
+  })
+
 }
 
 // Only Text Input Validation
@@ -382,7 +402,7 @@ EyeButton()
     }
 
     inputElement.addEventListener('blur', () => {
-        if (!/^[9876]\d{9}$/.test(inputElement.value)) {
+        if (!/^[a-zA-Z]+$/.test(inputElement.value)) {
             inputElement.reportValidity();
         }
     });

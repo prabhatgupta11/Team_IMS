@@ -52,10 +52,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(255), 
       allowNull: false,
     },
-    // CreditLimit: {
-    //   type: DataTypes.DECIMAL(10, 2), 
-    //   allowNull: false,
-    // },
     CreditLimit: {
       type: DataTypes.INTEGER,
       allowNull: false,

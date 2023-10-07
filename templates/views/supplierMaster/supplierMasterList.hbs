@@ -91,7 +91,12 @@
 <body id="body-pd">
 
     {{>side}}
-   
+    {{#if message}}
+    <div class="alert alert-info opacity-0">{{message}}</div>
+    {{/if}}
+    {{#if message}}
+    <div class="alert alert-info">{{message}}</div>
+    {{/if}}
     <div class="col-md-12 row-md-5 mx-0 main_container " style="padding-right:0px; margin-top:70px">
         <div class="row-md-4 subtitle d-flex justify-content-between align-items-center" style="margin-top: 60px;">
             <div class="row-md-4 subtitle d-flex justify-content-start align-items-center w-75"
@@ -112,17 +117,11 @@
                     </ul>
                 </div>
             </div>
-            
 
             <button type="button" class="btn btn-light btn-md  text-light h-25"
                 style="background-color: #ff9f43;font-weight:500"><a href="/supplierMaster"
                     style="text-decoration: none;color:white">+ Add Supplier Master</a></button>
         </div>
-    {{#if message}}
-    <div class="alert alert-info">{{message}}</div>
-    {{/if}}
-         
-
 
 
         <div class="container col-md-12 me-class" style="padding-right:24px">
@@ -132,31 +131,14 @@
                 </div>
 
             </div>
-            <div class="shub-class">
-            <label for="store">Store</label>
-        <div class="cons" style="position: relative;">
-          <div class="icon-context input-field" style="position: absolute; top:2px;left:10px ">
-            <i class="fa-solid fa-store icons-icons" style="font-size: 15px;"></i>
-          </div>
-
-          <select name="outletId" id="store" class="store-select w-25 py-1 rounded-3" style="padding-left: 30px;font-size:14px" required>
-            <option value="" disabled selected> Select Store</option>
-            {{#each store}}
-            <option value={{outletId}}>{{storeName}}</option>
-            {{/each}}
-          </select>
-        </div>
-        </div>
 
 
             <div class="container-table pt-2 p-0 mt-4 table-responsive">
                 <form style="overflow-x: hidden;">
                     <table class="table table-custom" id="order_table">
-                        
                         <thead>
-                            
                             <tr>
-                            
+
                                 <th scope="col ">Supplier Code</th>
                                 <th scope="col ">Supplier Name</th>
                                 <th scope="col ">Email</th>
@@ -188,42 +170,74 @@
 
 
     <script>
-       $(document).ready(function () {
-    const dataTable = $('#order_table').DataTable({
-        "language": {
-            "lengthMenu": "Show _MENU_ Entries"
-        },
-        'processing': true,
-        'serverSide': true,
-        'ajax': {
-            'url': '/supplierDetailsList',  // Change to the appropriate server-side route
-            'type': 'POST',  // Change to POST request
-            'data': function (d) {
-                // Send the selected outletId to the server
-                d.outletId = $('#store').val();
-            }
-        },
-        'columns': [
-            { data: 'Code' },
-            { data: 'Name' },
-            { data: 'Email' },
-            {
-                data: 'rowguid',
-                'render': function (data, type, row) {
-                    return "<a href='/updateSupplierMaster/" + data + "'>EDIT</a>";
-                }
-            },
-        ],
-    });
+        $(document).ready(function () {
+            const dataTable = $('#order_table').DataTable({
+                "language": {
+                    "lengthMenu": "Show _MENU_ Entries"
+                },
+                'processing': true,
+                'serverSide': true,
+                'ajax': {
+                    'url': '/supplierDetailsList',
+                    'type': 'GET'
+                },
+                'columns': [
+                    { data: 'Code' },
+                    { data: 'Name' },
+                    { data: 'Email' },
+                    {
+                        data: 'rowguid',
+                        'render': function (data, type, row) {
+                            return "<a href='/updateSupplierMaster/" + data + "'>EDIT</a>";
+                        }
+                    },
+                ],
+            });
+        });
+    </script>
+    {{!--
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tableBody = document.getElementById("tablebody");
 
-    // Update the DataTable when the store selection changes
-    $('#store').on('change', function () {
-        dataTable.ajax.reload();
-    });
-});
-  </script>
+            // Fetch supplier data
+            fetch(/getAllsupplierdata)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(supplier => {
 
-   
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                        <td>${supplier.Code}</td>
+                        <td>${supplier.Name}</td>
+                        <td>${supplier.Email}</td>
+                        <td><a href='/updateSupplierMaster/${supplier.rowguid}'>Edit</a></td>
+                    `;
+                        tableBody.appendChild(row);
+                    });
+
+
+                    /*var alleditbtn=document.querySelectorAll(".edit-btn");
+                       console.log(7777,alleditbtn)
+                       for(let i=0;i<alleditbtn.length;i++)
+                       {
+                          alleditbtn[i].addEventListener("click", () => {
+                              alert(button is clicked ${alleditbtn[i].value})
+                          const supplierUuid = alleditbtn[i].value;
+                          // Assuming you want to navigate to the edit page with the supplierId as a parameter
+                          window.location.href = /supplierMasterUpdate/${supplierUuid};
+                      });
+                       }*/
+                })
+                .catch(error => console.error('Error fetching supplier data:', error));
+
+        });
+
+        // code of edit-btn
+
+    </script> --}}
+
+
 </body>
 
 </html>
